@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Herman Miller 選配計算器｜Price Book 4/26</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #f5f4f2;
+    --surface: #ffffff;
+    --border: #e0ddd8;
+    --border-strong: #c8c4bc;
+    --text: #1a1917;
+    --text-muted: #6b6860;
+    --accent: #1a1917;
+    --accent-light: #f0efe9;
+    --green: #2d6a4f;
+    --green-light: #e8f5ef;
+    --red: #c0392b;
+    --red-light: #fdf0ee;
+    --yellow: #7a5c00;
+    --yellow-light: #fef9e7;
+    --step-bg: #fafaf8;
+    --total-bg: #1a1917;
+    --total-text: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Microsoft JhengHei', 'Noto Sans TC', '微軟正黑體', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 24px 16px 48px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .container { max-width: 960px; margin: 0 auto; }
+
+  /* ── TOP HEADER ── */
+  .header {
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 16px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .header-brand {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+  .header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+  .header-version {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'Roboto Mono', monospace;
+    background: var(--accent-light);
+    border: 1px solid var(--border);
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  /* ── PRODUCT TABS (level 1) ── */
+  .product-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+    background: var(--surface);
+  }
+  .product-tab-btn {
+    padding: 12px 24px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-muted);
+    border-bottom: 3px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .product-tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .product-tab-btn:hover:not(.active) { color: var(--text); background: var(--accent-light); }
+
+  .product-panel { display: none; }
+  .product-panel.active { display: block; }
+
+  /* ── INNER TABS (level 2, Aeron only) ── */
+  .tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tab-btn {
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.15s;
+  }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-btn:hover:not(.active) { color: var(--text); }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── SHARED: Input Section ── */
+  .input-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .input-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .input-row { display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
+  .model-input {
+    flex: 1; min-width: 260px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 15px; font-weight: 500;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 6px;
+    background: var(--accent-light);
+    color: var(--accent);
+    outline: none;
+    letter-spacing: 0.04em;
+    transition: border-color 0.15s;
+  }
+  .model-input:focus { border-color: var(--accent); }
+  .model-input::placeholder { color: #bbb; font-weight: 400; }
+
+  .btn-primary {
+    padding: 11px 22px;
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 6px;
+    font-family: 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+    font-size: 13px; font-weight: 700;
+    cursor: pointer; letter-spacing: 0.05em;
+    white-space: nowrap; transition: opacity 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-clear {
+    padding: 11px 16px;
+    background: none; color: var(--text-muted);
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    font-family: 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+    font-size: 13px; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-clear:hover { background: var(--accent-light); color: var(--accent); }
+
+  .input-hint { margin-top: 8px; font-size: 11px; color: var(--text-muted); }
+  .input-hint code {
+    font-family: 'Roboto Mono', monospace;
+    background: var(--accent-light); padding: 1px 5px;
+    border-radius: 3px; font-size: 11px;
+  }
+
+  /* ── ALERT ── */
+  .alert {
+    padding: 12px 16px; border-radius: 6px;
+    font-size: 13px; margin-bottom: 16px;
+    display: none; align-items: flex-start; gap: 8px;
+  }
+  .alert.show { display: flex; }
+  .alert-error { background: var(--red-light); border: 1px solid #f5c6c2; color: var(--red); }
+  .alert-warn  { background: var(--yellow-light); border: 1px solid #fae5a0; color: var(--yellow); }
+  .alert-icon  { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── RESULT ── */
+  .result-block { display: none; }
+  .result-block.show { display: block; }
+
+  .model-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--accent); color: #fff;
+    padding: 8px 16px; border-radius: 6px; margin-bottom: 16px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
+  }
+  .model-badge-label {
+    font-family: 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+    font-size: 10px; opacity: 0.6;
+    text-transform: uppercase; letter-spacing: 0.1em; font-weight: 400;
+  }
+
+  /* ── STEPS TABLE ── */
+  .steps-table {
+    width: 100%; border-collapse: collapse;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+    margin-bottom: 16px; font-size: 13px;
+  }
+  .steps-table thead tr { background: var(--step-bg); border-bottom: 1.5px solid var(--border); }
+  .steps-table th {
+    padding: 10px 14px; text-align: left;
+    font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--text-muted); font-weight: 600;
+  }
+  .steps-table th:last-child { text-align: right; }
+  .steps-table tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
+  .steps-table tbody tr:last-child { border-bottom: none; }
+  .steps-table tbody tr:hover { background: var(--accent-light); }
+  .steps-table td { padding: 11px 14px; vertical-align: middle; }
+
+  .step-num { font-family: 'Roboto Mono', monospace; font-size: 10px; color: var(--text-muted); white-space: nowrap; }
+  .step-code {
+    font-family: 'Roboto Mono', monospace; font-size: 12px; font-weight: 500;
+    background: var(--accent-light); border: 1px solid var(--border);
+    padding: 2px 8px; border-radius: 4px; display: inline-block; white-space: nowrap;
+  }
+  .step-desc { color: var(--text); line-height: 1.4; }
+  .step-desc small { display: block; color: var(--text-muted); font-size: 11px; margin-top: 1px; }
+  .step-price { font-family: 'Roboto Mono', monospace; font-size: 13px; font-weight: 500; text-align: right; white-space: nowrap; }
+  .price-zero  { color: var(--text-muted); }
+  .price-add   { color: var(--green); }
+  .price-base  { color: var(--accent); font-weight: 700; }
+
+  /* ── TOTAL BAR ── */
+  .total-bar {
+    background: var(--total-bg); color: var(--total-text);
+    border-radius: 8px; padding: 16px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px; flex-wrap: wrap; gap: 8px;
+  }
+  .total-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; opacity: 0.6; }
+  .total-model { font-family: 'Roboto Mono', monospace; font-size: 12px; opacity: 0.5; margin-top: 2px; }
+  .total-sub   { font-size: 11px; opacity: 0.45; margin-top: 3px; }
+  .total-price { font-family: 'Roboto Mono', monospace; font-size: 28px; font-weight: 500; letter-spacing: -0.02em; }
+  .total-currency { font-size: 14px; opacity: 0.7; margin-right: 4px; }
+
+  /* ── TWD BAR ── */
+  .twd-bar {
+    background: var(--accent-light); border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px; flex-wrap: wrap; gap: 8px;
+  }
+  .twd-label  { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); }
+  .twd-price  { font-family: 'Roboto Mono', monospace; font-size: 20px; font-weight: 700; color: var(--accent); }
+  .twd-rate   { font-size: 11px; color: var(--text-muted); }
+  .twd-input-row { display: flex; align-items: center; gap: 8px; }
+  .twd-input {
+    width: 80px; padding: 5px 8px;
+    border: 1px solid var(--border-strong); border-radius: 4px;
+    font-family: 'Roboto Mono', monospace; font-size: 13px;
+    text-align: right; background: var(--surface); color: var(--accent); outline: none;
+  }
+  .twd-input:focus { border-color: var(--accent); }
+
+  /* ── SECTION DIVIDER ── */
+  .section-divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+  /* ── AERON MANUAL CONFIG ── */
+  .config-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-bottom: 16px;
+  }
+  @media (max-width: 600px) { .config-grid { grid-template-columns: 1fr; } }
+
+  .config-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px;
+  }
+  .config-item-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--text-muted); font-weight: 600; margin-bottom: 6px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .config-item-step {
+    font-family: 'Roboto Mono', monospace; font-size: 10px;
+    background: var(--step-bg); padding: 1px 5px;
+    border-radius: 3px; border: 1px solid var(--border); color: var(--text-muted);
+  }
+  .config-select {
+    width: 100%; padding: 8px 10px;
+    border: 1px solid var(--border-strong); border-radius: 5px;
+    background: var(--accent-light);
+    font-family: 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+    font-size: 13px; color: var(--accent); outline: none; cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231a1917' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px;
+  }
+  .config-select:focus { border-color: var(--accent); }
+
+  .config-price-display {
+    margin-top: 5px; font-size: 11px; color: var(--text-muted);
+    font-family: 'Roboto Mono', monospace; min-height: 16px;
+  }
+  .config-price-display.has-price { color: var(--green); font-weight: 500; }
+
+  .btn-build {
+    width: 100%; padding: 13px; background: var(--accent); color: #fff;
+    border: none; border-radius: 6px;
+    font-family: 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+    letter-spacing: 0.05em; margin-top: 4px; transition: opacity 0.15s;
+  }
+  .btn-build:hover { opacity: 0.85; }
+
+  .generated-code-box {
+    background: var(--accent-light); border: 1px solid var(--border);
+    border-radius: 6px; padding: 12px 16px;
+    font-family: 'Roboto Mono', monospace; font-size: 14px; font-weight: 500;
+    color: var(--accent); letter-spacing: 0.05em;
+    margin-top: 12px; word-break: break-all;
+    display: none; user-select: all; cursor: text;
+  }
+  .generated-code-box.show { display: block; }
+
+  /* ── EAMES CONFIG WRAPPER ── */
+  .config-wrapper {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 20px; margin-bottom: 20px;
+  }
+  .section-title {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--text-muted); font-weight: 600;
+    margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+  }
+  .eames-config-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-bottom: 16px;
+  }
+  @media (max-width: 600px) { .eames-config-grid { grid-template-columns: 1fr; } }
+
+  .eames-config-item {
+    background: var(--step-bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px;
+  }
+  .eames-select {
+    width: 100%; padding: 9px 32px 9px 10px;
+    border: 1px solid var(--border-strong); border-radius: 5px;
+    background: var(--surface);
+    font-family: 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+    font-size: 13px; color: var(--accent); outline: none; cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231a1917' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 10px center;
+  }
+  .eames-select:focus { border-color: var(--accent); }
+
+  .btn-calc {
+    width: 100%; padding: 13px; background: var(--accent); color: #fff;
+    border: none; border-radius: 6px;
+    font-family: 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+    letter-spacing: 0.05em; margin-top: 4px; transition: opacity 0.15s;
+  }
+  .btn-calc:hover { opacity: 0.85; }
+
+  /* ── LEATHER SWATCHES ── */
+  .swatch-container { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .swatch {
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 2px solid transparent; cursor: pointer;
+    transition: transform 0.1s, border-color 0.1s;
+  }
+  .swatch:hover { transform: scale(1.15); }
+  .swatch.active { border-color: var(--accent); transform: scale(1.15); }
+
+  .leather-section { margin-top: 8px; }
+  .leather-sel-label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+  .selected-leather-name { font-size: 12px; font-weight: 600; color: var(--accent); font-family: 'Roboto Mono', monospace; }
+
+  /* ── QTY ROW ── */
+  .qty-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 12px; padding: 10px 14px;
+    background: var(--step-bg); border: 1px solid var(--border); border-radius: 6px;
+  }
+  .qty-label { font-size: 12px; color: var(--text-muted); flex: 1; }
+  .qty-input {
+    width: 64px; padding: 6px 10px;
+    border: 1px solid var(--border-strong); border-radius: 4px;
+    font-family: 'Roboto Mono', monospace; font-size: 14px; font-weight: 600;
+    text-align: center; color: var(--accent); background: var(--surface); outline: none;
+  }
+  .qty-input:focus { border-color: var(--accent); }
+  .qty-total { font-family: 'Roboto Mono', monospace; font-size: 13px; font-weight: 600; color: var(--green); white-space: nowrap; }
+
+  /* ── FOOTER ── */
+  .footer-note {
+    margin-top: 28px; font-size: 11px; color: var(--text-muted);
+    border-top: 1px solid var(--border); padding-top: 14px; line-height: 1.8;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ── TOP HEADER ── -->
+  <div class="header">
+    <span class="header-brand">HermanMiller</span>
+    <h1>選配計算器</h1>
+    <span class="header-version">Price Book 4/26</span>
+  </div>
+
+  <!-- ── PRODUCT TABS ── -->
+  <div class="product-tabs">
+    <button class="product-tab-btn active" onclick="switchProduct('aeron')">🪑 Aeron® Work Chair</button>
+    <button class="product-tab-btn" onclick="switchProduct('eames')">🛋 Eames® Lounge Chair + Ottoman</button>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       PRODUCT PANEL A: AERON
+  ══════════════════════════════════════════ -->
+  <div id="product-aeron" class="product-panel active">
+
+    <!-- Inner tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchAeronTab('paste')">📋 貼上型號計算</button>
+      <button class="tab-btn" onclick="switchAeronTab('manual')">🎛 下拉手動選配</button>
+    </div>
+
+    <!-- ── AERON TAB 1: PASTE ── -->
+    <div id="aeron-tab-paste" class="tab-panel active">
+      <div class="input-section">
+        <label class="input-label">輸入或貼上 Aeron 型號</label>
+        <div class="input-row">
+          <input type="text" class="model-input" id="aeronModelInput"
+            placeholder="例：AER1B23DW ALP G1 G1 G1 BB BK 23103"
+            onkeydown="if(event.key==='Enter') aeronParseModel()">
+          <button class="btn-primary" onclick="aeronParseModel()">計算價格</button>
+          <button class="btn-clear" onclick="aeronClearAll()">清除</button>
+        </div>
+        <div class="input-hint">
+          支援帶空白或無空白格式，如 <code>AER1B23DW</code> 或 <code>AER 1 B 2 3 D W</code> 皆可自動辨識
+        </div>
+      </div>
+
+      <div class="alert alert-error" id="aeronAlertError">
+        <span class="alert-icon">⚠️</span><div id="aeronAlertErrorMsg"></div>
+      </div>
+      <div class="alert alert-warn" id="aeronAlertWarn">
+        <span class="alert-icon">💡</span><div id="aeronAlertWarnMsg"></div>
+      </div>
+
+      <div class="result-block" id="aeronResultBlock">
+        <div class="model-badge">
+          <span class="model-badge-label">型號</span>
+          <span id="aeronBadgeModel"></span>
+        </div>
+        <table class="steps-table">
+          <thead><tr>
+            <th style="width:72px">Step</th>
+            <th style="width:90px">代碼</th>
+            <th>說明</th>
+            <th style="width:110px">加價 (USD)</th>
+          </tr></thead>
+          <tbody id="aeronStepsBody"></tbody>
+        </table>
+        <div class="total-bar">
+          <div>
+            <div class="total-label">單張定價</div>
+            <div class="total-model" id="aeronTotalModel"></div>
+          </div>
+          <div class="total-price">
+            <span class="total-currency">USD</span>
+            <span id="aeronTotalPrice">—</span>
+          </div>
+        </div>
+      </div>
+    </div><!-- /aeron-tab-paste -->
+
+    <!-- ── AERON TAB 2: MANUAL ── -->
+    <div id="aeron-tab-manual" class="tab-panel">
+      <div class="config-grid" id="aeronConfigGrid"></div>
+      <button class="btn-build" onclick="aeronBuildFromSelects()">產生型號並計算價格 →</button>
+      <div class="generated-code-box" id="aeronGeneratedCode"></div>
+      <div class="section-divider"></div>
+      <div class="alert alert-error" id="aeronAlertErrorM">
+        <span class="alert-icon">⚠️</span><div id="aeronAlertErrorMMsg"></div>
+      </div>
+      <div class="result-block" id="aeronResultBlockM">
+        <div class="model-badge">
+          <span class="model-badge-label">型號</span>
+          <span id="aeronBadgeModelM"></span>
+        </div>
+        <table class="steps-table">
+          <thead><tr>
+            <th style="width:72px">Step</th>
+            <th style="width:90px">代碼</th>
+            <th>說明</th>
+            <th style="width:110px">加價 (USD)</th>
+          </tr></thead>
+          <tbody id="aeronStepsBodyM"></tbody>
+        </table>
+        <div class="total-bar">
+          <div>
+            <div class="total-label">單張定價</div>
+            <div class="total-model" id="aeronTotalModelM"></div>
+          </div>
+          <div class="total-price">
+            <span class="total-currency">USD</span>
+            <span id="aeronTotalPriceM">—</span>
+          </div>
+        </div>
+      </div>
+    </div><!-- /aeron-tab-manual -->
+
+    <div class="footer-note">
+      ※ 本計算器依據 Herman Miller New Aeron® Chairs Price Book (4/26) AER1 Work Chair 定價。<br>
+      ※ 真皮扶手墊（皮革選項 F）適用 Price Category 9 加價 +$90；九級皮革（黑色 2109 / 灰色 2118）由您提供。<br>
+      ※ 所有定價為美金 USD，不含稅、運費及其他費用。
+    </div>
+
+  </div><!-- /product-aeron -->
+
+
+  <!-- ══════════════════════════════════════════
+       PRODUCT PANEL B: EAMES LOUNGE
+  ══════════════════════════════════════════ -->
+  <div id="product-eames" class="product-panel">
+
+    <div class="config-wrapper">
+      <div class="section-title">Step 1 — 選擇配置</div>
+      <div class="eames-config-grid">
+
+        <!-- 木材 -->
+        <div class="eames-config-item">
+          <div class="config-item-label">
+            木材飾面 Shell Finish
+            <span class="config-item-step">Step 3</span>
+          </div>
+          <select class="eames-select" id="eames_shell" onchange="eamesOnShellChange()">
+            <option value="OU">胡桃木（OU / Walnut）— 標準 +$0</option>
+            <option value="WHN">白橡木（WHN / White Oak）— 標準 +$0</option>
+            <option value="5Q">油胡桃（5Q / Oiled Walnut）— +$979</option>
+            <option value="9N">桑托斯玫瑰木（9N / Santos Palisander）— +$1,014</option>
+            <option value="5D">油桑托斯玫瑰木（5D / Oiled Santos）— +$1,977</option>
+            <option value="1E">黑梣木（ES67071E，殼面固定）— 固定型號</option>
+            <option value="1R">白梣木（ES67071R，殼面固定）— 固定型號</option>
+          </select>
+          <div class="config-price-display" id="eamesPrice_shell">+$0</div>
+        </div>
+
+        <!-- 尺寸 -->
+        <div class="eames-config-item">
+          <div class="config-item-label">
+            尺寸 Chair Size
+            <span class="config-item-step">Step 2</span>
+          </div>
+          <select class="eames-select" id="eames_size" onchange="eamesOnSizeChange()">
+            <option value="classic">Classic 標準尺寸</option>
+            <option value="tall">Tall 高背尺寸 — +$366</option>
+          </select>
+          <div class="config-price-display" id="eamesPrice_size">+$0</div>
+        </div>
+
+        <!-- 皮革等級 -->
+        <div class="eames-config-item" style="grid-column: 1 / -1;">
+          <div class="config-item-label">
+            皮革材質 Leather Category
+            <span class="config-item-step">Step 6</span>
+          </div>
+          <select class="eames-select" id="eames_cat" onchange="eamesOnCatChange()">
+            <option value="std">標準布料（未含皮革，基本售價） — +$0</option>
+            <option value="cat9">Category 9 皮革 Leather（14 款）— 套組加價 +$734</option>
+            <option value="cat11">Category 11 皮革 Prone Leather（16 款）— 套組加價 +$1,072</option>
+          </select>
+          <div class="config-price-display" id="eamesPrice_cat">+$0</div>
+
+          <div class="leather-section" id="eamesLeather9" style="display:none;">
+            <div class="leather-sel-label">選擇皮革顏色：<span class="selected-leather-name" id="eamesLeather9Name">— 請選擇 —</span></div>
+            <div class="swatch-container" id="eamesSwatches9"></div>
+          </div>
+          <div class="leather-section" id="eamesLeather11" style="display:none;">
+            <div class="leather-sel-label">選擇皮革顏色：<span class="selected-leather-name" id="eamesLeather11Name">— 請選擇 —</span></div>
+            <div class="swatch-container" id="eamesSwatches11"></div>
+          </div>
+        </div>
+
+      </div><!-- /eames-config-grid -->
+
+      <!-- 數量 -->
+      <div class="qty-row">
+        <span class="qty-label">🪑 訂購數量（套組）</span>
+        <input type="number" class="qty-input" id="eames_qty" value="1" min="1" max="999" onchange="eamesRecalc()">
+        <span class="qty-total" id="eamesQtyTotal"></span>
+      </div>
+
+      <button class="btn-calc" onclick="eamesCalcAll()">計算總價 →</button>
+    </div><!-- /config-wrapper -->
+
+    <div class="alert alert-warn" id="eamesAlertWarn">
+      <span class="alert-icon">💡</span><div id="eamesAlertWarnMsg"></div>
+    </div>
+
+    <!-- RESULT -->
+    <div class="result-block" id="eamesResultBlock">
+      <div class="model-badge">
+        <span class="model-badge-label">型號</span>
+        <span id="eamesBadgeModel">—</span>
+      </div>
+      <table class="steps-table">
+        <thead><tr>
+          <th style="width:72px">Step</th>
+          <th style="width:100px">代碼</th>
+          <th>說明</th>
+          <th style="width:130px">加價 (USD)</th>
+        </tr></thead>
+        <tbody id="eamesStepsBody"></tbody>
+      </table>
+
+      <div class="total-bar">
+        <div>
+          <div class="total-label">單套定價（USD）</div>
+          <div class="total-sub">套組 = 椅 + 腳凳</div>
+        </div>
+        <div class="total-price">
+          <span class="total-currency">USD</span>
+          <span id="eamesTotalPrice">—</span>
+        </div>
+      </div>
+
+      <!-- Full model string -->
+      <div style="background:var(--accent-light);border:1px solid var(--border);border-radius:8px;padding:12px 20px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+        <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);font-weight:600;white-space:nowrap;">完整型號</span>
+        <span id="eamesFullModel" style="font-family:'Roboto Mono',monospace;font-size:15px;font-weight:700;color:var(--accent);letter-spacing:0.05em;word-break:break-all;text-align:right;">—</span>
+      </div>
+      <div class="twd-bar">
+        <div>
+          <div class="twd-label">台幣換算（含 <span id="eamesQtyLabel">1</span> 套）</div>
+          <div class="twd-rate">匯率：1 USD ＝ <span id="eamesRateDisplay">40</span> TWD（500 進位）</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="twd-price">NT$ <span id="eamesTwdPrice">—</span></div>
+          <div class="twd-input-row" style="justify-content:flex-end; margin-top:6px;">
+            <span style="font-size:11px; color:var(--text-muted);">匯率</span>
+            <input type="number" class="twd-input" id="eamesTwdRate" value="40" step="0.5" min="1" onchange="eamesRecalcTWD()">
+            <span style="font-size:11px; color:var(--text-muted);">TWD</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Multi total -->
+      <div id="eamesMultiBar" style="display:none;" class="total-bar">
+        <div><div class="total-label">合計（<span id="eamesMultiQtyLabel">1</span> 套）</div></div>
+        <div class="total-price">
+          <span class="total-currency">USD</span>
+          <span id="eamesMultiPrice">—</span>
+        </div>
+      </div>
+    </div><!-- /eamesResultBlock -->
+
+    <div class="footer-note">
+      ※ 本計算器依據 Herman Miller Ancillary Price Book (4/26) · Eames® Lounge Chair + Ottoman 套組定價。<br>
+      ※ 套組基本售價已包含椅 + 腳凳。殼面加價為 Step 3 Shell Finish 加價；梣木系列殼面已內含於固定型號中。<br>
+      ※ Tall 尺寸：胡桃木 / 白橡木 / 油胡桃 / 桑托斯 / 油桑托斯各加 +$366；黑梣木 / 白梣木 Tall 基本售價 $9,602（已含加價）。<br>
+      ※ Category 9 皮革加價 +$734 / Category 11 Prone 皮革加價 +$1,072（套組含椅＋腳凳）。<br>
+      ※ 所有定價為美金 USD，不含稅、運費及其他費用。台幣換算僅供參考。
+    </div>
+
+  </div><!-- /product-eames -->
+
+</div><!-- /container -->
+
+<script>
+// =========================================================
+// PRODUCT TAB SWITCH
+// =========================================================
+function switchProduct(id) {
+  document.querySelectorAll('.product-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.product-tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('product-' + id).classList.add('active');
+  document.querySelectorAll('.product-tab-btn').forEach(b => {
+    if (b.getAttribute('onclick').includes("'" + id + "'")) b.classList.add('active');
+  });
+}
+
+// =========================================================
+// AERON — DATA
+// =========================================================
+const AERON_STEPS = [
+  { key:'size',   step:'Step 2',  label:'尺寸 Size',
+    options:{ 'A':{desc:'A size 小型',price:1726},'B':{desc:'B size 中型',price:1726},'C':{desc:'C size 大型',price:1726} } },
+  { key:'height', step:'Step 3',  label:'高度調整 Height Adjustment',
+    options:{ '1':{desc:'Low-height range 低高度',price:0},'2':{desc:'Standard-height range 標準高度',price:0},'3':{desc:'High-height range 高高度',price:0} },
+    note:'A size 只能選 1；C size 只能選 2 或 3' },
+  { key:'tilt',   step:'Step 4',  label:'傾仰機構 Tilt',
+    options:{ '1':{desc:'Standard tilt 標準傾仰',price:0},'2':{desc:'Tilt limiter 傾仰限制',price:100},'3':{desc:'Tilt limiter + seat angle 傾仰限制＋座角調整',price:207} } },
+  { key:'arms',   step:'Step 5',  label:'手臂 Arms',
+    options:{ 'N':{desc:'No arms 無手臂',price:0},'P':{desc:'Fixed arms 固定手臂',price:223},'H':{desc:'Height-adjustable arms 高度可調手臂',price:321},'A':{desc:'Height-adj. + pivot arms 高度可調＋旋轉手臂',price:473},'D':{desc:'Fully adjustable arms 全功能可調手臂',price:473} } },
+  { key:'armpad', step:'Step 6',  label:'扶手墊材質 Armpad Upholstery',
+    options:{ 'N':{desc:'No arms — N/A',price:0},'W':{desc:'Nonupholstered armpads 非皮革扶手墊',price:0},'F':{desc:'Leather armpads 皮革扶手墊',price:168} } },
+  { key:'back',   step:'Step 7',  label:'背部支撐 Back Support',
+    options:{ 'SZS':{desc:'Basic back support 基本背部支撐',price:0},'ZSS':{desc:'PostureFit® 骨盆支撐',price:45},'AJ':{desc:'Adjustable lumbar support 可調腰椎支撐',price:65},'ALP':{desc:'Adjustable PostureFit SL® 可調骨盆＋腰椎支撐',price:95} } },
+  { key:'frame',  step:'Step 8',  label:'框架顏色 Frame Finish',
+    options:{ 'G1':{desc:'Graphite (CP) 石墨黑',price:0},'CRB':{desc:'Carbon (CP) 碳黑',price:85},'VPR':{desc:'Mineral 礦石灰',price:175},'BK':{desc:'Black 黑色',price:175},'MG1':{desc:'Graphite + MicrobeCare™',price:70},'MCR':{desc:'Carbon + MicrobeCare™',price:155},'MVR':{desc:'Mineral + MicrobeCare™',price:245},'MBL':{desc:'Black + MicrobeCare™',price:200},'ZB':{desc:'Graphite + Graphite Appliqué',price:175} } },
+  { key:'chassis',step:'Step 9',  label:'座盤顏色 Chassis Finish',
+    options:{ 'G1':{desc:'Graphite (CP) 石墨黑',price:0},'CD':{desc:'Polished aluminum 拋光鋁',price:85},'SNC':{desc:'Satin carbon 緞面碳黑',price:0},'SNA':{desc:'Satin aluminum 緞面鋁',price:0},'BLX':{desc:'Onyx ultra matte 極黑啞光',price:0} } },
+  { key:'base',   step:'Step 10', label:'底座顏色 Base Finish',
+    options:{ 'G1':{desc:'Graphite (CP) 石墨黑',price:0},'CD':{desc:'Polished aluminum 拋光鋁',price:250},'DCR':{desc:'Dark carbon 深碳黑',price:0},'SNC':{desc:'Satin carbon 緞面碳黑',price:80},'DVP':{desc:'Dark mineral 深礦石灰',price:0},'SNA':{desc:'Satin aluminum 緞面鋁',price:150},'BK':{desc:'Black 黑色',price:0},'BLX':{desc:'Onyx ultra matte 極黑啞光',price:150} } },
+  { key:'caster', step:'Step 11', label:'輪子 Casters/Glides',
+    options:{ 'BB':{desc:'2½" Hard caster, carpet only 硬輪（地毯專用）',price:0},'GF':{desc:'2½" Glide 腳墊（硬地/地毯）',price:25},'C7':{desc:'2½" Soft caster, hard floors or carpet 軟輪（硬地/地毯）',price:50},'DC1':{desc:'2½" Braking caster 制動軟輪（靜音）',price:75} } },
+  { key:'armpadFinish', step:'Step 12', label:'扶手墊顏色 Armpad Finish',
+    options:{ 'BK':{desc:'Black 黑色（隨 G1 / BK 框架）',price:0},'DVP':{desc:'Dark mineral 深礦石灰（隨 VPR 框架）',price:0},'DCR':{desc:'Dark carbon 深碳黑（隨 CRB 框架）',price:0} },
+    note:'無手臂時此項不適用' },
+  { key:'pellicle', step:'Step 13', label:'8Z Pellicle 網布顏色',
+    options:{ '23103':{desc:'Graphite 石墨黑網布',price:0},'23101':{desc:'Mineral 礦石灰網布',price:0},'23102':{desc:'Carbon 碳黑網布',price:0},'23105':{desc:'Black / Onyx 黑色網布',price:0} },
+    note:'標準 8Z Pellicle 均為 Price Category 1，加價 +$0' },
+  { key:'leatherColor', step:'Step 14', label:'皮革扶手墊顏色 Armpad Leather',
+    options:{ 'N/A':{desc:'不適用（非皮革扶手）',price:0},'2109':{desc:'九級皮革 黑色 2109',price:90},'2118':{desc:'九級皮革 灰色 2118',price:90} },
+    note:'僅當 Step 6 選擇 F（皮革扶手墊）時計費' },
+];
+
+// ── AERON PARSER ──
+function aeronParseModel() {
+  _aeronClearAlerts('');
+  document.getElementById('aeronResultBlock').classList.remove('show');
+  const raw = document.getElementById('aeronModelInput').value;
+  if (!raw.trim()) { _aeronShowError('請輸入 Aeron 型號。', ''); return; }
+  const result = _aeronParse(raw);
+  if (result.error) { _aeronShowError(result.error, ''); return; }
+  _aeronRenderResult(result, '');
+}
+
+function aeronClearAll() {
+  document.getElementById('aeronModelInput').value = '';
+  document.getElementById('aeronResultBlock').classList.remove('show');
+  _aeronClearAlerts('');
+}
+
+function _aeronParse(raw) {
+  const clean = raw.replace(/\s+/g,'').toUpperCase();
+  if (!clean.startsWith('AER1')) return { error:`型號必須以 AER1 開頭，目前輸入為「${raw.trim()}」。` };
+  const rest = clean.slice(4);
+  const size=rest[0], height=rest[1], tilt=rest[2], arm=rest[3], armpad=rest[4];
+  if (!['A','B','C'].includes(size)) return {error:`Step 2 尺寸代碼「${size}」無效，應為 A / B / C。`};
+  if (!['1','2','3'].includes(height)) return {error:`Step 3 高度代碼「${height}」無效。`};
+  if (!['1','2','3'].includes(tilt)) return {error:`Step 4 傾仰代碼「${tilt}」無效。`};
+  if (!['N','P','H','A','D'].includes(arm)) return {error:`Step 5 手臂代碼「${arm}」無效。`};
+  if (!['N','W','F'].includes(armpad)) return {error:`Step 6 扶手墊代碼「${armpad}」無效。`};
+
+  const KNOWN=['ALP','SZS','ZSS','AJ','MG1','MCR','MVR','MBL','CRB','VPR','ZB','BK','G1','SNC','SNA','BLX','CD','DCR','DVP','DC1','BB','GF','C7','23103','23101','23102','23105','2109','2118'];
+  const SORTED=[...new Set(KNOWN)].sort((a,b)=>b.length-a.length);
+  let r=rest.slice(5); const extracted=[];
+  while(r.length>0){
+    let matched=false;
+    for(const t of SORTED){ if(r.startsWith(t)){extracted.push(t);r=r.slice(t.length);matched=true;break;} }
+    if(!matched) return {error:`無法識別代碼片段「${r}」，請確認型號是否正確。`};
+  }
+  const [back,frameStr,chassisStr,baseStr,casterStr]=extracted;
+  let armpadFinishStr=extracted[5], pellicleStr=extracted[6], leatherStr=extracted[7]||'N/A';
+  if(!['SZS','ZSS','AJ','ALP'].includes(back)) return {error:`Step 7 背部支撐「${back}」無效。`};
+  if(!frameStr) return {error:'Step 8 框架顏色代碼缺失。'};
+  if(!chassisStr) return {error:'Step 9 座盤顏色代碼缺失。'};
+  if(!baseStr) return {error:'Step 10 底座顏色代碼缺失。'};
+  if(!casterStr) return {error:'Step 11 輪子代碼缺失。'};
+  if(!['23103','23101','23102','23105'].includes(pellicleStr)) return {error:`Step 13 網布代碼「${pellicleStr}」無效。`};
+  if(!armpadFinishStr||!['BK','DVP','DCR'].includes(armpadFinishStr)) armpadFinishStr=arm==='N'?'N/A':'BK';
+  if(!['2109','2118'].includes(leatherStr)) leatherStr='N/A';
+
+  const warnings=[];
+  if(size==='A'&&height!=='1') warnings.push(`A size 高度只能選低高度（1），您選了「${height}」。`);
+  if(size==='C'&&height==='1') warnings.push('C size 不支援低高度（1），建議選 2 或 3。');
+  const chassisRules={'G1':['G1','MG1','ZB'],'SNC':['CRB','MCR'],'SNA':['VPR','MVR'],'BLX':['BK','MBL']};
+  for(const [ch,frames] of Object.entries(chassisRules))
+    if(chassisStr===ch&&!frames.includes(frameStr)) warnings.push(`座盤 ${ch} 通常搭配框架 ${frames.join(' 或 ')}，請確認。`);
+
+  return {
+    model:`AER1${size}${height}${tilt}${arm}${armpad} ${back} ${frameStr} ${chassisStr} ${baseStr} ${casterStr} ${armpadFinishStr} ${pellicleStr}${leatherStr!=='N/A'?' '+leatherStr:''}`,
+    values:{size,height,tilt,arms:arm,armpad,back,frame:frameStr,chassis:chassisStr,base:baseStr,caster:casterStr,armpadFinish:armpadFinishStr,pellicle:pellicleStr,leatherColor:leatherStr},
+    warnings
+  };
+}
+
+function _aeronCalcPrice(values){
+  const rows=[]; let total=0;
+  const sz=AERON_STEPS[0].options[values.size];
+  rows.push({step:'Step 2',code:values.size,desc:sz.desc,sub:values.size+' size 基礎定價',price:sz.price,isBase:true}); total+=sz.price;
+  const addRow=(stepDef,key)=>{ const v=values[key]; const opt=stepDef.options[v]; if(!opt)return; rows.push({step:stepDef.step,code:v,desc:opt.desc,sub:stepDef.label,price:opt.price}); total+=opt.price; };
+  addRow(AERON_STEPS[1],'height'); addRow(AERON_STEPS[2],'tilt'); addRow(AERON_STEPS[3],'arms');
+  const ap=AERON_STEPS[4].options[values.armpad]; if(ap){rows.push({step:'Step 6',code:values.armpad,desc:ap.desc,sub:'扶手墊材質',price:ap.price}); total+=ap.price;}
+  addRow(AERON_STEPS[5],'back'); addRow(AERON_STEPS[6],'frame'); addRow(AERON_STEPS[7],'chassis'); addRow(AERON_STEPS[8],'base'); addRow(AERON_STEPS[9],'caster');
+  if(values.arms&&values.arms!=='N'){ const af=AERON_STEPS[10].options[values.armpadFinish]; if(af){rows.push({step:'Step 12',code:values.armpadFinish,desc:af.desc,sub:'扶手墊顏色',price:af.price}); total+=af.price;} }
+  const pel=AERON_STEPS[11].options[values.pellicle]; if(pel){rows.push({step:'Step 13',code:values.pellicle,desc:pel.desc,sub:'8Z Pellicle 網布（Price Cat.1）',price:pel.price}); total+=pel.price;}
+  if(values.armpad==='F'&&values.leatherColor!=='N/A'&&values.leatherColor){ const lOpt=AERON_STEPS[12].options[values.leatherColor]; if(lOpt){rows.push({step:'Step 14',code:values.leatherColor,desc:lOpt.desc,sub:'皮革扶手墊顏色 (Price Cat.9)',price:lOpt.price}); total+=lOpt.price;} }
+  return {rows,total};
+}
+
+function _aeronRenderResult(parsed, suffix){
+  const s=suffix||'';
+  const {model,values,warnings}=parsed;
+  const {rows,total}=_aeronCalcPrice(values);
+  document.getElementById('aeronBadgeModel'+s).textContent=model;
+  document.getElementById('aeronTotalModel'+s).textContent=model;
+  document.getElementById('aeronTotalPrice'+s).textContent=total.toLocaleString();
+  const tbody=document.getElementById('aeronStepsBody'+s);
+  tbody.innerHTML=rows.map(r=>{
+    const pc=r.isBase?'price-base':r.price===0?'price-zero':'price-add';
+    const ps=r.isBase?`$${r.price.toLocaleString()}`:r.price===0?'+$0':`+$${r.price.toLocaleString()}`;
+    return `<tr><td class="step-num">${r.step}</td><td><span class="step-code">${r.code}</span></td><td class="step-desc">${r.desc}<small>${r.sub}</small></td><td class="step-price ${pc}">${ps}</td></tr>`;
+  }).join('');
+  document.getElementById('aeronResultBlock'+s).classList.add('show');
+  if(warnings.length>0){
+    const wId='aeronAlertWarn'+(s==='M'?'M':'');
+    const mId='aeronAlertWarnMsg'+(s==='M'?'M':'');
+    const wEl=document.getElementById(wId)||document.getElementById('aeronAlertWarn');
+    const mEl=document.getElementById(mId)||document.getElementById('aeronAlertWarnMsg');
+    if(wEl&&mEl){ mEl.innerHTML=warnings.map(w=>`• ${w}`).join('<br>'); wEl.classList.add('show'); }
+  }
+}
+
+function _aeronShowError(msg,suffix){
+  const s=suffix==='M'?'M':'';
+  const el=document.getElementById('aeronAlertError'+s);
+  const mel=document.getElementById('aeronAlertErrorMsg'+s+(s?'':''));
+  const mel2=document.getElementById('aeronAlertError'+s+'Msg'); // fallback naming
+  const target=document.getElementById('aeronAlertError'+(s==='M'?'M':''));
+  const tmsg=document.getElementById('aeronAlertError'+(s==='M'?'M':'')+'Msg');
+  if(target&&tmsg){ tmsg.textContent=msg; target.classList.add('show'); }
+  else if(el){ el.classList.add('show'); }
+}
+
+function _aeronClearAlerts(suffix){
+  ['aeronAlertError','aeronAlertWarn'].forEach(id=>{
+    const el=document.getElementById(id+(suffix==='M'?'M':''));
+    if(el) el.classList.remove('show');
+  });
+}
+
+// AERON MANUAL TAB
+function aeronBuildManualUI(){
+  const grid=document.getElementById('aeronConfigGrid');
+  grid.innerHTML=AERON_STEPS.map((step,si)=>{
+    const opts=Object.entries(step.options).map(([code,data])=>
+      `<option value="${code}">${code} — ${data.desc}${data.price>0?' (+$'+data.price+')':''}</option>`
+    ).join('');
+    return `<div class="config-item">
+      <div class="config-item-label">${step.label}<span class="config-item-step">${step.step}</span></div>
+      <select class="config-select" id="aeronSel_${step.key}" onchange="aeronUpdateSelPrice('${step.key}',${si})">${opts}</select>
+      <div class="config-price-display" id="aeronSelPrice_${step.key}"></div>
+    </div>`;
+  }).join('');
+  const defs={size:'B',height:'2',tilt:'3',arms:'D',armpad:'W',back:'ALP',frame:'G1',chassis:'G1',base:'G1',caster:'BB',armpadFinish:'BK',pellicle:'23103',leatherColor:'N/A'};
+  for(const [k,v] of Object.entries(defs)){ const el=document.getElementById('aeronSel_'+k); if(el) el.value=v; }
+}
+
+function aeronUpdateSelPrice(key,si){
+  const sel=document.getElementById('aeronSel_'+key);
+  const disp=document.getElementById('aeronSelPrice_'+key);
+  if(!sel||!disp) return;
+  const opt=AERON_STEPS[si].options[sel.value];
+  if(!opt){disp.textContent='';disp.classList.remove('has-price');return;}
+  if(opt.price>0){disp.textContent='+$'+opt.price.toLocaleString();disp.classList.add('has-price');}
+  else{disp.textContent='+$0';disp.classList.remove('has-price');}
+}
+
+function aeronBuildFromSelects(){
+  _aeronClearAlerts('M');
+  document.getElementById('aeronResultBlockM').classList.remove('show');
+  const values={};
+  for(const step of AERON_STEPS){ const el=document.getElementById('aeronSel_'+step.key); values[step.key]=el?el.value:''; }
+  const modelStr=`AER1${values.size}${values.height}${values.tilt}${values.arms}${values.armpad} ${values.back} ${values.frame} ${values.chassis} ${values.base} ${values.caster} ${values.armpadFinish} ${values.pellicle}${values.leatherColor!=='N/A'?' '+values.leatherColor:''}`;
+  const cb=document.getElementById('aeronGeneratedCode'); cb.textContent=modelStr; cb.classList.add('show');
+  _aeronRenderResult({model:modelStr,values,warnings:[]}, 'M');
+}
+
+function switchAeronTab(id){
+  document.querySelectorAll('#product-aeron .tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('#product-aeron .tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('aeron-tab-'+id).classList.add('active');
+  document.querySelectorAll('#product-aeron .tab-btn').forEach(b=>{
+    if(b.getAttribute('onclick').includes("'"+id+"'")) b.classList.add('active');
+  });
+}
+
+// =========================================================
+// EAMES — DATA
+// =========================================================
+const EAMES_SHELLS = {
+  'OU':  {label:'胡桃木（OU / Walnut）',                    code:'ES6707 1',    surcharge:0,    fixed:false},
+  'WHN': {label:'白橡木（WHN / White Oak）',                 code:'ES6707 1',    surcharge:0,    fixed:false},
+  '5Q':  {label:'油胡桃（5Q / Oiled Walnut）',               code:'ES6707 1',    surcharge:979,  fixed:false},
+  '9N':  {label:'桑托斯玫瑰木（9N / Santos Palisander）',    code:'ES6707 1',    surcharge:1014, fixed:false},
+  '5D':  {label:'油桑托斯玫瑰木（5D / Oiled Santos）',       code:'ES6707 1',    surcharge:1977, fixed:false},
+  '1E':  {label:'黑梣木（ES67071E，固定殼面）',              code:'ES67071E N',  surcharge:null, fixed:true,  tallCode:'ES67071E NT', classicBase:9273, tallBase:9602},
+  '1R':  {label:'白梣木（ES67071R，固定殼面）',              code:'ES67071R E',  surcharge:null, fixed:true,  tallCode:'ES67071R ET', classicBase:9273, tallBase:9602},
+};
+const EAMES_BASE_CLASSIC = {'OU':8462,'WHN':8462,'5Q':9441,'9N':9476,'5D':10439,'1E':9273,'1R':9273};
+const EAMES_BASE_TALL    = {'OU':8828,'WHN':8828,'5Q':9807,'9N':9842,'5D':10805,'1E':9602,'1R':9602};
+const EAMES_TALL_ADDER=366, EAMES_CAT9=734, EAMES_CAT11=1072;
+const EAMES_CAT9_LEATHERS=[
+  {code:'2115',name:'Alpine',      desc:'淺米白 / 奶油',  color:'#f5ecd7'},
+  {code:'2109',name:'Black',       desc:'黑色',           color:'#1a1a1a'},
+  {code:'2120',name:'Cranberry',   desc:'深紅 / 蔓越莓',  color:'#7a1a2a'},
+  {code:'2119',name:'Dark Carbon', desc:'深炭灰',         color:'#2e2e2e'},
+  {code:'2118',name:'Dark Mineral',desc:'煙灰藍綠',       color:'#4a5a5c'},
+  {code:'2121',name:'Deep Sea',    desc:'深海藍綠',       color:'#1c3a42'},
+  {code:'2111',name:'Graphite',    desc:'橄欖炭綠',       color:'#3d3f30'},
+  {code:'2116',name:'Haze',        desc:'淺沙米',         color:'#d4c4a8'},
+  {code:'2101',name:'Ivory',       desc:'象牙白',         color:'#f0e8d0'},
+  {code:'2112',name:'Khaki',       desc:'卡其駝',         color:'#b09060'},
+  {code:'2113',name:'Rattan',      desc:'藤黃棕',         color:'#9a7040'},
+  {code:'2117',name:'Sable Grey',  desc:'灰藍岩',         color:'#7a8090'},
+  {code:'2110',name:'Smoke',       desc:'橄欖灰',         color:'#6a6a5a'},
+  {code:'2114',name:'Truffle',     desc:'深巧克力棕',     color:'#3a2a1a'},
+];
+const EAMES_CAT11_LEATHERS=[
+  {code:'1NX13',name:'Balsa',     desc:'淺杏膚',   color:'#e8c9a0'},
+  {code:'1NX15',name:'Bricolage', desc:'銅棕',     color:'#8a5a3a'},
+  {code:'1NX03',name:'Essence',   desc:'沙漠灰綠', color:'#8a9078'},
+  {code:'1NX05',name:'Gambit',    desc:'深炭灰',   color:'#303030'},
+  {code:'1NX20',name:'Java',      desc:'深咖啡',   color:'#2e1a0e'},
+  {code:'1NX17',name:'Ledge',     desc:'中棕',     color:'#7a5040'},
+  {code:'1NX01',name:'Lotus',     desc:'米白奶油', color:'#ede0c8'},
+  {code:'1NX21',name:'Lute',      desc:'淺玫瑰米', color:'#ddbaa0'},
+  {code:'1NX19',name:'Mantra',    desc:'深酒紅棕', color:'#4a1a18'},
+  {code:'1NX06',name:'Obsidian',  desc:'近黑炭',   color:'#161616'},
+  {code:'1NX07',name:'Sail',      desc:'深海軍藍', color:'#1a2a42'},
+  {code:'1NX04',name:'Script',    desc:'中性暖灰', color:'#8c8070'},
+  {code:'1NX14',name:'Shore',     desc:'焦糖沙棕', color:'#b07840'},
+  {code:'1NX02',name:'Timbre',    desc:'米白亞麻', color:'#ddd0b8'},
+  {code:'1NX09',name:'Vine',      desc:'深橄欖綠', color:'#2a3820'},
+  {code:'1NX10',name:'Yarrow',    desc:'芥末金',   color:'#c8a030'},
+];
+let eamesSelectedLeather9=null, eamesSelectedLeather11=null, eamesLastTotal=0;
+
+function eamesBuildSwatches(containerId,leathers,selVar,nameId){
+  const c=document.getElementById(containerId); c.innerHTML='';
+  leathers.forEach(l=>{
+    const s=document.createElement('div'); s.className='swatch';
+    s.style.background=l.color; s.title=`${l.code} ${l.name} — ${l.desc}`; s.dataset.code=l.code;
+    s.onclick=()=>{
+      c.querySelectorAll('.swatch').forEach(x=>x.classList.remove('active')); s.classList.add('active');
+      if(selVar==='9'){eamesSelectedLeather9=l; document.getElementById(nameId).textContent=`${l.code} ${l.name} (${l.desc})`;}
+      if(selVar==='11'){eamesSelectedLeather11=l; document.getElementById(nameId).textContent=`${l.code} ${l.name} (${l.desc})`;}
+    };
+    c.appendChild(s);
+  });
+}
+
+function eamesOnShellChange(){
+  const v=document.getElementById('eames_shell').value;
+  const s=EAMES_SHELLS[v]; const disp=document.getElementById('eamesPrice_shell');
+  if(s.fixed){disp.textContent='固定殼面型號';disp.classList.remove('has-price');}
+  else if(s.surcharge>0){disp.textContent=`+$${s.surcharge.toLocaleString()}`;disp.classList.add('has-price');}
+  else{disp.textContent='+$0';disp.classList.remove('has-price');}
+}
+function eamesOnSizeChange(){
+  const v=document.getElementById('eames_size').value; const disp=document.getElementById('eamesPrice_size');
+  if(v==='tall'){disp.textContent='+$366';disp.classList.add('has-price');}
+  else{disp.textContent='+$0';disp.classList.remove('has-price');}
+}
+function eamesOnCatChange(){
+  const v=document.getElementById('eames_cat').value; const disp=document.getElementById('eamesPrice_cat');
+  document.getElementById('eamesLeather9').style.display=v==='cat9'?'block':'none';
+  document.getElementById('eamesLeather11').style.display=v==='cat11'?'block':'none';
+  if(v==='cat9'){disp.textContent='+$734';disp.classList.add('has-price');}
+  else if(v==='cat11'){disp.textContent='+$1,072';disp.classList.add('has-price');}
+  else{disp.textContent='+$0';disp.classList.remove('has-price');}
+}
+
+function eamesCalcAll(){
+  const shellKey=document.getElementById('eames_shell').value;
+  const size=document.getElementById('eames_size').value;
+  const cat=document.getElementById('eames_cat').value;
+  const qty=parseInt(document.getElementById('eames_qty').value)||1;
+  const shell=EAMES_SHELLS[shellKey]; const warnings=[];
+  if(cat==='cat9'&&!eamesSelectedLeather9) warnings.push('您選擇了 Category 9 皮革，但尚未指定皮革顏色，建議選擇色碼後再報價。');
+  if(cat==='cat11'&&!eamesSelectedLeather11) warnings.push('您選擇了 Category 11 皮革，但尚未指定皮革顏色，建議選擇色碼後再報價。');
+  const wEl=document.getElementById('eamesAlertWarn'); const wMsg=document.getElementById('eamesAlertWarnMsg');
+  if(warnings.length>0){wMsg.innerHTML=warnings.map(w=>`• ${w}`).join('<br>');wEl.classList.add('show');}
+  else wEl.classList.remove('show');
+
+  const rows=[]; let total=0;
+  const isTall = size==='tall';
+  const base = isTall ? EAMES_BASE_TALL[shellKey] : EAMES_BASE_CLASSIC[shellKey];
+  const displayCode = (shell.fixed && isTall) ? shell.tallCode : shell.code;
+  rows.push({step:'Step 1–2',code:displayCode,desc:'基礎定價（套組：椅＋腳凳）',sub:`${shell.label} · ${isTall?'Tall':'Classic'} 尺寸`,price:base,isBase:true}); total+=base;
+  if(!shell.fixed&&isTall){rows.push({step:'Step 2',code:'Tall',desc:'Tall 高背尺寸加價',sub:'較 Classic 加價',price:EAMES_TALL_ADDER}); total+=EAMES_TALL_ADDER;}
+  if(!shell.fixed&&shell.surcharge>0){rows.push({step:'Step 3',code:shellKey,desc:'殼面加價 Shell Finish',sub:shell.label,price:shell.surcharge}); total+=shell.surcharge;}
+  if(cat==='cat9'){
+    const lName=eamesSelectedLeather9?`${eamesSelectedLeather9.code} ${eamesSelectedLeather9.name}（${eamesSelectedLeather9.desc}）`:'— 顏色待定 —';
+    rows.push({step:'Step 6',code:eamesSelectedLeather9?.code||'Cat.9',desc:'Category 9 皮革加價',sub:lName,price:EAMES_CAT9}); total+=EAMES_CAT9;
+  } else if(cat==='cat11'){
+    const lName=eamesSelectedLeather11?`${eamesSelectedLeather11.code} ${eamesSelectedLeather11.name}（${eamesSelectedLeather11.desc}）`:'— 顏色待定 —';
+    rows.push({step:'Step 6',code:eamesSelectedLeather11?.code||'Cat.11',desc:'Category 11 Prone 皮革加價',sub:lName,price:EAMES_CAT11}); total+=EAMES_CAT11;
+  }
+
+  // Build full model string: base code + shell code (if not fixed) + leather code
+  let fullModel = displayCode;
+  if(!shell.fixed) fullModel += ' ' + shellKey;
+  if(cat==='cat9' && eamesSelectedLeather9) fullModel += ' ' + eamesSelectedLeather9.code;
+  else if(cat==='cat9') fullModel += ' \u2014';
+  if(cat==='cat11' && eamesSelectedLeather11) fullModel += ' ' + eamesSelectedLeather11.code;
+  else if(cat==='cat11') fullModel += ' \u2014';
+
+  document.getElementById('eamesBadgeModel').textContent=fullModel;
+  document.getElementById('eamesFullModel').textContent=fullModel;
+  document.getElementById('eamesTotalPrice').textContent=total.toLocaleString();
+
+  const tbody=document.getElementById('eamesStepsBody');
+  tbody.innerHTML=rows.map(r=>{
+    const pc=r.isBase?'price-base':r.price===0?'price-zero':'price-add';
+    const ps=r.isBase?`$${r.price.toLocaleString()}`:r.price===0?'+$0':`+$${r.price.toLocaleString()}`;
+    return `<tr><td class="step-num">${r.step}</td><td><span class="step-code">${r.code}</span></td><td class="step-desc">${r.desc}<small>${r.sub}</small></td><td class="step-price ${pc}">${ps}</td></tr>`;
+  }).join('');
+
+  eamesLastTotal=total;
+  document.getElementById('eamesResultBlock').classList.add('show');
+  const multiBar=document.getElementById('eamesMultiBar');
+  if(qty>1){
+    document.getElementById('eamesMultiQtyLabel').textContent=qty;
+    document.getElementById('eamesMultiPrice').textContent=(total*qty).toLocaleString();
+    multiBar.style.display='flex';
+  } else multiBar.style.display='none';
+  document.getElementById('eamesQtyLabel').textContent=qty;
+  eamesRecalcTWD();
+  document.getElementById('eamesQtyTotal').textContent=qty>1?`× ${qty} 套 ＝ USD ${(total*qty).toLocaleString()}`:'';
+}
+
+function eamesRecalc(){ if(document.getElementById('eamesResultBlock').classList.contains('show')) eamesCalcAll(); }
+function eamesRecalcTWD(){
+  const rate=parseFloat(document.getElementById('eamesTwdRate').value)||40;
+  const qty=parseInt(document.getElementById('eames_qty').value)||1;
+  document.getElementById('eamesRateDisplay').textContent=rate.toFixed(1);
+  if(eamesLastTotal>0){
+    const twd=Math.ceil(eamesLastTotal*qty*rate/500)*500;
+    document.getElementById('eamesTwdPrice').textContent=twd.toLocaleString();
+  }
+}
+
+// =========================================================
+// INIT
+// =========================================================
+aeronBuildManualUI();
+eamesBuildSwatches('eamesSwatches9', EAMES_CAT9_LEATHERS, '9', 'eamesLeather9Name');
+eamesBuildSwatches('eamesSwatches11', EAMES_CAT11_LEATHERS, '11', 'eamesLeather11Name');
+eamesOnShellChange(); eamesOnSizeChange(); eamesOnCatChange();
+
+// Pre-fill Aeron demo
+document.getElementById('aeronModelInput').value='AER1B23DW ALP G1 G1 G1 BB BK 23103';
+aeronParseModel();
+
+// Pre-calc Eames (silent, result hidden until user clicks)
+eamesCalcAll();
+</script>
+</body>
+</html>

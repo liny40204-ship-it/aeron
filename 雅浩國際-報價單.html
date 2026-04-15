@@ -1,0 +1,1928 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>雅浩國際｜報價單</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap');
+
+:root{
+  --font-ui: 'Microsoft JhengHei','微軟正黑體','Noto Sans TC','PingFang TC','蘋方-繁',sans-serif;
+  --bg:#f5f4f2;--surface:#fff;--border:#e0ddd8;--border-s:#c8c4bc;
+  --text:#1a1917;--muted:#6b6860;--accent:#1a1917;--alight:#f0efe9;
+  --green:#2d6a4f;--red:#c0392b;--stepbg:#fafaf8;
+  --nc-accent:#1e3a5f;--nc-light:#e8f0f8;--nc-border:#b8ccde;
+  --md-accent:#3a6b3e;--md-light:#f0f4f0;--md-border:#b8d4bc;
+  --hag-accent:#6b3a1f;--hag-light:#f7f0eb;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-ui);background:var(--bg);color:var(--text);
+  min-height:100vh;padding:24px 16px 60px;font-size:14px;line-height:1.6;}
+.wrap{max-width:980px;margin:0 auto;}
+
+/* Header */
+.hdr{border-bottom:2px solid var(--accent);padding-bottom:14px;margin-bottom:26px;
+  display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;}
+.hdr-brand{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);}
+.hdr h1{font-size:20px;font-weight:700;letter-spacing:-.02em;}
+.hdr-tag{margin-left:auto;font-size:11px;color:var(--muted);font-family:'Roboto Mono',monospace;
+  background:var(--alight);border:1px solid var(--border);padding:3px 8px;border-radius:4px;}
+
+/* Step bar */
+.stepbar{display:flex;align-items:center;gap:6px;margin-bottom:20px;flex-wrap:wrap;}
+.sbs{padding:6px 16px;border-radius:20px;font-size:12px;font-weight:500;
+  background:var(--surface);border:1px solid var(--border);color:var(--muted);white-space:nowrap;transition:all .15s;}
+.sbs.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.sbs.done{background:var(--alight);color:var(--accent);border-color:var(--accent);cursor:pointer;}
+.sbarrow{color:var(--border-s);font-size:14px;}
+/* Brand Switcher */
+.brand-switcher{display:flex;gap:0;margin-bottom:20px;border:1.5px solid var(--border-s);
+  border-radius:8px;overflow:hidden;background:var(--surface);}
+.brand-btn{flex:1;padding:10px 18px;border:none;background:none;font-family:var(--font-ui);
+  font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;color:var(--muted);
+  display:flex;align-items:center;justify-content:center;gap:8px;}
+.brand-btn:not(:last-child){border-right:1.5px solid var(--border-s);}
+.brand-btn.active-hm{background:#1a1917;color:#fff;}
+.brand-btn.active-nc{background:var(--nc-accent);color:#fff;}
+.brand-btn.active-md{background:var(--md-accent);color:#fff;}
+.brand-btn.active-hag{background:var(--hag-accent);color:#fff;}
+.brand-btn .blogo{font-size:10px;letter-spacing:.12em;opacity:.75;}
+
+/* HM Series Tabs */
+.hm-series-wrap{border:1.5px solid var(--border-s);border-radius:8px;overflow:hidden;margin-bottom:18px;}
+.hm-series-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;padding:8px 16px 6px;background:var(--stepbg);border-bottom:1px solid var(--border);}
+.hm-series-tabs{display:flex;background:var(--stepbg);border-bottom:1.5px solid var(--border-s);flex-wrap:wrap;}
+.hm-stab{flex:1;padding:10px 12px;border:none;background:none;font-family:var(--font-ui);cursor:pointer;transition:all .15s;text-align:center;border-right:1px solid var(--border);}
+.hm-stab:last-child{border-right:none;}
+.hm-stab-name{display:block;font-size:13px;font-weight:700;color:var(--muted);transition:color .15s;}
+.hm-stab-sub{display:block;font-size:10px;color:#aaa;margin-top:2px;transition:color .15s;}
+.hm-stab.active{background:#1a1917;}
+.hag-stab.active{background:#6b3a1f!important;}
+.emb-stab.active{background:#2d5a3d!important;}
+.aer-stab.active{background:#1a1917!important;}
+.hm-stab.active .hm-stab-name{color:#fff;}
+.hm-stab.active .hm-stab-sub{color:rgba(255,255,255,.55);}
+.hm-stab:not(.active):hover{background:var(--alight);}
+.hm-stab:not(.active):hover .hm-stab-name{color:var(--accent);}
+.hm-series-panel{padding:14px 16px;}
+.hm-series-desc{font-size:12px;color:var(--muted);margin-bottom:12px;padding:8px 12px;background:var(--alight);border-radius:6px;border-left:3px solid var(--border-s);}
+.hm-series-desc strong{color:var(--accent);}
+.hm-sub-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;color:var(--muted);margin-bottom:6px;margin-top:4px;}
+
+/* NC Browser */
+.nc-browser{margin-bottom:20px;}
+.nc-header{background:var(--nc-accent);color:#fff;border-radius:8px 8px 0 0;padding:12px 16px;display:flex;align-items:center;gap:10px;}
+.nc-header-title{font-size:13px;font-weight:700;letter-spacing:.05em;}
+.nc-header-sub{font-size:10px;opacity:.7;letter-spacing:.08em;margin-top:1px;}
+.nc-search-bar{background:var(--nc-light);border:1px solid var(--nc-border);border-top:none;padding:12px 16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.nc-search-input{flex:1;min-width:180px;padding:8px 12px;border:1.5px solid var(--nc-border);border-radius:6px;font-family:var(--font-ui);font-size:13px;outline:none;background:#fff;}
+.nc-search-input:focus{border-color:var(--nc-accent);}
+.nc-cat-filter{padding:7px 14px;border:1.5px solid var(--nc-border);border-radius:20px;font-family:var(--font-ui);font-size:12px;font-weight:500;cursor:pointer;background:#fff;color:var(--nc-accent);transition:all .15s;white-space:nowrap;}
+.nc-cat-filter.active{background:var(--nc-accent);color:#fff;border-color:var(--nc-accent);}
+.nc-count{font-size:11px;color:var(--muted);margin-left:auto;white-space:nowrap;}
+.nc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;padding:14px;background:var(--surface);border:1px solid var(--nc-border);border-top:none;border-radius:0 0 8px 8px;max-height:440px;overflow-y:auto;}
+.nc-card{border:1.5px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:all .15s;background:#fff;display:flex;flex-direction:column;padding:10px 12px;}
+.nc-card:hover{border-color:var(--nc-accent);box-shadow:0 3px 10px rgba(30,58,95,.1);transform:translateY(-1px);}
+.nc-card.selected{border-color:var(--nc-accent);background:var(--nc-light);box-shadow:0 0 0 3px rgba(30,58,95,.15);}
+.nc-cat-badge{display:inline-block;font-size:9px;font-weight:700;margin-bottom:5px;padding:2px 7px;border-radius:10px;background:rgba(30,58,95,.12);color:var(--nc-accent);letter-spacing:.05em;}
+.nc-info{display:flex;flex-direction:column;gap:2px;}
+.nc-name{font-size:12px;font-weight:700;color:var(--text);line-height:1.3;}
+.nc-color{font-size:10.5px;color:var(--muted);}
+.nc-size{font-size:9.5px;color:#aaa;margin-top:1px;}
+.nc-prices{display:flex;align-items:baseline;gap:6px;margin-top:4px;flex-wrap:wrap;}
+.nc-eur{font-size:10px;color:#999;font-family:'Roboto Mono',monospace;}
+.nc-ntd{font-size:12px;font-weight:700;color:var(--green);font-family:'Roboto Mono',monospace;}
+.nc-code{font-size:9px;font-family:'Roboto Mono',monospace;color:#bbb;margin-top:2px;}
+.nc-add-bar{background:var(--nc-light);border:1px solid var(--nc-border);border-radius:8px;padding:12px 16px;margin-top:10px;display:none;align-items:center;gap:12px;flex-wrap:wrap;}
+.nc-add-bar.show{display:flex;}
+.nc-sel-info{flex:1;min-width:150px;}
+.nc-sel-name{font-size:13px;font-weight:700;color:var(--nc-accent);}
+.nc-sel-sub{font-size:11px;color:var(--muted);}
+.nc-sel-prices{font-size:12px;color:var(--muted);}
+.nc-sel-prices strong{color:var(--green);font-family:'Roboto Mono',monospace;}
+.nc-qty-wrap{display:flex;align-items:center;gap:6px;}
+.nc-qty{width:60px;padding:7px 8px;border:1.5px solid var(--nc-border);border-radius:6px;font-size:13px;text-align:center;background:#fff;outline:none;}
+.nc-add-btn{padding:9px 20px;background:var(--green);color:#fff;border:none;border-radius:6px;font-family:var(--font-ui);font-size:13px;font-weight:700;cursor:pointer;transition:opacity .15s;}
+.nc-add-btn:hover{opacity:.85;}
+
+
+/* Panel */
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:22px;margin-bottom:16px;}
+.ptitle{font-size:15px;font-weight:700;margin-bottom:18px;padding-bottom:12px;
+  border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
+
+/* 型號查詢 */
+.mlbox{background:var(--alight);border:1px solid var(--border);border-radius:8px;padding:16px 18px;margin-bottom:20px;}
+.mllabel{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin-bottom:10px;}
+.mlrow{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start;}
+.mlinput{flex:1;min-width:220px;font-family:'Roboto Mono',monospace;font-size:13px;font-weight:500;
+  padding:9px 12px;border:1.5px solid var(--border-s);border-radius:6px;
+  background:#fff;color:var(--accent);outline:none;letter-spacing:.04em;}
+.mlinput:focus{border-color:var(--accent);}
+.mlinput::placeholder{color:#bbb;font-weight:400;font-family:var(--font-ui);font-size:12px;}
+.mlqty{width:68px;padding:9px 8px;border:1.5px solid var(--border-s);border-radius:6px;
+  font-size:13px;text-align:center;background:#fff;color:var(--accent);outline:none;}
+.mlbtn{padding:9px 18px;background:var(--accent);color:#fff;border:none;border-radius:6px;
+  font-family:var(--font-ui);font-size:13px;font-weight:700;cursor:pointer;transition:opacity .15s;}
+.mlbtn:hover{opacity:.85;}
+.mlres{margin-top:12px;padding:12px 14px;background:#fff;border:1px solid var(--border);border-radius:6px;display:none;}
+.mlres.show{display:block;}
+.mlstr{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:10px;word-break:break-all;}
+.mlprices{display:flex;gap:28px;align-items:center;flex-wrap:wrap;margin-bottom:12px;}
+.mlpi{font-size:11px;color:var(--muted);}
+.mlpi strong{display:block;font-family:'Roboto Mono',monospace;font-size:14px;font-weight:700;color:var(--accent);}
+.mlpi strong.ntd{font-size:20px;color:var(--green);}
+.mladd{padding:8px 20px;background:var(--green);color:#fff;border:none;border-radius:6px;
+  font-family:var(--font-ui);font-size:13px;font-weight:700;cursor:pointer;transition:opacity .15s;}
+.mladd:hover{opacity:.85;}
+.mlerr{margin-top:8px;padding:8px 12px;background:#fdf0ee;border:1px solid #f5c6c2;
+  border-radius:5px;font-size:12px;color:var(--red);display:none;}
+.mlerr.show{display:block;}
+
+/* Chips & Category Tabs */
+.preset-sec{margin-bottom:18px;}
+.cat-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.cat-tab{padding:6px 16px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;
+  background:var(--surface);border:1.5px solid var(--border);color:var(--muted);transition:all .15s;user-select:none;}
+.cat-tab:hover{border-color:var(--accent);color:var(--accent);background:var(--alight);}
+.cat-tab.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.cat-panel{display:none;}.cat-panel.show{display:block;}
+.pglabel{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin-bottom:8px;}
+.sub-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.sf-btn{padding:4px 11px;border-radius:14px;font-size:11px;font-weight:600;cursor:pointer;
+  background:var(--surface);border:1px solid var(--border);color:var(--muted);transition:all .15s;user-select:none;}
+.sf-btn:hover{border-color:var(--accent);color:var(--accent);}
+.sf-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.chiprow{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;max-height:180px;overflow-y:auto;}
+.chip{padding:6px 13px;border-radius:20px;background:var(--surface);border:1px solid var(--border);
+  font-size:12px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px;user-select:none;}
+.chip:hover{border-color:var(--accent);background:var(--alight);}
+.ctag{font-weight:700;}
+.cprice{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--green);font-weight:700;}
+/* Fuzzy Search */
+.fsearch-wrap{position:relative;margin-bottom:16px;}
+.fsearch-input{width:100%;padding:9px 36px 9px 12px;border:1.5px solid var(--border-s);border-radius:6px;
+  font-family:var(--font-ui);font-size:13px;color:var(--accent);background:#fff;outline:none;}
+.fsearch-input:focus{border-color:var(--accent);}
+.fsearch-icon{position:absolute;right:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px;pointer-events:none;}
+.fsearch-drop{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1.5px solid var(--accent);
+  border-radius:6px;box-shadow:0 6px 20px rgba(0,0,0,.12);z-index:200;max-height:280px;overflow-y:auto;display:none;}
+.fsearch-drop.show{display:block;}
+.fsd-item{padding:9px 14px;cursor:pointer;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;transition:background .1s;}
+.fsd-item:last-child{border-bottom:none;}
+.fsd-item:hover,.fsd-item.focused{background:var(--alight);}
+.fsd-code{font-family:'Roboto Mono',monospace;font-size:11px;color:var(--muted);min-width:0;flex:0 0 auto;max-width:220px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.fsd-desc{font-size:12px;color:var(--text);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.fsd-price{font-family:'Roboto Mono',monospace;font-size:12px;color:var(--green);font-weight:700;white-space:nowrap;}
+.fsd-cat{font-size:10px;padding:2px 6px;border-radius:10px;background:var(--alight);color:var(--muted);white-space:nowrap;}
+.fsd-empty{padding:12px 14px;font-size:12px;color:var(--muted);text-align:center;}
+mark{background:#fff3cd;border-radius:2px;padding:0 1px;}
+
+/* Item table */
+.itbl{width:100%;border-collapse:collapse;font-size:12.5px;}
+.itbl thead tr{background:var(--stepbg);border-bottom:2px solid var(--accent);}
+.itbl th{padding:8px 10px;text-align:left;font-size:10px;text-transform:uppercase;
+  letter-spacing:.08em;font-weight:600;color:var(--muted);}
+.itbl th.r,.itbl td.r{text-align:right;}
+.itbl th.c,.itbl td.c{text-align:center;}
+.itbl tbody tr{border-bottom:1px solid var(--border);}
+.itbl tbody tr:last-child{border-bottom:none;}
+.itbl td{padding:7px 10px;vertical-align:middle;}
+.ci{width:100%;padding:5px 8px;border:1px solid var(--border);border-radius:4px;
+  font-family:var(--font-ui);font-size:12px;background:#fff;outline:none;}
+.ci:focus{border-color:var(--accent);}
+.ci.mono{font-family:'Roboto Mono',monospace;}
+.ci.r{text-align:right;}
+.ci.bold{font-weight:700;color:var(--accent);}
+.delbtn{background:none;border:none;color:#ccc;cursor:pointer;font-size:18px;padding:0 4px;line-height:1;transition:color .1s;}
+.delbtn:hover{color:var(--red);}
+.addrow{margin-top:10px;padding:7px;background:none;border:1.5px dashed var(--border-s);
+  border-radius:6px;color:var(--muted);font-family:var(--font-ui);font-size:12px;
+  cursor:pointer;transition:all .15s;width:100%;}
+.addrow:hover{border-color:var(--accent);color:var(--accent);background:var(--alight);}
+
+/* Total */
+.livtot{background:var(--stepbg);border:1px solid var(--border);border-radius:6px;padding:14px 18px;margin-top:16px;}
+.ltr{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);padding:4px 0;}
+.ltr span:last-child{font-family:'Roboto Mono',monospace;}
+.discwrap{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--red);}
+.discinput{width:120px;padding:3px 8px;border:1px solid var(--border);border-radius:4px;
+  font-family:'Roboto Mono',monospace;font-size:12px;text-align:right;background:#fff;outline:none;}
+.ltfin{display:flex;justify-content:space-between;font-size:18px;font-weight:700;color:var(--accent);
+  padding-top:10px;margin-top:8px;border-top:2px solid var(--accent);}
+.ltfin span:last-child{font-family:'Roboto Mono',monospace;}
+
+/* Form */
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+@media(max-width:600px){.fgrid{grid-template-columns:1fr;}}
+.full{grid-column:1/-1;}
+.flabel{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin-bottom:5px;display:block;}
+.finput,.fsel{width:100%;padding:9px 12px;border:1.5px solid var(--border-s);border-radius:6px;
+  font-family:var(--font-ui);font-size:13px;color:var(--accent);background:var(--alight);outline:none;}
+.finput:focus,.fsel:focus{border-color:var(--accent);}
+.fsel{appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231a1917' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;}
+
+/* Buttons */
+.btnrow{display:flex;gap:10px;margin-top:18px;align-items:center;flex-wrap:wrap;}
+.btnp{padding:11px 24px;background:var(--accent);color:#fff;border:none;border-radius:6px;
+  font-family:var(--font-ui);font-size:13px;font-weight:700;cursor:pointer;transition:opacity .15s;}
+.btnp:hover{opacity:.85;}
+.btns{padding:11px 18px;background:none;color:var(--muted);border:1px solid var(--border-s);
+  border-radius:6px;font-family:var(--font-ui);font-size:13px;cursor:pointer;transition:all .15s;}
+.btns:hover{background:var(--alight);color:var(--accent);}
+.btnhint{font-size:11px;color:var(--muted);}
+
+/* ══ Print Quote ══ */
+#previewPanel{display:none;}
+#previewPanel.show{display:block;}
+#qpa{font-family:var(--font-ui);font-size:13px;color:#111;
+  background:#fff;border:1.5px solid #c8c4bc;border-radius:8px;overflow:hidden;}
+.qph{background:#1a1917;color:#fff;padding:20px 28px 16px;display:flex;justify-content:space-between;align-items:flex-end;}
+.qph-co{font-size:18px;font-weight:700;letter-spacing:.05em;margin-bottom:4px;}
+.qph-sub{font-size:11px;opacity:.6;line-height:1.6;}
+.qph-doc{text-align:right;}
+.qph-doc h2{font-size:22px;font-weight:300;letter-spacing:.15em;margin-bottom:4px;}
+.qph-date{font-size:11px;opacity:.6;font-family:'Roboto Mono',monospace;}
+.qpm{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #e0ddd8;}
+.qpmi{padding:10px 28px;border-right:1px solid #e0ddd8;font-size:12px;}
+.qpmi:nth-child(even){border-right:none;}
+.qpmi.full{grid-column:1/-1;border-right:none;}
+.qpmi-l{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#888;margin-bottom:2px;}
+.qpmi-v{font-weight:500;}
+.qptw{padding:0 28px;}
+.qpt{width:100%;border-collapse:collapse;margin:16px 0;font-size:12.5px;}
+.qpt thead tr{background:#f5f4f2;border-top:1px solid #e0ddd8;border-bottom:2px solid #1a1917;}
+.qpt th{padding:8px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;color:#444;}
+.qpt th.r,.qpt td.r{text-align:right;}
+.qpt th.c,.qpt td.c{text-align:center;}
+.qpt tbody tr{border-bottom:1px solid #ece9e4;}
+.qpt tbody tr:last-child{border-bottom:2px solid #1a1917;}
+.qpt td{padding:10px;vertical-align:middle;line-height:1.4;}
+.qpcode{font-family:'Roboto Mono',monospace;font-size:10px;background:#f0efe9;
+  border:1px solid #e0ddd8;padding:2px 5px;border-radius:3px;display:inline-block;word-break:break-all;max-width:170px;}
+.qptots{padding:0 28px 16px;display:flex;flex-direction:column;align-items:flex-end;gap:5px;}
+.qptr{display:flex;gap:60px;font-size:12.5px;color:#555;}
+.qptr span:last-child{font-family:'Roboto Mono',monospace;min-width:110px;text-align:right;}
+.qptr-d{color:#c0392b!important;}
+.qptf{display:flex;gap:60px;font-size:17px;font-weight:700;color:#1a1917;
+  padding-top:8px;border-top:2px solid #1a1917;margin-top:4px;}
+.qptf span:last-child{font-family:'Roboto Mono',monospace;min-width:110px;text-align:right;}
+.qpdl{display:flex;border-top:1px solid #e0ddd8;border-bottom:1px solid #e0ddd8;font-size:12px;}
+.qpdli{padding:8px 28px;flex:1;border-right:1px solid #e0ddd8;}
+.qpdli:last-child{border-right:none;}
+.qpdll{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:2px;}
+.qpterms{padding:14px 28px;font-size:10.5px;color:#555;line-height:1.7;border-top:1px solid #e0ddd8;background:#fafaf8;}
+.qpterms-t{font-weight:700;font-size:11px;color:#1a1917;margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em;}
+.qpterms ol{padding-left:16px;margin:0;}
+.qpterms li{margin-bottom:3px;}
+.qpsign{display:grid;grid-template-columns:1fr 1fr;padding:16px 28px 20px;gap:20px;border-top:1px solid #e0ddd8;}
+.qpsign-box{border:1px solid #c8c4bc;border-radius:6px;padding:12px 16px;min-height:64px;}
+.qpsign-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#888;}
+.qpfoot{background:#f0efe9;padding:10px 28px;font-size:10.5px;color:#666;text-align:center;border-top:1px solid #e0ddd8;}
+
+@media print{
+  @page{margin:0;size:A4 portrait;}
+  body{background:#fff!important;padding:6mm 8mm!important;font-size:11px!important;}
+  .hdr,.stepbar,.panel:not(#previewPanel),
+  #previewPanel>.btnrow{display:none!important;}
+  #previewPanel{display:block!important;}
+  #qpa{border:none!important;border-radius:0!important;}
+  .qph,.qpt thead tr,.qpterms,.qpfoot{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+
+  /* Header 壓縮 */
+  .qph{padding:10px 16px 8px!important;}
+  .qph-co{font-size:14px!important;}
+  .qph-sub{font-size:9px!important;line-height:1.4!important;}
+  .qph-doc h2{font-size:16px!important;}
+  .qph-date{font-size:9px!important;}
+
+  /* 品項表格 — 欄位平均、清楚 */
+  .qptw{padding:0 14px!important;}
+  .qpt{margin:5px 0!important;font-size:10px!important;table-layout:fixed!important;}
+  .qpt th{padding:5px 5px!important;font-size:8.5px!important;}
+  .qpt td{padding:6px 5px!important;line-height:1.35!important;}
+  /* 欄位寬度平均分配 */
+  .qpt th:nth-child(1),.qpt td:nth-child(1){width:4%!important;}
+  .qpt th:nth-child(2),.qpt td:nth-child(2){width:26%!important;}
+  .qpt th:nth-child(3),.qpt td:nth-child(3){width:34%!important;}
+  .qpt th:nth-child(4),.qpt td:nth-child(4){width:8%!important;}
+  .qpt th:nth-child(5),.qpt td:nth-child(5){width:14%!important;}
+  .qpt th:nth-child(6),.qpt td:nth-child(6){width:14%!important;}
+  .qpcode{font-size:8px!important;padding:1px 3px!important;max-width:none!important;width:100%!important;display:block!important;word-break:break-all!important;}
+
+  /* 金額區壓縮 */
+  .qptots{padding:0 14px 6px!important;gap:2px!important;}
+  .qptr{font-size:10px!important;gap:20px!important;}
+  .qptr span:last-child{min-width:90px!important;}
+  .qptf{font-size:13px!important;gap:20px!important;padding-top:4px!important;}
+  .qptf span:last-child{min-width:90px!important;}
+
+  /* 客戶資料格 — 縮小讓商品更突出 */
+  .qpm{border-top:1px solid #e0ddd8!important;}
+  .qpmi{padding:3px 14px!important;font-size:9px!important;}
+  .qpmi-l{font-size:7.5px!important;margin-bottom:0px!important;}
+  .qpmi-v{font-size:9px!important;line-height:1.3!important;}
+
+  /* 物流列 — 縮小 */
+  .qpdl{font-size:9px!important;}
+  .qpdli{padding:3px 14px!important;}
+  .qpdll{font-size:7.5px!important;}
+
+  /* 注意事項 — 兩欄 + 字體縮小 */
+  .qpterms{padding:8px 16px!important;font-size:8.5px!important;line-height:1.5!important;border-top:1px solid #e0ddd8!important;}
+  .qpterms-t{font-size:9px!important;margin-bottom:4px!important;}
+  .qpterms ol{padding-left:14px!important;margin:0!important;
+    column-count:2!important;column-gap:16px!important;}
+  .qpterms li{margin-bottom:2px!important;break-inside:avoid!important;}
+
+  /* 簽名區 */
+  .qpsign{padding:8px 16px 10px!important;gap:12px!important;}
+  .qpsign-box{min-height:36px!important;padding:6px 10px!important;}
+  .qpsign-label{font-size:8.5px!important;}
+
+  /* 頁尾 */
+  .qpfoot{padding:5px 16px!important;font-size:9px!important;}
+
+  /* 隱藏網頁備註（不給客戶看） */
+  .footer-note{display:none!important;}
+}
+.footer-note{margin-top:28px;font-size:11px;color:var(--muted);border-top:1px solid var(--border);padding-top:14px;line-height:1.7;}
+
+
+
+/* ══════════════════════════════════════════════
+   手機版 RWD (max-width: 600px)
+══════════════════════════════════════════════ */
+@media(max-width:600px){
+  body{padding:12px 10px 60px;font-size:13px;}
+  .wrap{max-width:100%;}
+
+  /* Header */
+  .hdr{gap:6px;margin-bottom:16px;padding-bottom:10px;}
+  .hdr h1{font-size:17px;}
+  .hdr-tag{font-size:10px;padding:2px 6px;}
+
+  /* Step bar */
+  .stepbar{gap:4px;margin-bottom:14px;}
+  .sbs{padding:8px 14px;font-size:12px;}
+
+  /* Panel */
+  .panel{padding:14px 12px;}
+  .ptitle{font-size:14px;margin-bottom:14px;}
+
+  /* 型號查詢 */
+  .mlbox{padding:12px;}
+  .mlinput{min-width:100%;font-size:14px;padding:11px 12px;}
+  .mlrow{flex-direction:column;gap:8px;}
+  .mlqty{width:100%;padding:11px 12px;font-size:14px;}
+  .mlbtn{width:100%;padding:12px;font-size:14px;}
+  .mladd{width:100%;padding:12px;font-size:14px;margin-top:4px;}
+  .mlprices{flex-direction:column;gap:10px;}
+  .mlpi strong.ntd{font-size:22px;}
+
+  /* Chips — 放大方便點選 */
+  .chip{padding:10px 16px;font-size:13px;border-radius:10px;}
+  .chiprow{gap:8px;}
+  .ctag{font-size:13px;}
+  .cprice{font-size:12px;}
+
+  /* 品項明細表 → 卡片式 */
+  .itbl thead{display:none;}
+  .itbl tbody tr{
+    display:block;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:12px 12px 12px 12px;
+    margin-bottom:10px;
+    position:relative;
+  }
+  .itbl tbody tr:last-child{border-bottom:1px solid var(--border);}
+  .itbl td{
+    display:flex;
+    align-items:center;
+    padding:5px 0;
+    border:none;
+    font-size:13px;
+    gap:8px;
+  }
+  .itbl td::before{
+    content:attr(data-label);
+    font-size:10px;
+    font-weight:600;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    min-width:60px;
+    flex-shrink:0;
+  }
+  .itbl td.c{justify-content:flex-start;}
+  .itbl td.r{justify-content:flex-start;}
+  .itbl td.r input{text-align:left;}
+  .ci{font-size:14px;padding:8px 10px;}
+  .ci.bold{font-size:14px;}
+  .itbl td:last-child{
+    position:absolute;top:8px;right:8px;
+    width:auto;padding:0;
+  }
+  .itbl td:last-child::before{display:none;}
+  .itbl td:first-child{display:none;}
+  .delbtn{font-size:22px;padding:0 6px;}
+  .addrow{padding:12px;font-size:14px;}
+
+  /* 總計 */
+  .livtot{padding:12px;}
+  .ltr{font-size:14px;}
+  .ltfin{font-size:16px;}
+  .discwrap{gap:6px;font-size:13px;}
+  .discinput{width:110px;font-size:13px;}
+
+  /* 按鈕 */
+  .btnp,.btns{width:100%;padding:14px;font-size:14px;text-align:center;}
+  .btnrow{flex-direction:column;gap:8px;}
+  .btnhint{text-align:center;}
+
+  /* Step 2 表單 */
+  .addr-row{grid-template-columns:1fr 1fr;gap:8px;}
+  .addr-row input[id$="Street"]{grid-column:1/-1;}
+  .finput,.fsel,.finput-sm,.fsel-sm{font-size:15px;padding:11px 12px;}
+
+  /* 發票區 */
+  .inv-panel{padding:12px;}
+  .inv-typebtn button{padding:10px 16px;font-size:13px;}
+}
+
+/* ── 發票區塊 ── */
+.inv-toggle{margin-top:4px;}
+.inv-typebtn{display:inline-flex;border:1.5px solid var(--border-s);border-radius:6px;overflow:hidden;margin-bottom:14px;}
+.inv-typebtn button{padding:7px 18px;border:none;background:none;font-family:var(--font-ui);font-size:13px;cursor:pointer;color:var(--muted);transition:all .15s;}
+.inv-typebtn button.sel{background:var(--accent);color:#fff;}
+.sec-divider{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;
+  padding:10px 0 6px;border-top:1px dashed var(--border);margin-top:8px;margin-bottom:10px;grid-column:1/-1;}
+.same-chk{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);cursor:pointer;
+  padding:8px 12px;background:var(--alight);border:1px solid var(--border);border-radius:6px;
+  margin-bottom:14px;user-select:none;grid-column:1/-1;}
+.same-chk input[type=checkbox]{width:15px;height:15px;cursor:pointer;accent-color:var(--accent);}
+.addr-row{display:grid;grid-template-columns:110px 110px 1fr;gap:8px;}
+.addr-row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px;}
+.finput-sm{width:100%;padding:9px 10px;border:1.5px solid var(--border-s);border-radius:6px;
+  font-family:var(--font-ui);font-size:13px;color:var(--accent);background:var(--alight);outline:none;}
+.finput-sm:focus{border-color:var(--accent);}
+.fsel-sm{width:100%;padding:9px 10px;border:1.5px solid var(--border-s);border-radius:6px;
+  font-family:var(--font-ui);font-size:13px;color:var(--accent);background:var(--alight);outline:none;
+  appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231a1917' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;}
+.addr-hint{font-size:10px;color:var(--muted);margin-top:4px;grid-column:1/-1;}
+.inv-panel{background:var(--alight);border:1px solid var(--border);border-radius:8px;padding:16px 18px;margin-bottom:8px;}
+.inv-panel-title{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin-bottom:12px;}
+
+/* 列印時發票資訊顯示 */
+.qpmi-inv{background:#fffbe6;border-left:3px solid #d4a017;}
+
+/* ── Eames Picker ── */
+.eames-picker{background:var(--alight);border:1px solid var(--border);border-radius:8px;padding:14px 16px;}
+.eames-sel-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.eames-sel-row label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin-bottom:4px;display:block;}
+.eames-sel{width:100%;padding:8px 10px;border:1.5px solid var(--border-s);border-radius:6px;
+  font-family:var(--font-ui);font-size:13px;color:var(--accent);background:#fff;outline:none;
+  appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231a1917' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;}
+.eames-sel:focus{border-color:var(--accent);}
+.eames-price-row{background:#fff;border:1px solid var(--border);border-radius:6px;
+  padding:10px 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px;}
+.eames-price-label{font-size:11px;color:var(--muted);}
+.eames-price-val{font-family:'Roboto Mono',monospace;font-size:22px;font-weight:700;color:var(--green);}
+.eames-desc-text{font-size:11px;color:var(--muted);margin-top:2px;}
+.eames-add-btn{padding:9px 20px;background:var(--green);color:#fff;border:none;border-radius:6px;
+  font-family:var(--font-ui);font-size:13px;font-weight:700;cursor:pointer;transition:opacity .15s;white-space:nowrap;}
+.eames-add-btn:hover{opacity:.85;}
+.eames-add-btn:disabled{opacity:.35;cursor:not-allowed;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hdr">
+  <span class="hdr-brand">雅浩國際股份有限公司</span>
+  <h1>報價單產生器</h1>
+  <span class="hdr-tag">Herman Miller · Normann · Madesk · HAG · Yaho</span>
+</div>
+
+<div class="stepbar">
+  <div class="sbs active" id="sb1">① 品項明細</div>
+  <div class="sbarrow">→</div>
+  <div class="sbs" id="sb2">② 客戶資料</div>
+  <div class="sbarrow">→</div>
+  <div class="sbs" id="sb3">③ 預覽列印</div>
+</div>
+
+<!-- STEP 1 -->
+<div class="panel" id="panel1">
+  <div class="ptitle">📦 品項明細</div>
+
+  <!-- Brand Switcher -->
+  <div class="brand-switcher">
+    <button class="brand-btn active-hm" id="brandHM" onclick="switchBrand('HM')">
+      <span>🪑</span>
+      <div><div style="font-size:13px">Herman Miller</div><div class="blogo">HM · AERON · EMBODY</div></div>
+    </button>
+    <button class="brand-btn" id="brandNC" onclick="switchBrand('NC')">
+      <span>🛋</span>
+      <div><div style="font-size:13px">Normann Copenhagen</div><div class="blogo">NC · 北歐設計</div></div>
+    </button>
+    <button class="brand-btn" id="brandMD" onclick="switchBrand('MD')">
+      <span>🖥</span>
+      <div><div style="font-size:13px">Madesk</div><div class="blogo">MD · 電動升降桌</div></div>
+    </button>
+    <button class="brand-btn" id="brandHAG" onclick="switchBrand('HAG')">
+      <span>🪑</span>
+      <div><div style="font-size:13px">Flokk HAG</div><div class="blogo">HAG · CAPISCO · TION</div></div>
+    </button>
+  </div>
+
+  <!-- ── HM 面板 ── -->
+  <div id="hmPanel">
+  <!-- 模糊查詢 -->
+  <div class="mlbox">
+    <div class="mllabel">模糊查詢｜輸入型號片段、品名、顏色、木紋任意關鍵字</div>
+    <div class="fsearch-wrap">
+      <input type="text" class="fsearch-input" id="mlInput"
+        placeholder="例：ES6707、Alpine、胡桃、1T OU、2109、Black… 或貼上完整 Aeron 型號"
+        autocomplete="off" oninput="fsearchUpdate()" onkeydown="fsearchKey(event)">
+      <span class="fsearch-icon">🔍</span>
+      <div class="fsearch-drop" id="fsearchDrop"></div>
+    </div>
+    <div class="mlrow" style="margin-top:8px;">
+      <input type="number" class="mlqty" id="mlQty" value="1" min="1" title="數量">
+      <button class="mlbtn" onclick="mlLookup()">完整型號查詢（Aeron）→</button>
+    </div>
+    <div class="mlerr" id="mlErr"></div>
+    <div class="mlres" id="mlRes">
+      <div class="mlstr" id="mlStr"></div>
+      <div class="mlprices">
+        <div class="mlpi" id="mlUsdWrap" style="display:none">
+          <span>USD 定價</span><strong id="mlUsd"></strong>
+        </div>
+        <div class="mlpi">
+          <span>NT 定價（含稅）</span><strong class="ntd" id="mlNtd"></strong>
+        </div>
+        <div class="mlpi">
+          <span>品名</span><strong id="mlDesc" style="font-size:13px;font-family:var(--font-ui)"></strong>
+        </div>
+      </div>
+      <button class="mladd" onclick="mlAdd()">＋ 加入明細表</button>
+    </div>
+  </div>
+
+  <!-- 分類快速品項 -->
+  <div class="preset-sec">
+    <div class="cat-tabs">
+      <div class="cat-tab active" onclick="switchCat('aeron')">Aeron®</div>
+      <div class="cat-tab" onclick="switchCat('eames-classic')">Eames® Lounge Classic</div>
+      <div class="cat-tab" onclick="switchCat('eames-tall')">Eames® Lounge Tall</div>
+      <div class="cat-tab" onclick="switchCat('acc')">配件</div>
+    </div>
+    <div class="cat-panel show" id="cat-aeron">
+      <div class="pglabel">常用 Aeron 椅款</div>
+      <div class="chiprow" id="chipChairs"></div>
+    </div>
+    <div class="cat-panel" id="cat-eames-classic">
+      <div id="eames-classic-picker"></div>
+    </div>
+    <div class="cat-panel" id="cat-eames-tall">
+      <div id="eames-tall-picker"></div>
+    </div>
+    <div class="cat-panel" id="cat-acc">
+      <div class="pglabel">配件</div>
+      <div class="chiprow" id="chipAcc"></div>
+    </div>
+  </div>
+
+  </div><!-- /#hmPanel -->
+
+  <!-- ── Normann Copenhagen 面板 ── -->
+  <div id="ncPanel" style="display:none">
+    <div class="nc-browser">
+      <div class="nc-header">
+        <div>
+          <div class="nc-header-title">Normann Copenhagen 商品目錄</div>
+          <div class="nc-header-sub">點選商品圖卡 → 調整數量 → 加入明細表</div>
+        </div>
+        <div style="margin-left:auto;font-size:10px;opacity:.7">EUR 定價僅供內部參考</div>
+      </div>
+      <div class="nc-search-bar">
+        <input type="text" class="nc-search-input" id="ncSearch" placeholder="搜尋商品名稱或型號…" oninput="ncFilter()">
+        <div id="ncCatFilters" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;"></div>
+        <span class="nc-count" id="ncCount"></span>
+      </div>
+      <div class="nc-grid" id="ncGrid"></div>
+    </div>
+    <div class="nc-add-bar" id="ncAddBar">
+      <div class="nc-sel-info">
+        <div class="nc-sel-name" id="ncSelName">—</div>
+        <div class="nc-sel-sub" id="ncSelSub"></div>
+        <div class="nc-sel-prices">EUR <strong id="ncSelEur">—</strong> ｜ 台幣定價 <strong id="ncSelNtd">—</strong></div>
+      </div>
+      <div class="nc-qty-wrap">
+        <label style="font-size:12px;color:var(--muted)">數量</label>
+        <input type="number" class="nc-qty" id="ncQty" value="1" min="1">
+      </div>
+      <button class="nc-add-btn" onclick="ncAdd()">＋ 加入明細表</button>
+    </div>
+  </div>
+
+  <!-- ── Madesk 面板 ── -->
+  <div id="mdPanel" style="display:none">
+    <div class="mlbox" style="background:#f0f4f0;border-color:#b8d4bc;">
+      <div class="mllabel" style="color:#3a6b3e;">🖥 Madesk 升降桌選配｜先選桌面再選桌腳，分別加入明細表</div>
+      <div style="margin-bottom:14px;">
+        <div style="font-size:11px;font-weight:700;color:#3a6b3e;margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em;">① 桌面</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+          <div>
+            <label class="flabel">材質</label>
+            <select id="mdMaterial" onchange="mdUpdateTop()" style="padding:7px 28px 7px 10px;border:1.5px solid #b8d4bc;border-radius:6px;font-family:var(--font-ui);font-size:13px;background:#fff;outline:none;appearance:none;background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%228%22 viewBox=%220 0 12 8%22%3E%3Cpath d=%22M1 1l5 5 5-5%22 stroke=%22%231a1917%22 stroke-width=%221.5%22 fill=%22none%22 stroke-linecap=%22round%22/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right 10px center;">
+              <option value="0949 雪白">0949 雪白</option>
+              <option value="5486NT 經典金胡桃木">5486NT 經典金胡桃木</option>
+              <option value="8854NT 雪花橡木">8854NT 雪花橡木</option>
+              <option value="0756 天然楓木">0756 天然楓木</option>
+            </select>
+          </div>
+          <div>
+            <label class="flabel">尺寸（長×寬 cm）</label>
+            <select id="mdSize" onchange="mdUpdateTop()" style="padding:7px 28px 7px 10px;border:1.5px solid #b8d4bc;border-radius:6px;font-family:var(--font-ui);font-size:13px;background:#fff;outline:none;appearance:none;background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%228%22 viewBox=%220 0 12 8%22%3E%3Cpath d=%22M1 1l5 5 5-5%22 stroke=%22%231a1917%22 stroke-width=%221.5%22 fill=%22none%22 stroke-linecap=%22round%22/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right 10px center;">
+              <option>120×60</option><option>120×70</option><option>120×80</option>
+              <option>140×60</option><option selected>140×70</option><option>140×80</option>
+              <option>150×60</option><option>150×70</option><option>150×80</option>
+              <option>160×60</option><option>160×70</option><option>160×80</option>
+              <option>170×60</option><option>170×70</option><option>170×80</option>
+              <option>180×60</option><option>180×70</option><option>180×80</option>
+            </select>
+          </div>
+          <div>
+            <label class="flabel">數量</label>
+            <input type="number" id="mdTopQty" value="1" min="1" style="width:60px;padding:7px 8px;border:1.5px solid #b8d4bc;border-radius:6px;font-size:13px;text-align:center;background:#fff;outline:none;">
+          </div>
+        </div>
+        <div id="mdTopInfo" style="display:flex;align-items:center;gap:16px;padding:8px 12px;background:#fff;border:1px solid #b8d4bc;border-radius:6px;flex-wrap:wrap;">
+          <div style="font-size:12px;color:var(--muted)">定價</div>
+          <div style="font-size:18px;font-weight:700;color:var(--green);font-family:'Roboto Mono',monospace;" id="mdTopPrice">NT$6,000</div>
+          <button onclick="mdAddTop()" style="margin-left:auto;padding:7px 18px;background:var(--green);color:#fff;border:none;border-radius:6px;font-family:var(--font-ui);font-size:13px;font-weight:700;cursor:pointer;">＋ 加入桌面</button>
+        </div>
+      </div>
+      <div style="border-top:1px dashed #b8d4bc;padding-top:12px;">
+        <div style="font-size:11px;font-weight:700;color:#3a6b3e;margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em;">② 升降桌腳</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;">
+          <div>
+            <label class="flabel">顏色</label>
+            <select id="mdLegColor" style="padding:7px 28px 7px 10px;border:1.5px solid #b8d4bc;border-radius:6px;font-family:var(--font-ui);font-size:13px;background:#fff;outline:none;appearance:none;background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%228%22 viewBox=%220 0 12 8%22%3E%3Cpath d=%22M1 1l5 5 5-5%22 stroke=%22%231a1917%22 stroke-width=%221.5%22 fill=%22none%22 stroke-linecap=%22round%22/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right 10px center;">
+              <option value="白色">白色 White (M2-SA4.WH)</option>
+              <option value="深灰">深灰 Dark Gray (M2-SA4S.DG)</option>
+            </select>
+          </div>
+          <div>
+            <label class="flabel">數量</label>
+            <input type="number" id="mdLegQty" value="1" min="1" style="width:60px;padding:7px 8px;border:1.5px solid #b8d4bc;border-radius:6px;font-size:13px;text-align:center;background:#fff;outline:none;">
+          </div>
+          <div style="padding:8px 12px;background:#fff;border:1px solid #b8d4bc;border-radius:6px;display:flex;align-items:center;gap:12px;">
+            <div style="font-size:18px;font-weight:700;color:var(--green);font-family:'Roboto Mono',monospace;">NT$18,000</div>
+            <button onclick="mdAddLeg()" style="padding:7px 18px;background:var(--green);color:#fff;border:none;border-radius:6px;font-family:var(--font-ui);font-size:13px;font-weight:700;cursor:pointer;">＋ 加入桌腳</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="preset-sec">
+      <div class="pglabel">常用規格快捷</div>
+      <div class="chiprow">
+        <div class="chip" onclick="mdQuick('0949 雪白','120×70','白色')" title="雪白120×70＋白色腳座">
+          <span class="ctag">雪白120×70＋白腳</span><span class="cprice">NT$23,200</span>
+        </div>
+        <div class="chip" onclick="mdQuick('0949 雪白','140×70','白色')" title="雪白140×70＋白色腳座">
+          <span class="ctag">雪白140×70＋白腳</span><span class="cprice">NT$24,000</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Flokk HAG 面板 ── -->
+  <div id="hagPanel" style="display:none">
+    <div class="hm-series-wrap" style="--stab-active:#6b3a1f;">
+      <div class="hm-series-label">選擇椅款系列</div>
+      <div class="hm-series-tabs" id="hagSeriesTabs">
+        <button class="hm-stab hag-stab active" data-hag="capisco8106" onclick="switchHAGSeries('capisco8106')">
+          <span class="hm-stab-name">Capisco 8106</span><span class="hm-stab-sub">皮革款 / 厚布款</span>
+        </button>
+        <button class="hm-stab hag-stab" data-hag="puls8020" onclick="switchHAGSeries('puls8020')">
+          <span class="hm-stab-name">Capisco Puls 8020</span><span class="hm-stab-sub">塑料款</span>
+        </button>
+        <button class="hm-stab hag-stab" data-hag="tion2140" onclick="switchHAGSeries('tion2140')">
+          <span class="hm-stab-name">Tion 2140</span><span class="hm-stab-sub">經濟款</span>
+        </button>
+      </div>
+      <div class="hm-series-panel" id="hagSeries-capisco8106">
+        <div class="hm-series-desc"><strong>HÅG Capisco 8106</strong>｜鞍型人體工學椅，皮革款與厚布款</div>
+        <div class="hm-sub-label">皮革款</div>
+        <div class="chiprow" id="hagChip8106Leather"></div>
+        <div class="hm-sub-label">厚布款</div>
+        <div class="chiprow" id="hagChip8106Fabric"></div>
+      </div>
+      <div class="hm-series-panel" id="hagSeries-puls8020" style="display:none">
+        <div class="hm-series-desc"><strong>HÅG Capisco Puls 8020</strong>｜輕量塑料款，多色可選</div>
+        <div class="chiprow" id="hagChipPuls"></div>
+      </div>
+      <div class="hm-series-panel" id="hagSeries-tion2140" style="display:none">
+        <div class="hm-series-desc"><strong>HÅG Tion 2140</strong>｜入門人體工學椅</div>
+        <div class="chiprow" id="hagChipTion"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 明細表 -->
+  <table class="itbl">
+    <thead><tr>
+      <th style="width:26px">#</th>
+      <th style="width:175px">型號</th>
+      <th>敘述</th>
+      <th class="c" style="width:54px">數量</th>
+      <th class="r" style="width:108px">定價 (NT)</th>
+      <th class="r" style="width:118px">售價小計 (NT)</th>
+      <th style="width:26px"></th>
+    </tr></thead>
+    <tbody id="itemBody"></tbody>
+  </table>
+  <button class="addrow" onclick="addRow()">＋ 新增空白列</button>
+
+  <div class="livtot">
+    <div class="ltr"><span>商品小計</span><span id="ltSub">NT$0</span></div>
+    <div class="ltr" style="color:var(--red)">
+      <div class="discwrap">
+        <span>折扣金額</span>
+        <input type="number" class="discinput" id="discInput" value="0" min="0" onchange="updateTotal()">
+      </div>
+      <span id="ltDisc">—</span>
+    </div>
+    <div class="ltfin"><span>總計（含稅）</span><span id="ltTotal">NT$0</span></div>
+  </div>
+
+  <div class="btnrow">
+    <button class="btnp" onclick="goStep(2)">下一步：客戶資料 →</button>
+  </div>
+</div>
+
+<!-- STEP 2 -->
+<div class="panel" id="panel2" style="display:none">
+  <div class="ptitle">👤 客戶資料</div>
+
+  <!-- 基本資料 -->
+  <div class="fgrid">
+    <div><label class="flabel">訂購者姓名</label><input type="text" class="finput" id="fCust" placeholder="客戶姓名" oninput="onBuyerChange()"></div>
+    <div><label class="flabel">日期</label><input type="text" class="finput" id="fDate"></div>
+    <div><label class="flabel">聯絡電話</label><input type="text" class="finput" id="fPhone" placeholder="02-xxxx-xxxx" oninput="onBuyerChange()"></div>
+    <div><label class="flabel">Email</label><input type="text" class="finput" id="fEmail" placeholder="example@email.com" oninput="onBuyerChange()"></div>
+
+    <!-- 送貨地址（郵局格式） -->
+    <div class="full">
+      <label class="flabel">送貨地址</label>
+      <div class="addr-row">
+        <select class="fsel-sm" id="fAddrCity" onchange="updateCityDist('fAddrCity','fAddrDist');onBuyerChange()"><option value="">縣市</option></select>
+        <select class="fsel-sm" id="fAddrDist" onchange="syncZip('fAddrDist','fAddrZip');onBuyerChange()"><option value="">鄉鎮市區</option></select>
+        <input type="text" class="finput-sm" id="fAddrStreet" placeholder="路段、巷弄、號、樓" oninput="onBuyerChange()">
+      </div>
+      <div class="addr-row2">
+        <input type="text" class="finput-sm" id="fAddrZip" placeholder="郵遞區號（自動帶入）" readonly style="background:#f0efe9;color:var(--muted)">
+        <input type="text" class="finput-sm" id="fAddrBldg" placeholder="社區／大樓名稱（選填）" oninput="onBuyerChange()">
+      </div>
+    </div>
+
+    <div><label class="flabel">貨物狀況</label>
+      <select class="fsel" id="fStock"><option value="現貨">現貨</option><option value="訂貨">訂貨</option></select></div>
+    <div><label class="flabel">預估交貨期</label><input type="text" class="finput" id="fDel" placeholder="例：2週"></div>
+    <div><label class="flabel">付款方式</label>
+      <select class="fsel" id="fPay">
+        <option>電匯／ATM轉帳</option><option>信用卡刷卡</option><option>現金／即期支票</option>
+      </select></div>
+    <div>
+      <label class="flabel">承辦人</label>
+      <select class="fsel" id="fHandlerSel" onchange="onHandlerSelChange()">
+        <option value="__custom__">自行填寫…</option>
+        <option value="Vita">Vita</option>
+        <option value="Ivy">Ivy</option>
+        <option value="Vivi">Vivi</option>
+        <option value="Stanley">Stanley</option>
+        <option value="Charlie">Charlie</option>
+      </select>
+      <input type="text" class="finput" id="fHandler" placeholder="請輸入承辦人姓名" style="display:none;margin-top:6px;">
+    </div>
+    <div class="full"><label class="flabel">備註（選填）</label><input type="text" class="finput" id="fNote" placeholder="其他說明"></div>
+  </div>
+
+  <!-- ══ 發票資訊 ══ -->
+  <div class="inv-panel">
+    <div class="inv-panel-title">🧾 發票資訊</div>
+
+    <!-- 發票類型切換 -->
+    <label class="flabel">發票類型</label>
+    <div class="inv-typebtn">
+      <button id="btnInv2" class="sel" onclick="setInvType(2)">二聯式（個人）</button>
+      <button id="btnInv3" onclick="setInvType(3)">三聯式（公司）</button>
+    </div>
+
+    <!-- 三聯式額外欄位 -->
+    <div id="invTriSection" style="display:none;margin-bottom:12px;">
+      <div class="fgrid" style="margin-bottom:0;">
+        <div><label class="flabel">發票抬頭（公司名稱）</label>
+          <input type="text" class="finput" id="fInvTitle" placeholder="XX股份有限公司"></div>
+        <div><label class="flabel">統一編號</label>
+          <input type="text" class="finput" id="fInvTaxId" placeholder="12345678" maxlength="8"
+            oninput="this.value=this.value.replace(/\D/g,'').slice(0,8)"></div>
+      </div>
+    </div>
+
+    <!-- 發票收件資料 -->
+    <div style="margin-top:4px;">
+      <label class="flabel" style="margin-bottom:8px;display:block;">發票收件資料</label>
+
+      <label class="same-chk" id="sameChkWrap">
+        <input type="checkbox" id="sameAsBuyer" onchange="toggleSameAsBuyer()">
+        <span>同購買人資料（姓名、電話、地址自動帶入）</span>
+      </label>
+
+      <div id="invRecipientFields">
+        <div class="fgrid" style="margin-bottom:10px;">
+          <div><label class="flabel">收件人姓名</label>
+            <input type="text" class="finput" id="fInvName" placeholder="收件人姓名"></div>
+          <div><label class="flabel">收件人電話</label>
+            <input type="text" class="finput" id="fInvPhone" placeholder="02-xxxx-xxxx"></div>
+        </div>
+        <!-- 發票收件地址（郵局格式） -->
+        <label class="flabel">收件地址</label>
+        <div class="addr-row" style="margin-bottom:6px;">
+          <select class="fsel-sm" id="fInvCity" onchange="updateCityDist('fInvCity','fInvDist')"><option value="">縣市</option></select>
+          <select class="fsel-sm" id="fInvDist" onchange="syncZip('fInvDist','fInvZip')"><option value="">鄉鎮市區</option></select>
+          <input type="text" class="finput-sm" id="fInvStreet" placeholder="路段、巷弄、號、樓">
+        </div>
+        <div class="addr-row2">
+          <input type="text" class="finput-sm" id="fInvZip" placeholder="郵遞區號（自動帶入）" readonly style="background:#f0efe9;color:var(--muted)">
+          <input type="text" class="finput-sm" id="fInvBldg" placeholder="社區／大樓名稱（選填）">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="btnrow">
+    <button class="btns" onclick="goStep(1)">← 返回</button>
+    <button class="btnp" onclick="goStep(3)">預覽報價單 →</button>
+  </div>
+</div>
+
+<!-- STEP 3 -->
+<div class="panel" id="previewPanel">
+  <div class="btnrow" style="margin-top:0;margin-bottom:16px">
+    <button class="btns" onclick="goStep(2)">← 修改</button>
+    <button class="btnp" onclick="window.print()">🖨 列印 ／ 存 PDF</button>
+    <button class="btns" onclick="resetAll()">🔄 重新填寫</button>
+    <span class="btnhint">列印時選「另存為PDF」</span>
+  </div>
+  <div id="qpa"></div>
+</div>
+
+<div class="footer-note">
+  ※ 所有金額含稅，單位新台幣（NT$）。Aeron 型號依 Price Book 4/26 自動換算（USD×35，500進位）。<br>
+  ※ Eames® Lounge Chair＋Ottoman 價格依 Price Book 4/26（USD×40，500進位），含 Cat9／Cat11 皮革加價。<br>
+  ※ Embody 型號依商品資料庫換算（USD×35，500進位），客戶端只顯示台幣金額。<br>
+  ※ Normann Copenhagen 商品 EUR 定價僅供內部參考，報價單對客戶僅顯示台幣金額。<br>
+  ※ 查詢 Aeron 美金定價明細請使用「Aeron 選配計算器」。
+</div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// 商品資料庫
+// ══════════════════════════════════════════════
+const PRODUCTS = [
+  // ── Aeron 常用椅款 ──
+  { code:'AER1B23DW ALP G1 G1 G1 BB BK 23103',    tag:'旗艦B',   desc:'Aeron® 旗艦款 B｜Graphite 石墨黑｜全功能手臂＋PostureFit SL', ntd:88000, cat:'aeron' },
+  { code:'AER1C23DW ALP G1 G1 G1 BB BK 23103',    tag:'旗艦C',   desc:'Aeron® 旗艦款 C｜Graphite 石墨黑｜全功能手臂＋PostureFit SL', ntd:88000, cat:'aeron' },
+  { code:'AER1B23DW ALP BK BLX BLX BB BK 23105',  tag:'尊爵旗B', desc:'Aeron® 尊爵旗款 B｜Onyx 極黑啞光｜全功能手臂＋PostureFit SL', ntd:99000, cat:'aeron' },
+  { code:'AER1B23DW ALP VPR SNA DVP BB DVP 23101', tag:'旗艦白B', desc:'Aeron® 旗艦款白 B｜Mineral 礦石灰｜全功能手臂＋PostureFit SL', ntd:94000, cat:'aeron' },
+  // ── 配件 ──
+  { code:'L5892AAK6',  tag:'頭枕黑', desc:'（副廠）挺拔頭枕－黑色',              ntd:4500,  cat:'acc' },
+  { code:'L5892AAGK6', tag:'頭枕灰', desc:'（副廠）挺拔頭枕－灰色',              ntd:4800,  cat:'acc' },
+  { code:'241670',     tag:'C7輪',   desc:'木質地板專用 C7 輪 1 組（5顆）',       ntd:3250,  cat:'acc' },
+  { code:'U1BH0JP',    tag:'DC1輪',  desc:'木質地板專用靜音 DC1 輪 1 組（5顆）', ntd:4750,  cat:'acc' },
+  { code:'F6035',      tag:'腳踏墊', desc:'腳踏墊',                               ntd:1200,  cat:'acc' },
+];
+
+// ── Eames® Lounge Chair + Ottoman 完整資料 ──
+// 木紋設定：[ 代碼, 中文名稱（含代碼）, 基本USD_Classic, 基本USD_Tall ]
+// 中文名稱依 Price Book 快速查閱工作表
+const EAMES_WOODS = [
+  ['OU',       '核桃木（OU）',            8462, 8828],
+  ['WHN',      '白橡木（WHN）',           8462, 8828],
+  ['5Q',       '油胡桃（5Q）',            9441, 9807],
+  ['9N',       '聖多斯紫檀（9N）',        9476, 9842],
+  ['5D',       '油聖多斯（5D）',         10439,10805],
+  ['ES67071E', '黑梣木（ES67071E）',      9273, 9602],
+  ['ES67071R', '白梣木（ES67071R）',      9273, 9602],
+];
+// 皮革設定：[ 代碼, 英文, 中文, 加價USD, cat9=true/false ]
+const EAMES_LEATHERS = [
+  ['2115','Alpine',     '淺米白/奶油', 734, true],
+  ['2109','Black',      '黑色',       734, true],
+  ['2120','Cranberry',  '深紅/蔓越莓',734, true],
+  ['2119','Dark Carbon','深炭灰',      734, true],
+  ['2118','Dark Mineral','煙灰藍綠',   734, true],
+  ['2121','Deep Sea',   '深海藍綠',   734, true],
+  ['2111','Graphite',   '橄欖炭綠',   734, true],
+  ['2116','Haze',       '淺沙米',     734, true],
+  ['2101','Ivory',      '象牙白',     734, true],
+  ['2112','Khaki',      '卡其駝',     734, true],
+  ['2113','Rattan',     '藤黃棕',     734, true],
+  ['2117','Sable Grey', '灰藍岩',     734, true],
+  ['2110','Smoke',      '橄欖灰',     734, true],
+  ['2114','Truffle',    '深巧克力棕', 734, true],
+  ['1NX13','Balsa',     '淺杏膚',    1072, false],
+  ['1NX15','Bricolage', '銅棕',      1072, false],
+  ['1NX03','Essence',   '沙漠灰綠',  1072, false],
+  ['1NX05','Gambit',    '深炭灰',    1072, false],
+  ['1NX20','Java',      '深咖啡',    1072, false],
+  ['1NX17','Ledge',     '中棕',      1072, false],
+  ['1NX01','Lotus',     '米白奶油',  1072, false],
+  ['1NX21','Lute',      '淺玫瑰米',  1072, false],
+  ['1NX19','Mantra',    '深酒紅棕',  1072, false],
+  ['1NX06','Obsidian',  '近黑炭',    1072, false],
+  ['1NX07','Sail',      '深海軍藍',  1072, false],
+  ['1NX04','Script',    '中性暖灰',  1072, false],
+  ['1NX14','Shore',     '焦糖沙棕',  1072, false],
+  ['1NX02','Timbre',    '米白亞麻',  1072, false],
+  ['1NX09','Vine',      '深橄欖綠',  1072, false],
+  ['1NX10','Yarrow',    '芥末金',    1072, false],
+];
+
+// 自動展開 Eames 全型號到 PRODUCTS
+(function buildEames(){
+  for(const [wcode, wname, usdC, usdT] of EAMES_WOODS){
+    for(const size of ['classic','tall']){
+      const usdBase = size==='classic'?usdC:usdT;
+      const sizeLabel = size==='classic'?'CLASSIC':'TALL';
+      const sizeTag = size==='classic'?'':'T';
+      // 判斷梣木（型號固定，殼面代碼內含）
+      const isAsh = wcode.startsWith('ES67071');
+      for(const [lcode, lname_en, lname_zh, lusd] of EAMES_LEATHERS){
+        let fullCode;
+        if(isAsh){
+          // 梣木：基本型號已含殼面，格式 ES67071X N/NT + 皮革
+          const baseModel = wcode==='ES67071E'
+            ? (size==='classic'?'ES67071E N':'ES67071E NT')
+            : (size==='classic'?'ES67071R E':'ES67071R ET');
+          fullCode = `${baseModel} ${lcode}`;
+        } else {
+          const baseModel = size==='classic'?'ES6707 1':'ES6707 1T';
+          fullCode = `${baseModel} ${wcode} ${lcode}`;
+        }
+        const ntdTotal = Math.ceil((usdBase+lusd)*40/500)*500;
+        const catLabel = lusd===734 ? 'Cat.9' : 'Cat.11';
+        const desc = `Eames® Lounge Chair＋Ottoman ${sizeLabel}｜${wname}｜${lname_en} ${lname_zh}（${catLabel}）`;
+        const tag = `${wname.slice(0,3)} ${lname_en.slice(0,5)}`;
+        PRODUCTS.push({code:fullCode, tag, desc, ntd:ntdTotal,
+          cat: size==='classic'?'eames-classic':'eames-tall',
+          wood:wname, woodCode:wcode, leather:lname_en, leatherZh:lname_zh,
+          leatherCode:lcode, size:sizeLabel, usdBase, usdLeather:lusd});
+      }
+    }
+  }
+})();
+
+
+// ══════════════════════════════════════════════
+// HM 詳細商品資料庫（含 Embody、asiaUsd/usUsd）
+// ══════════════════════════════════════════════
+// 擴充 PRODUCTS：把版本7的 Aeron 詳細款式 + Embody 加進來
+(function addHMProducts(){
+  const extra = [
+  // ── Aeron（亞洲線USD×35，500進位）──
+  { code:'AER1A13DW ALP G1 G1 G1 BB BK 23103',      tag:'旗艦A',   desc:'Aeron® 旗艦款 A｜石墨黑｜全功能把手＋PostureFit SL',          ntd:85500,  cat:'aeron', aeronGroup:'flagship',  asiaUsd:2442, usUsd:2501 },
+  { code:'AER1B33DW ALP G1 G1 G1 BB BK 23103',      tag:'旗艦B加高',desc:'Aeron® 旗艦款 B加高｜石墨黑｜全功能把手＋PostureFit SL',    ntd:85500,  cat:'aeron', aeronGroup:'flagship',  asiaUsd:2442, usUsd:2501 },
+  { code:'AER1A13DW ALP BK BLX BLX BB BK 23105',    tag:'尊爵A',   desc:'Aeron® 尊爵款 A｜啞光黑｜全功能把手＋PostureFit SL',          ntd:97000,  cat:'aeron', aeronGroup:'elite',     asiaUsd:2767, usUsd:2826 },
+  { code:'AER1C23DW ALP BK BLX BLX BB BK 23105',    tag:'尊爵C',   desc:'Aeron® 尊爵款 C｜啞光黑｜全功能把手＋PostureFit SL',          ntd:97000,  cat:'aeron', aeronGroup:'elite',     asiaUsd:2767, usUsd:2826 },
+  { code:'AER1A13DW ALP VPR SNA DVP BB DVP 23101',  tag:'旗艦白A', desc:'Aeron® 旗艦款礦白 A｜礦石白｜全功能把手＋PostureFit SL',      ntd:92000,  cat:'aeron', aeronGroup:'flagshipW', asiaUsd:2617, usUsd:2676 },
+  { code:'AER1C23DW ALP VPR SNA DVP BB DVP 23101',  tag:'旗艦白C', desc:'Aeron® 旗艦款礦白 C｜礦石白｜全功能把手＋PostureFit SL',      ntd:92000,  cat:'aeron', aeronGroup:'flagshipW', asiaUsd:2617, usUsd:2676 },
+  { code:'AER1B22HW ZSS G1 G1 G1 BB BK 23103',      tag:'基本B',   desc:'Aeron® 基本款 B｜石墨黑｜基本手臂',                           ntd:75000,  cat:'aeron', aeronGroup:'basic',     asiaUsd:2139, usUsd:2192 },
+  { code:'AER1C22HW ZSS G1 G1 G1 BB BK 23103',      tag:'基本C',   desc:'Aeron® 基本款 C｜石墨黑｜基本手臂',                           ntd:75000,  cat:'aeron', aeronGroup:'basic',     asiaUsd:2139, usUsd:2192 },
+  { code:'AER1B22HW ALP G1 G1 G1 BB BK 23103',      tag:'企業B',   desc:'Aeron® 企業款 B｜石墨黑｜PostureFit SL',                      ntd:77000,  cat:'aeron', aeronGroup:'corp',      asiaUsd:2189, usUsd:2242 },
+  { code:'AER1C22HW ALP G1 G1 G1 BB BK 23103',      tag:'企業C',   desc:'Aeron® 企業款 C｜石墨黑｜PostureFit SL',                      ntd:77000,  cat:'aeron', aeronGroup:'corp',      asiaUsd:2189, usUsd:2242 },
+  { code:'AER1B22AW ALP G1 G1 G1 BB BK 23103',      tag:'全職B',   desc:'Aeron® 全職款 B｜石墨黑｜全功能把手',                         ntd:82000,  cat:'aeron', aeronGroup:'fulltime',  asiaUsd:2336, usUsd:2394 },
+  { code:'AER1C22AW ALP G1 G1 G1 BB BK 23103',      tag:'全職C',   desc:'Aeron® 全職款 C｜石墨黑｜全功能把手',                         ntd:82000,  cat:'aeron', aeronGroup:'fulltime',  asiaUsd:2336, usUsd:2394 },
+  { code:'AER1B22DW ALP G1 G1 G1 BB BK 23103',      tag:'專職B',   desc:'Aeron® 專職款 B｜石墨黑｜全功能把手',                         ntd:82000,  cat:'aeron', aeronGroup:'pro',       asiaUsd:2337, usUsd:2394 },
+  { code:'AER1C22DW ALP G1 G1 G1 BB BK 23103',      tag:'專職C',   desc:'Aeron® 專職款 C｜石墨黑｜全功能把手',                         ntd:82000,  cat:'aeron', aeronGroup:'pro',       asiaUsd:2337, usUsd:2394 },
+  { code:'AER1B22NN ZSS G1 G1 G1 BB 23103',         tag:'創業B',   desc:'Aeron® 創業款 B｜石墨黑｜無手臂',                             ntd:64000,  cat:'aeron', aeronGroup:'startup',   asiaUsd:1826, usUsd:1871 },
+  { code:'AER1B22DW ALP BK CD CD BB BK 23105',       tag:'尊榮B',   desc:'Aeron® 尊榮款 B｜啞光黑｜拋光腳座',                           ntd:100000, cat:'aeron', aeronGroup:'premium',   asiaUsd:2847, usUsd:2904 },
+  { code:'AER1C22DW ALP BK CD CD BB BK 23105',       tag:'尊榮C',   desc:'Aeron® 尊榮款 C｜啞光黑｜拋光腳座',                           ntd:100000, cat:'aeron', aeronGroup:'premium',   asiaUsd:2847, usUsd:2904 },
+  { code:'AER1B22DW ALP VPR CD CD BB DVP 23101',     tag:'尊榮白B', desc:'Aeron® 尊榮款礦白 B｜礦石霧白｜拋光腳座',                     ntd:100000, cat:'aeron', aeronGroup:'premiumW',  asiaUsd:2847, usUsd:2904 },
+  { code:'AER1C22DW ALP VPR CD CD BB DVP 23101',     tag:'尊榮白C', desc:'Aeron® 尊榮款礦白 C｜礦石霧白｜拋光腳座',                     ntd:100000, cat:'aeron', aeronGroup:'premiumW',  asiaUsd:2847, usUsd:2904 },
+  { code:'AER1B22HW ZSS VPR SNA DVP BB DVP 23101',  tag:'限定白B', desc:'Aeron® 限定款礦白 B｜礦石霧白｜基本手臂＋PostureFit SL',      ntd:81000,  cat:'aeron', aeronGroup:'limitedW',  asiaUsd:2314, usUsd:2367 },
+  { code:'AER1A13AW ALP G1 G1 G1 BB BK 23103',      tag:'AW款A',   desc:'Aeron® 全功能AW款 A｜石墨黑｜全功能把手',                     ntd:85500,  cat:'aeron', aeronGroup:'aw',        asiaUsd:2441, usUsd:2501 },
+  { code:'AER1B23AW ALP G1 G1 G1 BB BK 23103',      tag:'AW款B',   desc:'Aeron® 全功能AW款 B｜石墨黑｜全功能把手',                     ntd:85500,  cat:'aeron', aeronGroup:'aw',        asiaUsd:2441, usUsd:2501 },
+  { code:'AER1C23AW ALP G1 G1 G1 BB BK 23103',      tag:'AW款C',   desc:'Aeron® 全功能AW款 C｜石墨黑｜全功能把手',                     ntd:85500,  cat:'aeron', aeronGroup:'aw',        asiaUsd:2441, usUsd:2501 },
+  { code:'AER1C23DF ALP BK CD CD DC1 23105 2109',   tag:'真皮C',   desc:'Aeron® 門市款 C｜真皮扶手｜拋光腳／靜音輪',                   ntd:112000, cat:'aeron', aeronGroup:'special',   asiaUsd:3190, usUsd:3344 },
+  { code:'AER1A13DW ALP G1 G1 G1 DC1 BK 23103',    tag:'靜音A',   desc:'Aeron® 門市款 A｜石墨黑｜靜音輪',                             ntd:88500,  cat:'aeron', aeronGroup:'special',   asiaUsd:2517, usUsd:2576 },
+  { code:'AER1A13DW ALP MBL BLX BLX DC1 BK 23105', tag:'啞光A',   desc:'Aeron® 門市款 A｜啞光黑｜靜音輪',                             ntd:100500, cat:'aeron', aeronGroup:'special',   asiaUsd:2867, usUsd:2926 },
+  // ── Embody ──
+  { code:'CN122AWAA G1 G1 BB 3SY08', tag:'夜幕藍', desc:'Embody® 人體工學椅｜黑框黑腳｜夜幕藍（3SY08）', ntd:88000, cat:'embody', embodyGroup:'black' },
+  { code:'CN122AWAA G1 G1 BB 3SY12', tag:'石頭黑', desc:'Embody® 人體工學椅｜黑框黑腳｜石頭黑（3SY12）', ntd:88000, cat:'embody', embodyGroup:'black' },
+  { code:'CN122AWAA G1 G1 BB 3SY03', tag:'峽谷紅', desc:'Embody® 人體工學椅｜黑框黑腳｜峽谷紅（3SY03）', ntd:88000, cat:'embody', embodyGroup:'black' },
+  { code:'CN122AWAA G1 G1 BB 3SY01', tag:'可可',   desc:'Embody® 人體工學椅｜黑框黑腳｜可可（3SY01）',   ntd:88000, cat:'embody', embodyGroup:'black' },
+  { code:'CN122AWAA G1 G1 BB 3SY06', tag:'森杉綠', desc:'Embody® 人體工學椅｜黑框黑腳｜森杉綠（3SY06）', ntd:88000, cat:'embody', embodyGroup:'black' },
+  { code:'CN122AWAA G1 91 BB 3SY12', tag:'白框黑腳・暮夜黑', desc:'Embody® 人體工學椅｜白框黑腳｜暮夜黑（3SY12）', ntd:89500, cat:'embody', embodyGroup:'white' },
+  { code:'CN122AWAA XT 91 BB 3SY08', tag:'白框灰腳・夜幕藍', desc:'Embody® 人體工學椅｜白框灰腳｜夜幕藍（3SY08）', ntd:91000, cat:'embody', embodyGroup:'white' },
+  { code:'CN122AWAA XT 91 BB 3SY10', tag:'白框灰腳・沉靜灰', desc:'Embody® 人體工學椅｜白框灰腳｜沉靜灰（3SY10）', ntd:91000, cat:'embody', embodyGroup:'white' },
+  { code:'CN122AWAA XT 91 BB 3SY01', tag:'白框灰腳・可可',   desc:'Embody® 人體工學椅｜白框灰腳｜可可（3SY01）',   ntd:91000, cat:'embody', embodyGroup:'white' },
+  { code:'CN122AWAA XT 91 BB 3SY03', tag:'白框灰腳・峽谷紅', desc:'Embody® 人體工學椅｜白框灰腳｜峽谷紅（3SY03）', ntd:91000, cat:'embody', embodyGroup:'white' },
+  { code:'CN122AWAA XT 91 BB 3SY06', tag:'白框灰腳・香草綠', desc:'Embody® 人體工學椅｜白框灰腳｜香草綠（3SY06）', ntd:91000, cat:'embody', embodyGroup:'white' },
+  { code:'CN122AWAA CD 91 BB 3SY09', tag:'拋光・鑽石灰', desc:'Embody® 人體工學椅｜拋光鋁腳｜鑽石灰（3SY09）', ntd:100000, cat:'embody', embodyGroup:'polish' },
+  { code:'CN122AWAA CD G1 BB 3SY12', tag:'拋光・暮夜黑', desc:'Embody® 人體工學椅｜拋光鋁腳｜暮夜黑（3SY12）', ntd:98500,  cat:'embody', embodyGroup:'polish' },
+  ];
+  // 只加不重複的
+  const existing = new Set(PRODUCTS.map(p=>p.code.replace(/\s+/g,'').toUpperCase()));
+  extra.forEach(p=>{
+    if(!existing.has(p.code.replace(/\s+/g,'').toUpperCase())) PRODUCTS.push(p);
+  });
+})();
+
+// ══════════════════════════════════════════════
+// Flokk HAG 商品資料庫
+// ══════════════════════════════════════════════
+const HAG_PRODUCTS = [
+  { code:'C8106-BKF999BKG3-C108L200',       tag:'皮革-星際黑', desc:'HÅG Capisco 8106｜皮革款－星際黑｜黑腳座', ntd:129500 },
+  { code:'C8106-WHF004WHG3-C108L200',       tag:'皮革-焦糖咖', desc:'HÅG Capisco 8106｜皮革款－焦糖咖｜白腳座', ntd:129500 },
+  { code:'CP8020-RPWH301RPAWH-C108L200',    tag:'Puls-乾燥玫瑰', desc:'HÅG Capisco Puls 8020｜塑料白框－乾燥玫瑰｜銀灰腳座', ntd:45900 },
+  { code:'CP8020-BKBK209DGABK-C108L200',   tag:'Puls-森林綠',  desc:'HÅG Capisco Puls 8020｜塑料黑框－森林綠｜黑腳座', ntd:44500 },
+  { code:'CP8020-BKBK115WGABK-C108L200',   tag:'Puls-地質灰',  desc:'HÅG Capisco Puls 8020｜塑料黑框皮革座墊－地質灰｜黑腳座', ntd:56500 },
+  { code:'CP8020-BKBKSC60999BKG3-C108L200',tag:'Puls-格調黑',  desc:'HÅG Capisco Puls 8020｜塑料黑框－格調黑｜黑腳座', ntd:44500 },
+  { code:'0L8JCQ', tag:'Puls-太空灰', desc:'HÅG Capisco Puls 8020｜塑料白框－太空灰', ntd:43700 },
+  { code:'0LE9PY', tag:'Puls-亞麻米', desc:'HÅG Capisco Puls 8020｜塑料白框－亞麻米', ntd:43700 },
+  { code:'0LJM4F', tag:'Puls-英皇赭', desc:'HÅG Capisco Puls 8020｜塑料白框－英皇赭', ntd:43700 },
+  { code:'0LTX3P', tag:'Puls-夕霧藍', desc:'HÅG Capisco Puls 8020｜塑料黑框－夕霧藍', ntd:45500 },
+  { code:'0KXCYB', tag:'8106-藏青藍', desc:'HÅG Capisco 8106｜厚布黑框－藏青藍', ntd:84000 },
+  { code:'0KQGSY', tag:'8106-堅果褐', desc:'HÅG Capisco 8106｜厚布金屬框－堅果褐', ntd:85000 },
+  { code:'0KWP0Y', tag:'8106-若葉綠', desc:'HÅG Capisco 8106｜厚布金屬框－若葉綠', ntd:89000 },
+  { code:'0KGQJP', tag:'8106-金屬黑', desc:'HÅG Capisco 8106｜厚布高腳黑框－金屬黑', ntd:84000 },
+  { code:'07UF96', tag:'Tion-風格米', desc:'HÅG Tion 2140｜風格米', ntd:32500 },
+  { code:'08BXH9', tag:'Tion-鈴蘭黃', desc:'HÅG Tion 2140｜鈴蘭黃', ntd:32500 },
+  { code:'07N0KA', tag:'Tion-抹茶綠', desc:'HÅG Tion 2140｜抹茶綠', ntd:32500 },
+  { code:'09PYWL', tag:'Tion-棋盤黑', desc:'HÅG Tion 2140｜棋盤黑', ntd:40000 },
+  { code:'TION2100-WHWHWHALU-C65L150', tag:'Tion-暮雪白', desc:'HÅG Tion 2100｜塑料白框－暮雪白', ntd:22000 },
+];
+
+// ══════════════════════════════════════════════
+// Madesk 商品資料庫
+// ══════════════════════════════════════════════
+const MD_TOPS = [
+  { code:'0949-120x60', material:'0949 雪白', size:'120×60', desc:'Madesk 雪白桌面 120×60cm｜木紋邊條＋R3圓弧收邊｜厚度2.5cm', ntd:4400 },
+  { code:'0949-120x70', material:'0949 雪白', size:'120×70', desc:'Madesk 雪白桌面 120×70cm｜木紋邊條＋R3圓弧收邊｜厚度2.5cm', ntd:5200 },
+  { code:'0949-120x80', material:'0949 雪白', size:'120×80', desc:'Madesk 雪白桌面 120×80cm｜木紋邊條＋R3圓弧收邊｜厚度2.5cm', ntd:5900 },
+  { code:'0949-140x60', material:'0949 雪白', size:'140×60', desc:'Madesk 雪白桌面 140×60cm｜木紋邊條＋R3圓弧收邊｜厚度2.5cm', ntd:5200 },
+  { code:'0949-140x70', material:'0949 雪白', size:'140×70', desc:'Madesk 雪白桌面 140×70cm｜木紋邊條＋R3圓弧收邊｜厚度2.5cm', ntd:6000 },
+  { code:'0949-140x80', material:'0949 雪白', size:'140×80', desc:'Madesk 雪白桌面 140×80cm｜木紋邊條＋R3圓弧收邊｜厚度2.5cm', ntd:6900 },
+  { code:'0949-150x60', material:'0949 雪白', size:'150×60', desc:'Madesk 雪白桌面 150×60cm｜木紋邊條＋R3圓弧收邊｜厚度2.5cm', ntd:5500 },
+  { code:'0949-150x70', material:'0949 雪白', size:'150×70', desc:'Madesk 雪白桌面 150×70cm｜木紋邊條＋R3圓弧收邊｜厚度2.5cm', ntd:6500 },
+  { code:'0949-150x80', material:'0949 雪白', size:'150×80', desc:'Madesk 雪白桌面 150×80cm｜木紋邊條＋R3圓弧收邊｜厚度2.5cm', ntd:7400 },
+  { code:'0949-160x60', material:'0949 雪白', size:'160×60', desc:'Madesk 雪白桌面 160×60cm｜木紋邊條＋R3圓弧收邊｜厚度2.5cm', ntd:5900 },
+  { code:'0949-160x70', material:'0949 雪白', size:'160×70', desc:'Madesk 雪白桌面 160×70cm｜木紋邊條＋R3圓弧收邊｜厚度2.5cm', ntd:6900 },
+  { code:'0949-160x80', material:'0949 雪白', size:'160×80', desc:'Madesk 雪白桌面 160×80cm｜木紋邊條＋R3圓弧收邊｜厚度2.5cm', ntd:7900 },
+  { code:'0949-170x60', material:'0949 雪白', size:'170×60', desc:'Madesk 雪白桌面 170×60cm｜木紋邊條＋R3圓弧收邊｜厚度2.5cm', ntd:6300 },
+  { code:'0949-170x70', material:'0949 雪白', size:'170×70', desc:'Madesk 雪白桌面 170×70cm｜木紋邊條＋R3圓弧收邊｜厚度2.5cm', ntd:7300 },
+  { code:'0949-170x80', material:'0949 雪白', size:'170×80', desc:'Madesk 雪白桌面 170×80cm｜木紋邊條＋R3圓弧收邊｜厚度2.5cm', ntd:8400 },
+  { code:'0949-180x60', material:'0949 雪白', size:'180×60', desc:'Madesk 雪白桌面 180×60cm｜木紋邊條＋R3圓弧收邊｜厚度2.5cm', ntd:6600 },
+  { code:'0949-180x70', material:'0949 雪白', size:'180×70', desc:'Madesk 雪白桌面 180×70cm｜木紋邊條＋R3圓弧收邊｜厚度2.5cm', ntd:7700 },
+  { code:'0949-180x80', material:'0949 雪白', size:'180×80', desc:'Madesk 雪白桌面 180×80cm｜木紋邊條＋R3圓弧收邊｜厚度2.5cm', ntd:8800 },
+  { code:'5486-120x60', material:'5486NT 經典金胡桃木', size:'120×60', desc:'Madesk 經典金胡桃木桌面 120×60cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:10100 },
+  { code:'5486-120x70', material:'5486NT 經典金胡桃木', size:'120×70', desc:'Madesk 經典金胡桃木桌面 120×70cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:10700 },
+  { code:'5486-120x80', material:'5486NT 經典金胡桃木', size:'120×80', desc:'Madesk 經典金胡桃木桌面 120×80cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:11400 },
+  { code:'5486-140x60', material:'5486NT 經典金胡桃木', size:'140×60', desc:'Madesk 經典金胡桃木桌面 140×60cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:10700 },
+  { code:'5486-140x70', material:'5486NT 經典金胡桃木', size:'140×70', desc:'Madesk 經典金胡桃木桌面 140×70cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:11500 },
+  { code:'5486-140x80', material:'5486NT 經典金胡桃木', size:'140×80', desc:'Madesk 經典金胡桃木桌面 140×80cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:12200 },
+  { code:'5486-150x60', material:'5486NT 經典金胡桃木', size:'150×60', desc:'Madesk 經典金胡桃木桌面 150×60cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:11000 },
+  { code:'5486-150x70', material:'5486NT 經典金胡桃木', size:'150×70', desc:'Madesk 經典金胡桃木桌面 150×70cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:11800 },
+  { code:'5486-150x80', material:'5486NT 經典金胡桃木', size:'150×80', desc:'Madesk 經典金胡桃木桌面 150×80cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:12700 },
+  { code:'5486-160x60', material:'5486NT 經典金胡桃木', size:'160×60', desc:'Madesk 經典金胡桃木桌面 160×60cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:11400 },
+  { code:'5486-160x70', material:'5486NT 經典金胡桃木', size:'160×70', desc:'Madesk 經典金胡桃木桌面 160×70cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:12200 },
+  { code:'5486-160x80', material:'5486NT 經典金胡桃木', size:'160×80', desc:'Madesk 經典金胡桃木桌面 160×80cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:13100 },
+  { code:'5486-170x60', material:'5486NT 經典金胡桃木', size:'170×60', desc:'Madesk 經典金胡桃木桌面 170×60cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:11700 },
+  { code:'5486-170x70', material:'5486NT 經典金胡桃木', size:'170×70', desc:'Madesk 經典金胡桃木桌面 170×70cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:12600 },
+  { code:'5486-170x80', material:'5486NT 經典金胡桃木', size:'170×80', desc:'Madesk 經典金胡桃木桌面 170×80cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:13500 },
+  { code:'5486-180x60', material:'5486NT 經典金胡桃木', size:'180×60', desc:'Madesk 經典金胡桃木桌面 180×60cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:12000 },
+  { code:'5486-180x70', material:'5486NT 經典金胡桃木', size:'180×70', desc:'Madesk 經典金胡桃木桌面 180×70cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:13000 },
+  { code:'5486-180x80', material:'5486NT 經典金胡桃木', size:'180×80', desc:'Madesk 經典金胡桃木桌面 180×80cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:13900 },
+  { code:'8854-120x60', material:'8854NT 雪花橡木', size:'120×60', desc:'Madesk 雪花橡木桌面 120×60cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:10100 },
+  { code:'8854-120x70', material:'8854NT 雪花橡木', size:'120×70', desc:'Madesk 雪花橡木桌面 120×70cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:10700 },
+  { code:'8854-120x80', material:'8854NT 雪花橡木', size:'120×80', desc:'Madesk 雪花橡木桌面 120×80cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:11400 },
+  { code:'8854-140x60', material:'8854NT 雪花橡木', size:'140×60', desc:'Madesk 雪花橡木桌面 140×60cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:10700 },
+  { code:'8854-140x70', material:'8854NT 雪花橡木', size:'140×70', desc:'Madesk 雪花橡木桌面 140×70cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:11500 },
+  { code:'8854-140x80', material:'8854NT 雪花橡木', size:'140×80', desc:'Madesk 雪花橡木桌面 140×80cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:12200 },
+  { code:'8854-150x60', material:'8854NT 雪花橡木', size:'150×60', desc:'Madesk 雪花橡木桌面 150×60cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:11000 },
+  { code:'8854-150x70', material:'8854NT 雪花橡木', size:'150×70', desc:'Madesk 雪花橡木桌面 150×70cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:11800 },
+  { code:'8854-150x80', material:'8854NT 雪花橡木', size:'150×80', desc:'Madesk 雪花橡木桌面 150×80cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:12700 },
+  { code:'8854-160x60', material:'8854NT 雪花橡木', size:'160×60', desc:'Madesk 雪花橡木桌面 160×60cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:11400 },
+  { code:'8854-160x70', material:'8854NT 雪花橡木', size:'160×70', desc:'Madesk 雪花橡木桌面 160×70cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:12200 },
+  { code:'8854-160x80', material:'8854NT 雪花橡木', size:'160×80', desc:'Madesk 雪花橡木桌面 160×80cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:13100 },
+  { code:'8854-170x60', material:'8854NT 雪花橡木', size:'170×60', desc:'Madesk 雪花橡木桌面 170×60cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:11700 },
+  { code:'8854-170x70', material:'8854NT 雪花橡木', size:'170×70', desc:'Madesk 雪花橡木桌面 170×70cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:12600 },
+  { code:'8854-170x80', material:'8854NT 雪花橡木', size:'170×80', desc:'Madesk 雪花橡木桌面 170×80cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:13500 },
+  { code:'8854-180x60', material:'8854NT 雪花橡木', size:'180×60', desc:'Madesk 雪花橡木桌面 180×60cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:12000 },
+  { code:'8854-180x70', material:'8854NT 雪花橡木', size:'180×70', desc:'Madesk 雪花橡木桌面 180×70cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:13000 },
+  { code:'8854-180x80', material:'8854NT 雪花橡木', size:'180×80', desc:'Madesk 雪花橡木桌面 180×80cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:13900 },
+  { code:'0756-120x60', material:'0756 天然楓木', size:'120×60', desc:'Madesk 天然楓木桌面 120×60cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:5100 },
+  { code:'0756-120x70', material:'0756 天然楓木', size:'120×70', desc:'Madesk 天然楓木桌面 120×70cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:6000 },
+  { code:'0756-120x80', material:'0756 天然楓木', size:'120×80', desc:'Madesk 天然楓木桌面 120×80cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:6300 },
+  { code:'0756-140x60', material:'0756 天然楓木', size:'140×60', desc:'Madesk 天然楓木桌面 140×60cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:6000 },
+  { code:'0756-140x70', material:'0756 天然楓木', size:'140×70', desc:'Madesk 天然楓木桌面 140×70cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:6900 },
+  { code:'0756-140x80', material:'0756 天然楓木', size:'140×80', desc:'Madesk 天然楓木桌面 140×80cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:7900 },
+  { code:'0756-150x60', material:'0756 天然楓木', size:'150×60', desc:'Madesk 天然楓木桌面 150×60cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:6400 },
+  { code:'0756-150x70', material:'0756 天然楓木', size:'150×70', desc:'Madesk 天然楓木桌面 150×70cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:7400 },
+  { code:'0756-150x80', material:'0756 天然楓木', size:'150×80', desc:'Madesk 天然楓木桌面 150×80cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:8500 },
+  { code:'0756-160x60', material:'0756 天然楓木', size:'160×60', desc:'Madesk 天然楓木桌面 160×60cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:6800 },
+  { code:'0756-160x70', material:'0756 天然楓木', size:'160×70', desc:'Madesk 天然楓木桌面 160×70cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:7900 },
+  { code:'0756-160x80', material:'0756 天然楓木', size:'160×80', desc:'Madesk 天然楓木桌面 160×80cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:9000 },
+  { code:'0756-170x60', material:'0756 天然楓木', size:'170×60', desc:'Madesk 天然楓木桌面 170×60cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:7200 },
+  { code:'0756-170x70', material:'0756 天然楓木', size:'170×70', desc:'Madesk 天然楓木桌面 170×70cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:8400 },
+  { code:'0756-170x80', material:'0756 天然楓木', size:'170×80', desc:'Madesk 天然楓木桌面 170×80cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:9600 },
+  { code:'0756-180x60', material:'0756 天然楓木', size:'180×60', desc:'Madesk 天然楓木桌面 180×60cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:7600 },
+  { code:'0756-180x70', material:'0756 天然楓木', size:'180×70', desc:'Madesk 天然楓木桌面 180×70cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:8900 },
+  { code:'0756-180x80', material:'0756 天然楓木', size:'180×80', desc:'Madesk 天然楓木桌面 180×80cm｜登打邊條＋R3圓弧收邊｜厚度2.5cm', ntd:10200 },
+];
+
+const MD_LEGS = [
+  { code:'M2-SA4.WH',  color:'白色', colorLabel:'白色 White',  desc:'Madesk M2 Eco 單面電動升降腳座（白色）｜數字鍵面板＋USB充電｜升降範圍 885~1187mm', ntd:18000 },
+  { code:'M2-SA4S.DG', color:'深灰', colorLabel:'深灰 Dark Gray', desc:'Madesk M2 Eco 單面電動升降腳座（深灰）｜數字鍵面板＋USB充電｜升降範圍 885~1187mm', ntd:18000 },
+];
+
+const NC_PRODUCTS = [{"cat":"戶外家具","code":"605702","name":"Bit Stool Cone","color":"Black /White","size":"H: 42 x Ø: 36 cm","eur":230,"ntd":11500},{"cat":"戶外家具","code":"605705","name":"Bit Stool Stack","color":"White / White","size":"H: 42 x Ø: 36 cm","eur":230,"ntd":11500},{"cat":"戶外家具","code":"603006","name":"Bit Stool","color":"Black","size":"H: 42 x Ø: 36 cm","eur":235,"ntd":11750},{"cat":"戶外家具","code":"608022","name":"Vig Chair","color":"Dark Green","size":"H: 83 x W: 57 x D: 55 x SH: 46 cm","eur":235,"ntd":11750},{"cat":"戶外家具","code":"603005","name":"Bit Stool","color":"White","size":"H: 42 x Ø: 36 cm","eur":235,"ntd":11750},{"cat":"戶外家具","code":"603007","name":"Bit Stool","color":"White Multi","size":"H: 42 x Ø: 36 cm","eur":235,"ntd":11750},{"cat":"戶外家具","code":"603008","name":"Bit Stool","color":"Black Multi","size":"H: 42 x Ø: 36 cm","eur":235,"ntd":11750},{"cat":"戶外家具","code":"605703","name":"Bit Stool Stack","color":"Red","size":"H: 42 x Ø: 36 cm","eur":255,"ntd":12750},{"cat":"戶外家具","code":"605700","name":"Bit Stool Cone","color":"Yellow","size":"H: 42 x Ø: 36 cm","eur":255,"ntd":12750},{"cat":"戶外家具","code":"605701","name":"Bit Stool Cone","color":"Blue","size":"H: 42 x Ø: 36 cm","eur":255,"ntd":12750},{"cat":"戶外家具","code":"605704","name":"Bit Stool Stack","color":"Green","size":"H: 42 x Ø: 36 cm","eur":255,"ntd":12750},{"cat":"戶外家具","code":"608028","name":"Vig Armchair","color":"Dark Green","size":"H: 83 x W: 61 x D: 57 x SH: 46 cm","eur":280,"ntd":14000},{"cat":"戶外家具","code":"608048","name":"Vig Barstool 65 cm","color":"Dark Green","size":"H: 78.5 x W: 51 x D: 45 x SH: 65 cm","eur":280,"ntd":14000},{"cat":"戶外家具","code":"608045","name":"Vig Bench","color":"Dark Green","size":"H: 46 x W: 50 x L: 150 cm","eur":370,"ntd":18500},{"cat":"戶外家具","code":"608036","name":"Vig Lounge Chair","color":"Dark Green","size":"H: 72.5 x W: 70.5 x D: 76 x SH: 41 cm","eur":445,"ntd":22250},{"cat":"戶外家具","code":"608042","name":"Vig Chaise Longue","color":"Dark Green","size":"H: 82.5 x W: 83 x L: 141 x SH: 38 cm","eur":590,"ntd":29500},{"cat":"戶外家具","code":"608078","name":"Vig Chaise Longue Cushion","color":"Green","size":"H: 1.5 x W: 49.7 x L: 165 cm","eur":95,"ntd":4750},{"cat":"戶外家具","code":"609401","name":"Bit Lounge Chair","color":"White","size":"H: 75.5 x W: 91 x D: 79 x SH: 42 cm","eur":645,"ntd":32250},{"cat":"戶外家具","code":"609411","name":"Bit Barstool 65 cm","color":"White","size":"H: 65 x Ø: 41 cm","eur":405,"ntd":20250},{"cat":"戶外家具","code":"609412","name":"Bit Barstool 65 cm","color":"Black","size":"H: 65 x Ø: 41 cm","eur":405,"ntd":20250},{"cat":"戶外家具","code":"609431","name":"Bit Side Table","color":"White","size":"H: 55 x Ø: 50 cm","eur":335,"ntd":16750},{"cat":"戶外家具","code":"609432","name":"Bit Side Table","color":"Black","size":"H: 55 x Ø: 50 cm","eur":335,"ntd":16750},{"cat":"戶外家具","code":"609441","name":"Bit Coffee Table","color":"White","size":"H: 48 x Ø: 75 cm","eur":425,"ntd":21250},{"cat":"戶外家具","code":"609442","name":"Bit Coffee Table","color":"Black","size":"H: 48 x Ø: 75 cm","eur":425,"ntd":21250},{"cat":"吧檯椅","code":"506080","name":"Circa Barstool 65 cm Black Steel","color":"Oak","size":"H: 65 x W: 37 cm","eur":250,"ntd":12500},{"cat":"吧檯椅","code":"608572","name":"Pole Barstool 65 cm","color":"Pine /Sand","size":"H: 65 x Ø: 40 cm","eur":370,"ntd":18500},{"cat":"吧檯椅","code":"608478","name":"Pind Barstool 65 cm","color":"Brown Stained Ash","size":"H: 81.5 x W: 44.5 x D: 45 x SH: 65 cm","eur":390,"ntd":19500},{"cat":"吧檯椅","code":"602671","name":"Just Barstool 65 cm Black Steel","color":"Black Ash","size":"H: 65 x W: 46.5 x D: 40 x SH: 65 cm","eur":330,"ntd":16500},{"cat":"吧檯椅","code":"602690","name":"Just Barstool 65 cm w. Back Chrome","color":"Oak","size":"H: 80 x W: 46.5 x D: 42 x SH: 65 cm","eur":330,"ntd":16500},{"cat":"吧檯椅","code":"602691","name":"Just Barstool 65 cm w. Back Black Steel","color":"Black Ash","size":"H: 80 x W: 46.5 x D: 42 x SH: 65 cm","eur":330,"ntd":16500},{"cat":"吧檯椅","code":"602778","name":"Form Barstool 65 cm Steel","color":"Green","size":"H: 77 x W: 42.5 x D: 42.5 x SH: 65 cm","eur":290,"ntd":14500},{"cat":"吧檯椅","code":"604029","name":"Hyg Barstool 65 cm Steel","color":"White","size":"H: 84 x W: 46.5 x D: 45 x SH: 65 cm","eur":275,"ntd":13750},{"cat":"吧檯椅","code":"602670","name":"Just Barstool 65 cm Chrome","color":"Oak","size":"H: 65 x W: 46.5 x D: 40 x SH: 65 cm","eur":330,"ntd":16500},{"cat":"吧檯椅","code":"602779","name":"Form Barstool 65 cm Steel","color":"Red","size":"H: 77 x W: 42.5 x D: 42.5 x SH: 65 cm","eur":290,"ntd":14500},{"cat":"吧檯椅","code":"603158","name":"Form Barstool 65 cm Chrome","color":"Black","size":"H: 77 x W: 42.5 x D: 42.5 x SH: 65 cm","eur":290,"ntd":14500},{"cat":"吧檯椅","code":"604031","name":"Hyg Barstool 65 cm Steel","color":"Black","size":"H: 84 x W: 46.5 x D: 45 x SH: 65 cm","eur":275,"ntd":13750},{"cat":"吧檯椅","code":"604032","name":"Hyg Barstool 65 cm Steel","color":"Olive","size":"H: 84 x W: 46.5 x D: 45 x SH: 65 cm","eur":275,"ntd":13750},{"cat":"吧檯椅","code":"609043","name":"Form Barstool 65 cm Steel","color":"Cream","size":"H: 77 x W: 42.5 x D: 42.5 x SH: 65 cm","eur":290,"ntd":14500},{"cat":"吧檯椅","code":"609217","name":"Mat Barstool 65 cm Cream Steel","color":"Hemp","size":"H: 75 x W: 47 x D: 46.3 x SH: 65 cm","eur":405,"ntd":20250},{"cat":"吧檯椅","code":"609234","name":"Mat Bar Chair 65 cm Cream Steel","color":"Seaweed","size":"H: 101 x W: 51.6 x D: 55 x SH: 65 cm","eur":415,"ntd":20750},{"cat":"沙發","code":"712232Remix242","name":"Swell Modular Sofa 100 Left Armrest Light Brown Group 2","color":"Remix 242","size":"H: 70 x W: 260 x D: 90 x SH: 42 cm","eur":1600,"ntd":81750},{"cat":"沙發","code":"712242Remix242","name":"Swell Modular Sofa 110 Center Light Brown Group 2","color":"Remix 242","size":"H: 70 x W: 67 x D: 95 x SH: 42 cm","eur":1325,"ntd":62750},{"cat":"沙發","code":"712252Remix242","name":"Swell Modular Sofa 120 Right Armrest Light Brown Group 2","color":"Remix 242","size":"H: 70 x W: 85 x D: 95 x SH: 42 cm","eur":1600,"ntd":81750},{"cat":"其他","code":"501003","name":"Norm 69 Lamp Large","color":"White","size":"H: 51 x Ø: 51 cm","eur":135,"ntd":6750},{"cat":"其他","code":"608395","name":"Hide Storage Pouf Large","color":"Steel Blue","size":"H: 39 x D: 72 x Ø: 72 cm","eur":260,"ntd":13000},{"cat":"其他","code":"609500","name":"Rib Sideboard Low","color":"Oak","size":"H: 48 x W: 175 x D: 45 cm","eur":1995,"ntd":99750},{"cat":"其他","code":"900143","name":"Toolbox With Inventory","color":"","size":"","eur":391,"ntd":19583},{"cat":"茶几","code":"602110","name":"Tablo Table Small","color":"Black","size":"H: 42 x Ø: 50 cm","eur":290,"ntd":14500},{"cat":"茶几","code":"602526","name":"Stock Table","color":"White","size":"H: 46 x Ø: 37 cm","eur":315,"ntd":15750},{"cat":"茶几","code":"602528","name":"Stock Table","color":"Steel Blue","size":"H: 46 x Ø: 37 cm","eur":315,"ntd":15750},{"cat":"茶几","code":"602527","name":"Stock Table","color":"Wine","size":"H: 46 x Ø: 37 cm","eur":315,"ntd":15750},{"cat":"茶几","code":"602105","name":"Tablo Table Large","color":"White","size":"H: 42 x Ø: 78 cm","eur":515,"ntd":25750},{"cat":"茶几","code":"605750","name":"Turn Table Marble","color":"White","size":"H: 41.5-64 x Ø: 55 cm","eur":780,"ntd":39000},{"cat":"茶几","code":"605751","name":"Turn Table Marble","color":"Black","size":"H: 41.5-64 x Ø: 55 cm","eur":780,"ntd":39000},{"cat":"茶几","code":"608220","name":"Fyr Stool","color":"Pine","size":"H: 45 x W: 39.5 x Ø: 40 cm","eur":230,"ntd":11500},{"cat":"茶几","code":"608549","name":"Dit Table Bright Red","color":"Honey Onyx","size":"H: 40 x Ø: 40 cm","eur":630,"ntd":31500},{"cat":"單人沙發","code":"608142","name":"Burra Lounge Chair","color":"Remix 912","size":"H: 72.5 x W: 95 x D: 79.5 x SH: 42.5 cm","eur":2120,"ntd":106000},{"cat":"單人沙發","code":"608142b","name":"Burra Lounge Chair","color":"Remix 762","size":"H: 72.5 x W: 95 x D: 79.5 x SH: 42.5 cm","eur":2120,"ntd":106000},{"cat":"單人沙發","code":"709172","name":"Hyg Lounge Chair Low Swivel Alu","color":"Remix 543","size":"H: 84.5 x W: 83 x D: 80 x SH: 40 cm","eur":1865,"ntd":93250},{"cat":"單人沙發","code":"709732","name":"Hyg Footstool Swivel Alu","color":"Remix 543","size":"H: 39 x W: 62.5 x D: 48.5 x SH: 39 cm","eur":850,"ntd":42500},{"cat":"單人沙發","code":"712872","name":"Drape Lounge Chair Low Grey Steel","color":"Remix 912","size":"H: 85 x W: 93 x D: 82 x SH: 43 cm","eur":1890,"ntd":94500},{"cat":"單人沙發","code":"712872b","name":"Drape Lounge Chair Low Grey Steel","color":"Remix 982","size":"H: 85 x W: 93 x D: 82 x SH: 43 cm","eur":1890,"ntd":94500},{"cat":"單品","code":"120800","name":"Rocking Glass - 4 pcs, 25 cl","color":"","size":"H: 8 x Ø: 9 cm","eur":25,"ntd":1250},{"cat":"單品","code":"331500","name":"Dropit Hooks Small - 2 pcs","color":"Black","size":"H: 7.7 x L: 5 x D: 8 cm","eur":35,"ntd":1750},{"cat":"單品","code":"331540","name":"Dropit Hooks Small - 2 pcs","color":"Oak","size":"H: 7.7 x L: 5 x D: 8 cm","eur":35,"ntd":1750},{"cat":"單品","code":"130035","name":"Bell Opener","color":"Gold","size":"H: 15.2 x Ø: 5.5 cm","eur":40,"ntd":2000},{"cat":"單品","code":"130036","name":"Bell Opener","color":"Black","size":"H: 15.2 x Ø: 5.5 cm","eur":40,"ntd":2000},{"cat":"單品","code":"331505","name":"Dropit Hooks Large - 2 pcs","color":"Black","size":"H: 9.3 x L: 6 x D: 8.7 cm","eur":45,"ntd":2250},{"cat":"單品","code":"331545","name":"Dropit Hooks Large - 2 pcs","color":"Oak","size":"H: 9.3 x L: 6 x D: 8.7 cm","eur":45,"ntd":2250},{"cat":"單品","code":"331561","name":"Dropit Hooks Large - 2 pcs","color":"Walnut","size":"H: 9.3 x L: 6 x D: 8.7 cm","eur":60,"ntd":3000},{"cat":"單品","code":"605870","name":"Pipe Pitcher","color":"Mirror Polished Stainless Steel","size":"H: 30.5 x W: 17.3 x Ø: 7.5 cm","eur":120,"ntd":6000},{"cat":"單品","code":"372005","name":"Flip Mirror","color":"Sand","size":"H: 34.5 x L: 28 x D: 19.5 cm","eur":125,"ntd":6250},{"cat":"單品","code":"372000","name":"Flip Mirror","color":"Black","size":"H: 34.5 x L: 28 x D: 19.5 cm","eur":125,"ntd":6250},{"cat":"單品","code":"380012","name":"Hoop Coat Rack","color":"White","size":"H: 10.5 x L: 81.5 x D: 5.3 cm","eur":135,"ntd":6750},{"cat":"單品","code":"330530","name":"Pebble Board Small","color":"Black","size":"H: 12.7 x L: 30 x D: 1.2 cm","eur":70,"ntd":3500},{"cat":"單品","code":"330531","name":"Pebble Board Large","color":"Black","size":"H: 18.9 x L: 30 x D: 1.2 cm","eur":85,"ntd":4250},{"cat":"單品","code":"605690","name":"Pose Mirror","color":"Black","size":"H: 39 x W: 21 cm","eur":135,"ntd":6750},{"cat":"單品","code":"605691","name":"Pose Mirror","color":"White","size":"H: 39 x W: 21 cm","eur":135,"ntd":6750},{"cat":"單品","code":"251554","name":"Geo Vacuum Jug 1,5 L","color":"White /Silver","size":"H: 29.5 x Ø: 16.5 cm","eur":135,"ntd":6750},{"cat":"單品","code":"100159","name":"Shorebird Large Oak","color":"Black","size":"H: 14 x L: 22 x D: 6.5 cm","eur":50,"ntd":2500},{"cat":"單品","code":"100207","name":"Shorebird Large Walnut","color":"Brass","size":"H: 14 x L: 22 x D: 6.5 cm","eur":65,"ntd":3250},{"cat":"單品","code":"120900","name":"Cognac Glass - 2 pcs, 25 cl","color":"","size":"Ø: 11 cm","eur":45,"ntd":2250},{"cat":"單品","code":"331560","name":"Dropit Hooks Small - 2 pcs","color":"Walnut","size":"H: 7.7 x L: 5 x D: 8 cm","eur":45,"ntd":2250},{"cat":"單品","code":"510110","name":"Porta Table Lamp","color":"Black","size":"H: 23.5 x W: 20.2 x D: 11.2 x Ø: 6.5 cm","eur":115,"ntd":5750},{"cat":"單品","code":"510111","name":"Porta Table Lamp","color":"White","size":"H: 23.5 x W: 20.2 x D: 11.2 x Ø: 6.5 cm","eur":115,"ntd":5750},{"cat":"單品","code":"510113","name":"Porta Table Lamp","color":"Red","size":"H: 23.5 x W: 20.2 x D: 11.2 x Ø: 6.5 cm","eur":115,"ntd":5750},{"cat":"單品","code":"510115","name":"Porta Table Lamp","color":"Green","size":"H: 23.5 x W: 20.2 x D: 11.2 x Ø: 6.5 cm","eur":115,"ntd":5750},{"cat":"單桌","code":"602190","name":"Journal Desk","color":"Black","size":"H: 74 x W: 65 x L: 130 cm","eur":770,"ntd":38500},{"cat":"單桌","code":"603312","name":"Form Cafe Table 70x70 H104.5 cm 白色","color":"White","size":"H: 104.5 x W: 70 x D: 70 cm","eur":737,"ntd":36850},{"cat":"單桌","code":"602240","name":"Ding Table","color":"Glass /Oak","size":"H: 40 x Ø: 75 cm","eur":495,"ntd":24750},{"cat":"單桌","code":"1401168","name":"Union Table Ø80 x H74.5 cm","color":"White","size":"H: 74.5 x Ø: 80 cm","eur":1160,"ntd":58000},{"cat":"單桌","code":"604144","name":"Form Café Table H94.5 60x60 cm Oak","color":"Oak","size":"H: 94.5 x W: 60 x L: 60 cm","eur":980,"ntd":49000},{"cat":"單桌","code":"604181","name":"Scala Table H75 Ø130 cm Oak","color":"Oak","size":"H: 75 x Ø: 130 cm","eur":1230,"ntd":61500},{"cat":"單桌","code":"604186","name":"Scala Coffee Table H40 Ø110 cm Marble","color":"Black","size":"H: 40 x Ø: 110 cm","eur":1830,"ntd":91500},{"cat":"單桌","code":"609697","name":"Form Café Table H94.5 Ø60 cm Marble","color":"White","size":"H: 94.5 x Ø: 60 cm","eur":1005,"ntd":50250},{"cat":"單椅","code":"506071","name":"Circa Stool 45 cm Black Steel","color":"Black Oak","size":"H: 45 x W: 37 cm","eur":180,"ntd":9000},{"cat":"單椅","code":"608471","name":"Pind Chair","color":"Ash","size":"H: 81 x W: 50 x D: 52 x SH: 46 cm","eur":315,"ntd":15750},{"cat":"單椅","code":"608476","name":"Pind Armchair","color":"Black Stained Ash","size":"H: 81 x W: 55 x D: 52 x SH: 46 cm","eur":435,"ntd":21750},{"cat":"單椅","code":"304049","name":"Allez Chair Molded wicker seat PP","color":"Park green","size":"H: 79 x W: 45 x D: 50 x SH: 45.5 cm","eur":220,"ntd":11000},{"cat":"單椅","code":"601127","name":"My Chair Chrome & Walnut","color":"Walnut","size":"H: 80 x W: 50 x D: 54 x SH: 43.5 cm","eur":435,"ntd":21750},{"cat":"單椅","code":"601311","name":"My Chair Lounge Black","color":"Black","size":"H: 72 x W: 58 x D: 67 x SH: 38.5 cm","eur":435,"ntd":21750},{"cat":"單椅","code":"608202","name":"Stretch Stool 40 cm","color":"Pine","size":"H: 45 x W: 40 x L: 40 cm","eur":155,"ntd":7750},{"cat":"單椅","code":"1401620","name":"Timb Armchair Front Upholstery","color":"Tan / Ultra Leather - Camel","size":"H: 82 x W: 56 x D: 51.5 x SH: 46 cm","eur":570,"ntd":28500},{"cat":"單椅","code":"601125","name":"My Chair Chrome & Oak","color":"Oak","size":"H: 80 x W: 50 x D: 54 x SH: 43.5 cm","eur":405,"ntd":20250},{"cat":"單椅","code":"603872","name":"Hyg Chair Steel","color":"White","size":"H: 84 x W: 54 x D: 55.5 x SH: 46 cm","eur":295,"ntd":14750},{"cat":"單椅","code":"603873","name":"Hyg Chair Steel","color":"Grey","size":"H: 84 x W: 54 x D: 55.5 x SH: 46 cm","eur":295,"ntd":14750},{"cat":"單椅","code":"603874","name":"Hyg Chair Steel","color":"Black","size":"H: 84 x W: 54 x D: 55.5 x SH: 46 cm","eur":295,"ntd":14750},{"cat":"單椅","code":"603875","name":"Hyg Chair Steel","color":"Olive","size":"H: 84 x W: 54 x D: 55.5 x SH: 46 cm","eur":295,"ntd":14750},{"cat":"單椅","code":"604464","name":"Hyg Chair Oak","color":"Black","size":"H: 84 x W: 54 x D: 53.5 x SH: 46 cm","eur":410,"ntd":20500},{"cat":"單椅","code":"609203","name":"Mat Chair Cream Steel","color":"Hemp","size":"H: 79 x W: 51.6 x D: 53 x SH: 45 cm","eur":335,"ntd":16750},{"cat":"單椅","code":"609206","name":"Mat Chair Black Steel","color":"Seaweed","size":"H: 79 x W: 51.6 x D: 53 x SH: 45 cm","eur":335,"ntd":16750},{"cat":"單椅","code":"609209","name":"Mat Armchair Cream Steel","color":"Hemp","size":"H: 79 x W: 64 x D: 55 x SH: 45 cm","eur":360,"ntd":18000},{"cat":"單椅","code":"609210","name":"Mat Armchair Cream Steel","color":"Seaweed","size":"H: 79 x W: 64 x D: 55 x SH: 45 cm","eur":360,"ntd":18000},{"cat":"單椅","code":"1401048","name":"Herit Armchair Upholstery Oak","color":"Spectrum Leather Black","size":"H: 81.5 x W: 60 x D: 51 x SH: 45 cm","eur":900,"ntd":45000}];
+// ══════════════════════════════════════════════
+// Aeron 解析引擎
+// ══════════════════════════════════════════════
+const AT = [...new Set([
+  'ALP','SZS','ZSS','AJ',
+  'MG1','MCR','MVR','MBL','CRB','VPR','ZB','BK','G1',
+  'SNC','SNA','BLX','CD','DCR','DVP','DC1','BB','GF','C7',
+  '23103','23101','23102','23105','2109','2118'
+])].sort((a,b)=>b.length-a.length);
+
+const AP = {
+  size:{A:1726,B:1726,C:1726}, tilt:{'1':0,'2':100,'3':207},
+  arms:{N:0,P:223,H:321,A:473,D:473}, armpad:{N:0,W:0,F:168},
+  back:{SZS:0,ZSS:45,AJ:65,ALP:95},
+  frame:{G1:0,CRB:85,VPR:175,BK:175,MG1:70,MCR:155,MVR:245,MBL:200,ZB:175},
+  chassis:{G1:0,CD:85,SNC:0,SNA:0,BLX:0},
+  base:{G1:0,CD:250,DCR:0,SNC:80,DVP:0,SNA:150,BK:0,BLX:150},
+  caster:{BB:0,GF:25,C7:50,DC1:75},
+};
+
+function aeronParse(raw) {
+  const c = raw.replace(/\s+/g,'').toUpperCase();
+  if (!c.startsWith('AER1')) return {error:'型號須以 AER1 開頭'};
+  const r = c.slice(4);
+  const sz=r[0],ht=r[1],tl=r[2],arm=r[3],ap=r[4];
+  if (!['A','B','C'].includes(sz))   return {error:`尺寸「${sz}」無效，應為 A/B/C`};
+  if (!['1','2','3'].includes(ht))   return {error:`高度「${ht}」無效`};
+  if (!['1','2','3'].includes(tl))   return {error:`傾仰「${tl}」無效`};
+  if (!['N','P','H','A','D'].includes(arm)) return {error:`手臂「${arm}」無效`};
+  if (!['N','W','F'].includes(ap))   return {error:`扶手墊「${ap}」無效`};
+  let rest=r.slice(5); const ex=[];
+  while(rest.length>0){
+    let ok=false;
+    for(const t of AT){if(rest.startsWith(t)){ex.push(t);rest=rest.slice(t.length);ok=true;break;}}
+    if(!ok) return {error:`無法識別「${rest}」`};
+  }
+  const [bk,fr,ch,ba,ca]=ex;
+  if(!bk||!ca) return {error:'代碼不完整，請確認型號'};
+  const usd=(AP.size[sz]||0)+(AP.tilt[tl]||0)+(AP.arms[arm]||0)+(AP.armpad[ap]||0)+
+    (AP.back[bk]||0)+(AP.frame[fr]||0)+(AP.chassis[ch]||0)+(AP.base[ba]||0)+(AP.caster[ca]||0);
+  const norm=`AER1${sz}${ht}${tl}${arm}${ap} ${ex.join(' ')}`;
+  return {usd, ntd:Math.ceil(usd*35/500)*500, model:norm, size:sz};
+}
+
+// ══════════════════════════════════════════════
+// Fuzzy Search
+// ══════════════════════════════════════════════
+let fsIdx = -1;
+
+function fsearchUpdate(){
+  const q = (document.getElementById('mlInput').value||'').trim();
+  const drop = document.getElementById('fsearchDrop');
+  if(!q){drop.className='fsearch-drop';return;}
+  const kw = q.toLowerCase().replace(/\s+/g,' ');
+  const tokens = kw.split(' ').filter(Boolean);
+  const matches = PRODUCTS.filter(p=>{
+    const hay = (p.code+' '+p.desc+' '+(p.wood||'')+' '+(p.woodCode||'')+' '+(p.leather||'')+' '+(p.leatherZh||'')+' '+(p.leatherCode||'')).toLowerCase();
+    return tokens.every(t=>hay.includes(t));
+  }).slice(0,30);
+  fsIdx = -1;
+  if(!matches.length){
+    drop.innerHTML=`<div class="fsd-empty">找不到符合的商品，可試試更短的關鍵字</div>`;
+    drop.className='fsearch-drop show'; return;
+  }
+  const catLabel={aeron:'Aeron','eames-classic':'Eames CLASSIC','eames-tall':'Eames TALL',acc:'配件'};
+  drop.innerHTML = matches.map((p,i)=>{
+    const hiCode = highlight(p.code, tokens);
+    const hiDesc = highlight(p.desc, tokens);
+    return `<div class="fsd-item" data-i="${i}" onmousedown="fselectItem(${i},event)">
+      <span class="fsd-code">${hiCode}</span>
+      <span class="fsd-desc">${hiDesc}</span>
+      <span class="fsd-price">${fmtNTD(p.ntd)}</span>
+      <span class="fsd-cat">${catLabel[p.cat]||p.cat}</span>
+    </div>`;
+  }).join('');
+  drop._matches = matches;
+  drop.className='fsearch-drop show';
+}
+
+function highlight(text, tokens){
+  let t = esc(text);
+  tokens.forEach(kw=>{
+    const re = new RegExp('('+kw.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')', 'gi');
+    t = t.replace(re,'<mark>$1</mark>');
+  });
+  return t;
+}
+
+function fsearchKey(e){
+  const drop = document.getElementById('fsearchDrop');
+  if(!drop.classList.contains('show')) {
+    if(e.key==='Enter') mlLookup();
+    return;
+  }
+  const items = drop.querySelectorAll('.fsd-item');
+  if(e.key==='ArrowDown'){e.preventDefault();fsIdx=Math.min(fsIdx+1,items.length-1);fsFocus(items);}
+  else if(e.key==='ArrowUp'){e.preventDefault();fsIdx=Math.max(fsIdx-1,-1);fsFocus(items);}
+  else if(e.key==='Enter'){e.preventDefault();if(fsIdx>=0&&drop._matches)fsPickMatch(drop._matches[fsIdx]);else mlLookup();}
+  else if(e.key==='Escape'){drop.className='fsearch-drop';}
+}
+function fsFocus(items){
+  items.forEach((el,i)=>{el.classList.toggle('focused',i===fsIdx);if(i===fsIdx)el.scrollIntoView({block:'nearest'});});
+}
+function fselectItem(i, e){
+  e.preventDefault();
+  const drop = document.getElementById('fsearchDrop');
+  if(drop._matches) fsPickMatch(drop._matches[i]);
+}
+function fsPickMatch(p){
+  mlCache = {code:p.code, desc:p.desc, ntd:p.ntd, usd:null};
+  document.getElementById('mlInput').value = p.code;
+  document.getElementById('fsearchDrop').className='fsearch-drop';
+  showRes(p.code, p.desc, null, p.ntd);
+}
+document.addEventListener('click', e=>{
+  if(!e.target.closest('.fsearch-wrap')) document.getElementById('fsearchDrop').className='fsearch-drop';
+});
+
+// ══════════════════════════════════════════════
+// 型號查詢（Aeron 完整型號）
+// ══════════════════════════════════════════════
+let mlCache={};
+
+function mlLookup(){
+  const raw=document.getElementById('mlInput').value.trim();
+  const errEl=document.getElementById('mlErr');
+  const resEl=document.getElementById('mlRes');
+  errEl.className='mlerr'; resEl.className='mlres'; mlCache={};
+  if(!raw) return;
+
+  const key=raw.replace(/\s+/g,'').toUpperCase();
+
+  // 1. 查資料庫
+  const db=PRODUCTS.find(p=>p.code.replace(/\s+/g,'').toUpperCase()===key);
+  if(db){
+    mlCache={code:db.code,desc:db.desc,ntd:db.ntd,usd:null};
+    showRes(db.code,db.desc,null,db.ntd); return;
+  }
+
+  // 2. AER1 動態解析
+  if(key.startsWith('AER1')){
+    const r=aeronParse(raw);
+    if(r.error){errEl.textContent='⚠️ '+r.error;errEl.className='mlerr show';return;}
+    const desc=`Aeron® Work Chair ${r.size} size`;
+    mlCache={code:r.model,desc,ntd:r.ntd,usd:r.usd};
+    showRes(r.model,desc,r.usd,r.ntd); return;
+  }
+
+  // 3. 找不到
+  errEl.textContent=`「${raw}」不在資料庫中，可手動新增空白列填寫，或請管理員建檔。`;
+  errEl.className='mlerr show';
+}
+
+function showRes(code,desc,usd,ntd){
+  document.getElementById('mlStr').textContent=code;
+  document.getElementById('mlDesc').textContent=desc;
+  const uw=document.getElementById('mlUsdWrap');
+  if(usd){document.getElementById('mlUsd').textContent='USD '+usd.toLocaleString();uw.style.display='block';}
+  else uw.style.display='none';
+  document.getElementById('mlNtd').textContent=fmtNTD(ntd);
+  document.getElementById('mlRes').className='mlres show';
+}
+
+function mlAdd(){
+  if(!mlCache.code) return;
+  const qty=parseInt(document.getElementById('mlQty').value)||1;
+  addRow({code:mlCache.code,desc:mlCache.desc,price:mlCache.ntd,qty});
+  document.getElementById('mlInput').value='';
+  document.getElementById('mlRes').className='mlres';
+  document.getElementById('mlErr').className='mlerr';
+  document.getElementById('mlQty').value=1;
+  mlCache={};
+}
+
+// ══════════════════════════════════════════════
+// 明細表
+// ══════════════════════════════════════════════
+let rc=0;
+function fmtNTD(n){return 'NT$'+Number(n).toLocaleString();}
+function todayStr(){const d=new Date();return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+
+function addRow(p){
+  const id=rc++; const qty=p?.qty??1; const price=p?.price??''; const sub=(price&&qty)?price*qty:'';
+  const tr=document.createElement('tr'); tr.id='row_'+id;
+  tr.innerHTML=`
+    <td class="c" data-label="#" style="font-size:11px;color:var(--muted)" id="rn_${id}"></td>
+    <td data-label="型號"><input class="ci mono" id="rc_${id}" value="${esc(p?.code??'')}" placeholder="型號"></td>
+    <td data-label="敘述"><input class="ci" id="rd_${id}" value="${esc(p?.desc??'')}" placeholder="品名敘述"></td>
+    <td class="c" data-label="數量"><input class="ci c" type="number" id="rq_${id}" value="${qty}" min="1" style="width:50px" onchange="syncSub(${id})"></td>
+    <td class="r" data-label="定價"><input class="ci mono r" type="number" id="rp_${id}" value="${price}" placeholder="定價" onchange="syncSub(${id})"></td>
+    <td class="r" data-label="小計"><input class="ci mono r bold" type="number" id="rs_${id}" value="${sub}" placeholder="售價小計" onchange="updateTotal()"></td>
+    <td><button class="delbtn" onclick="delRow(${id})">×</button></td>`;
+  document.getElementById('itemBody').appendChild(tr);
+  reNum(); updateTotal();
+}
+function syncSub(id){
+  const q=parseInt(document.getElementById('rq_'+id)?.value)||1;
+  const p=parseInt(document.getElementById('rp_'+id)?.value)||0;
+  const s=document.getElementById('rs_'+id); if(s) s.value=q*p; updateTotal();
+}
+function delRow(id){document.getElementById('row_'+id)?.remove();reNum();updateTotal();}
+function reNum(){let n=1;document.querySelectorAll('#itemBody tr').forEach(tr=>{const e=tr.querySelector('[id^="rn_"]');if(e)e.textContent=n++;});}
+function updateTotal(){
+  let sub=0; document.querySelectorAll('[id^="rs_"]').forEach(e=>{sub+=parseInt(e.value)||0;});
+  const disc=parseInt(document.getElementById('discInput')?.value)||0;
+  const fin=Math.max(0,sub-disc);
+  document.getElementById('ltSub').textContent=fmtNTD(sub);
+  document.getElementById('ltDisc').textContent=disc>0?`- ${fmtNTD(disc)}`:'—';
+  document.getElementById('ltTotal').textContent=fmtNTD(fin);
+}
+
+
+// ══════════════════════════════════════════════
+// 品牌切換
+// ══════════════════════════════════════════════
+let currentBrand = 'HM';
+
+function switchBrand(brand) {
+  currentBrand = brand;
+  document.getElementById('brandHM').className  = 'brand-btn' + (brand==='HM' ?' active-hm':'');
+  document.getElementById('brandNC').className  = 'brand-btn' + (brand==='NC' ?' active-nc':'');
+  document.getElementById('brandMD').className  = 'brand-btn' + (brand==='MD' ?' active-md':'');
+  document.getElementById('brandHAG').className = 'brand-btn' + (brand==='HAG'?' active-hag':'');
+  document.getElementById('hmPanel').style.display  = brand==='HM' ?'block':'none';
+  document.getElementById('ncPanel').style.display  = brand==='NC' ?'block':'none';
+  document.getElementById('mdPanel').style.display  = brand==='MD' ?'block':'none';
+  document.getElementById('hagPanel').style.display = brand==='HAG'?'block':'none';
+}
+
+// ══════════════════════════════════════════════
+// Flokk HAG Chips
+// ══════════════════════════════════════════════
+function initHAGChips(){
+  const mk = p => `<div class="chip" onclick='addRow({code:${JSON.stringify(p.code)},desc:${JSON.stringify(p.desc)},price:${p.ntd},qty:1})' title="${p.desc}">
+    <span class="ctag">${p.tag}</span><span class="cprice">${fmtNTD(p.ntd)}</span></div>`;
+  const leather  = ['C8106-BKF999BKG3-C108L200','C8106-WHF004WHG3-C108L200'];
+  const puls     = ['CP8020-RPWH301RPAWH-C108L200','CP8020-BKBK209DGABK-C108L200','CP8020-BKBK115WGABK-C108L200','CP8020-BKBKSC60999BKG3-C108L200','0L8JCQ','0LE9PY','0LJM4F','0LTX3P'];
+  const fabric   = ['0KXCYB','0KQGSY','0KWP0Y','0KGQJP'];
+  const tion     = ['07UF96','08BXH9','07N0KA','09PYWL','TION2100-WHWHWHALU-C65L150'];
+  const find = codes => HAG_PRODUCTS.filter(p=>codes.includes(p.code));
+  document.getElementById('hagChip8106Leather').innerHTML = find(leather).map(mk).join('');
+  document.getElementById('hagChipPuls').innerHTML        = find(puls).map(mk).join('');
+  document.getElementById('hagChip8106Fabric').innerHTML  = find(fabric).map(mk).join('');
+  document.getElementById('hagChipTion').innerHTML        = find(tion).map(mk).join('');
+}
+
+// ══════════════════════════════════════════════
+// Madesk 選配
+// ══════════════════════════════════════════════
+function mdGetTop(){
+  const mat  = document.getElementById('mdMaterial')?.value;
+  const size = document.getElementById('mdSize')?.value;
+  return MD_TOPS.find(p=>p.material===mat && p.size===size);
+}
+function mdUpdateTop(){
+  const p = mdGetTop();
+  if(p && document.getElementById('mdTopPrice')) document.getElementById('mdTopPrice').textContent = fmtNTD(p.ntd);
+}
+function mdAddTop(){
+  const p = mdGetTop();
+  if(!p) return;
+  const qty = parseInt(document.getElementById('mdTopQty').value)||1;
+  addRow({code:p.code, desc:p.desc, price:p.ntd, qty});
+}
+function mdAddLeg(){
+  const color = document.getElementById('mdLegColor')?.value;
+  const leg = MD_LEGS.find(l=>l.color===color);
+  if(!leg) return;
+  const qty = parseInt(document.getElementById('mdLegQty').value)||1;
+  addRow({code:leg.code, desc:leg.desc, price:leg.ntd, qty});
+}
+function mdQuick(mat, size, legColor){
+  const top = MD_TOPS.find(p=>p.material===mat && p.size===size);
+  if(top) addRow({code:top.code, desc:top.desc, price:top.ntd, qty:1});
+  const leg = MD_LEGS.find(l=>l.color===legColor);
+  if(leg) addRow({code:leg.code, desc:leg.desc, price:leg.ntd, qty:1});
+}
+
+// ══════════════════════════════════════════════
+// Normann 瀏覽器
+// ══════════════════════════════════════════════
+let ncSelectedProduct = null;
+let ncActiveCat = 'all';
+
+function initNCBrowser() {
+  const cats = ['all', ...new Set(NC_PRODUCTS.map(p=>p.cat))];
+  const filterEl = document.getElementById('ncCatFilters');
+  if(!filterEl) return;
+  filterEl.innerHTML = cats.map(c=>`
+    <button class="nc-cat-filter${c==='all'?' active':''}" 
+      onclick="ncSetCat('${c}')" id="nccat_${c.replace(/[^a-z0-9]/gi,'_')}">
+      ${c==='all'?'全部':c}
+    </button>`).join('');
+  ncRender();
+}
+function ncSetCat(cat) {
+  ncActiveCat = cat;
+  document.querySelectorAll('.nc-cat-filter').forEach(b=>b.classList.remove('active'));
+  const id = 'nccat_'+cat.replace(/[^a-z0-9]/gi,'_');
+  document.getElementById(id)?.classList.add('active');
+  ncRender();
+}
+function ncFilter() { ncRender(); }
+function ncRender() {
+  const q = (document.getElementById('ncSearch')?.value||'').toLowerCase().trim();
+  const filtered = NC_PRODUCTS.filter(p=>{
+    const catOk = ncActiveCat==='all'||p.cat===ncActiveCat;
+    const qOk = !q || p.name.toLowerCase().includes(q)||p.code.toLowerCase().includes(q)||p.color.toLowerCase().includes(q);
+    return catOk && qOk;
+  });
+  const countEl=document.getElementById('ncCount');
+  if(countEl) countEl.textContent = `${filtered.length} 項商品`;
+  const grid = document.getElementById('ncGrid');
+  if(!grid) return;
+  grid.innerHTML = filtered.map(p=>{
+    const isSelected = ncSelectedProduct && ncSelectedProduct.code===p.code;
+    return `
+    <div class="nc-card${isSelected?' selected':''}" onclick="ncSelect(${JSON.stringify(p).replace(/"/g,'&quot;')})">
+      <div class="nc-cat-badge">${p.cat}</div>
+      <div class="nc-info">
+        <div class="nc-name">${p.name}</div>
+        ${p.color?`<div class="nc-color">${p.color}</div>`:''}
+        ${p.size?`<div class="nc-size">${p.size}</div>`:''}
+        <div class="nc-prices">
+          <span class="nc-eur">EUR ${p.eur.toLocaleString()}</span>
+          <span class="nc-ntd">NT$${p.ntd.toLocaleString()}</span>
+        </div>
+        <div class="nc-code">${p.code}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function ncSelect(p) {
+  ncSelectedProduct = p;
+  document.getElementById('ncSelName').textContent = p.name;
+  document.getElementById('ncSelSub').textContent = [p.color,p.size].filter(Boolean).join(' ｜ ');
+  document.getElementById('ncSelEur').textContent = p.eur.toLocaleString();
+  document.getElementById('ncSelNtd').textContent = 'NT$'+p.ntd.toLocaleString();
+  document.getElementById('ncQty').value = 1;
+  document.getElementById('ncAddBar').className = 'nc-add-bar show';
+  ncRender();
+}
+function ncAdd() {
+  if(!ncSelectedProduct) return;
+  const qty = parseInt(document.getElementById('ncQty').value)||1;
+  const p = ncSelectedProduct;
+  const desc = `${p.name}${p.color?' – '+p.color:''}${p.size?' ('+p.size+')':''}`;
+  addRow({code:p.code, desc, price:p.ntd, qty});
+  ncSelectedProduct = null;
+  document.getElementById('ncAddBar').className = 'nc-add-bar';
+  ncRender();
+}
+
+// ══════════════════════════════════════════════
+// HAG 椅款系列切換
+// ══════════════════════════════════════════════
+function switchHAGSeries(series){
+  document.querySelectorAll('.hag-stab').forEach(b=>{
+    b.classList.toggle('active', b.dataset.hag===series);
+  });
+  ['capisco8106','puls8020','tion2140'].forEach(s=>{
+    const p=document.getElementById('hagSeries-'+s);
+    if(p) p.style.display=s===series?'block':'none';
+  });
+}
+
+// ══════════════════════════════════════════════
+// Chips & Category Tabs
+// ══════════════════════════════════════════════
+function initChips(){
+  const mkChip=p=>`<div class="chip" onclick='addRow({code:${JSON.stringify(p.code)},desc:${JSON.stringify(p.desc)},price:${p.ntd},qty:1})' title="${p.desc}">
+    <span class="ctag">${p.tag}</span><span class="cprice">${fmtNTD(p.ntd)}</span></div>`;
+  document.getElementById('chipChairs').innerHTML=PRODUCTS.filter(p=>p.cat==='aeron'&&p.aeronGroup==='flagship').slice(0,4).map(mkChip).join('');
+  document.getElementById('chipAcc').innerHTML=PRODUCTS.filter(p=>p.cat==='acc').map(mkChip).join('');
+  initEamesPicker('classic');
+  initEamesPicker('tall');
+}
+
+function initEamesPicker(sz){
+  const woods = [...new Set(PRODUCTS.filter(p=>p.cat===`eames-${sz}`).map(p=>p.wood))];
+  const leathers = [...new Set(PRODUCTS.filter(p=>p.cat===`eames-${sz}`).map(p=>p.leather))];
+  const sizeLabel = sz==='classic'?'Classic':'Tall';
+  const container = document.getElementById(`eames-${sz}-picker`);
+  container.innerHTML = `
+    <div class="eames-picker">
+      <div class="eames-sel-row">
+        <div>
+          <label>木紋</label>
+          <select class="eames-sel" id="epWood-${sz}" onchange="eamesUpdate('${sz}')">
+            <option value="">— 選擇木紋 —</option>
+            ${woods.map(w=>`<option value="${w}">${w}</option>`).join('')}
+          </select>
+        </div>
+        <div>
+          <label>皮革</label>
+          <select class="eames-sel" id="epLeather-${sz}" onchange="eamesUpdate('${sz}')">
+            <option value="">— 選擇皮革 —</option>
+            <optgroup label="Category 9（+$734）">
+            ${leathers.filter(l=>{const ex=PRODUCTS.find(p=>p.cat===`eames-${sz}`&&p.leather===l);return ex&&ex.usdLeather===734;}).map(l=>{
+              const ex = PRODUCTS.find(p=>p.cat===`eames-${sz}`&&p.leather===l);
+              const zh = ex?.leatherZh||'';
+              return `<option value="${l}">${ex.leatherCode} · ${l} ${zh}</option>`;
+            }).join('')}
+            </optgroup>
+            <optgroup label="Category 11（+$1,072）">
+            ${leathers.filter(l=>{const ex=PRODUCTS.find(p=>p.cat===`eames-${sz}`&&p.leather===l);return ex&&ex.usdLeather===1072;}).map(l=>{
+              const ex = PRODUCTS.find(p=>p.cat===`eames-${sz}`&&p.leather===l);
+              const zh = ex?.leatherZh||'';
+              return `<option value="${l}">${ex.leatherCode} · ${l} ${zh}</option>`;
+            }).join('')}
+            </optgroup>
+          </select>
+        </div>
+      </div>
+      <div class="eames-price-row" id="epResult-${sz}">
+        <div>
+          <div class="eames-price-label">Eames® Lounge＋Ottoman ${sizeLabel}</div>
+          <div class="eames-desc-text" id="epDesc-${sz}" style="color:var(--muted)">請先選擇木紋與皮革</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:flex-end;">
+          <div style="text-align:right;">
+            <div style="font-size:11px;color:var(--muted);font-family:'Roboto Mono',monospace" id="epUsd-${sz}"></div>
+            <div class="eames-price-val" id="epPrice-${sz}">—</div>
+          </div>
+          <button class="eames-add-btn" id="epAddBtn-${sz}" disabled onclick="eamesAdd('${sz}')">＋ 加入</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function eamesUpdate(sz){
+  const wood = document.getElementById(`epWood-${sz}`)?.value;
+  const leather = document.getElementById(`epLeather-${sz}`)?.value;
+  const priceEl = document.getElementById(`epPrice-${sz}`);
+  const descEl = document.getElementById(`epDesc-${sz}`);
+  const btn = document.getElementById(`epAddBtn-${sz}`);
+  if(!wood||!leather){
+    priceEl.textContent='—'; descEl.textContent='請先選擇木紋與皮革';
+    btn.disabled=true; return;
+  }
+  const p = PRODUCTS.find(p=>p.cat===`eames-${sz}`&&p.wood===wood&&p.leather===leather);
+  if(!p){ priceEl.textContent='—'; descEl.textContent='查無此組合'; btn.disabled=true; return; }
+  priceEl.textContent = fmtNTD(p.ntd);
+  descEl.textContent = `${wood} ／ ${p.leatherCode} · ${leather} ${p.leatherZh||''}`;
+  const usdEl = document.getElementById(`epUsd-${sz}`);
+  if(usdEl) usdEl.textContent = `USD ${(p.usdBase+p.usdLeather).toLocaleString()}`;
+  btn.disabled=false;
+}
+
+function eamesAdd(sz){
+  const wood = document.getElementById(`epWood-${sz}`)?.value;
+  const leather = document.getElementById(`epLeather-${sz}`)?.value;
+  if(!wood||!leather) return;
+  const p = PRODUCTS.find(p=>p.cat===`eames-${sz}`&&p.wood===wood&&p.leather===leather);
+  if(!p) return;
+  addRow({code:p.code, desc:p.desc, price:p.ntd, qty:1});
+}
+
+function switchCat(cat){
+  document.querySelectorAll('.cat-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.cat-panel').forEach(p=>p.classList.remove('show'));
+  event.currentTarget.classList.add('active');
+  document.getElementById('cat-'+cat).classList.add('show');
+}
+
+// ══════════════════════════════════════════════
+// Step 切換
+// ══════════════════════════════════════════════
+function goStep(n){
+  document.getElementById('panel1').style.display=n===1?'block':'none';
+  document.getElementById('panel2').style.display=n===2?'block':'none';
+  document.getElementById('previewPanel').style.display=n===3?'block':'none';
+  [1,2,3].forEach(i=>{
+    const sb=document.getElementById('sb'+i);
+    sb.className='sbs'+(i===n?' active':i<n?' done':'');
+    sb.onclick=i<n?()=>goStep(i):null;
+  });
+  if(n===3) buildPreview();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══════════════════════════════════════════════
+// 產生報價單
+// ══════════════════════════════════════════════
+function buildPreview(){
+  const g=id=>document.getElementById(id)?.value||'';
+  const cust=g('fCust')||'—',date=g('fDate')||todayStr(),phone=g('fPhone')||'—',email=g('fEmail')||'—';
+
+  // 送貨地址組合
+  const aCity=g('fAddrCity'),aDist=g('fAddrDist'),aZip=g('fAddrZip'),aStreet=g('fAddrStreet'),aBldg=g('fAddrBldg');
+  const addr=[aZip,aCity,aDist,aBldg,aStreet].filter(Boolean).join(' ')||'—';
+
+  const stock=g('fStock')||'現貨',del=g('fDel')||'—';
+  const pay=g('fPay')||'—',note=g('fNote');
+  const handlerSel=document.getElementById('fHandlerSel')?.value||'';
+  const handler=(handlerSel==='__custom__'?g('fHandler'):handlerSel)||'—';
+  const disc=parseInt(g('discInput'))||0;
+  const invType=document.getElementById('btnInv3')?.classList.contains('sel')?'三聯式':'二聯式';
+
+  // 發票資訊
+  const invTitle=g('fInvTitle'),invTaxId=g('fInvTaxId');
+  const invName=g('fInvName'),invPhone=g('fInvPhone');
+  const iCity=g('fInvCity'),iDist=g('fInvDist'),iZip=g('fInvZip'),iStreet=g('fInvStreet'),iBldg=g('fInvBldg');
+  const invAddr=[iZip,iCity,iDist,iBldg,iStreet].filter(Boolean).join(' ')||'—';
+
+  const items=[];
+  document.querySelectorAll('#itemBody tr').forEach(tr=>{
+    const id=tr.id.replace('row_','');
+    const code=document.getElementById('rc_'+id)?.value||'';
+    const desc=document.getElementById('rd_'+id)?.value||'';
+    const qty=parseInt(document.getElementById('rq_'+id)?.value)||1;
+    const price=parseInt(document.getElementById('rp_'+id)?.value)||0;
+    const sub=parseInt(document.getElementById('rs_'+id)?.value)||0;
+    if(code||desc||sub) items.push({code,desc,qty,price,sub});
+  });
+
+  const subtotal=items.reduce((s,i)=>s+i.sub,0);
+  const fin=Math.max(0,subtotal-disc);
+
+  const rows=items.map((it,i)=>`
+    <tr>
+      <td>${i+1}</td>
+      <td><span class="qpcode">${it.code||'—'}</span></td>
+      <td>${it.desc||'—'}</td>
+      <td class="c">${it.qty}</td>
+      <td class="r" style="color:#999">${it.price?fmtNTD(it.price):'—'}</td>
+      <td class="r" style="font-weight:700">${fmtNTD(it.sub)}</td>
+    </tr>`).join('');
+
+  const discRow=disc>0?`<div class="qptr qptr-d"><span>折扣優惠</span><span>- ${fmtNTD(disc)}</span></div>`:'';
+  const noteRow=note?`<div class="qpmi full"><div class="qpmi-l">備註</div><div class="qpmi-v">${note}</div></div>`:'';
+
+  // 三聯式發票抬頭列
+  const triRow=invType==='三聯式'?`
+    <div class="qpmi qpmi-inv"><div class="qpmi-l">發票抬頭</div><div class="qpmi-v">${invTitle||'—'}</div></div>
+    <div class="qpmi qpmi-inv"><div class="qpmi-l">統一編號</div><div class="qpmi-v">${invTaxId||'—'}</div></div>`:'';
+
+  // 發票收件資料列
+  const invRecRow=`
+    <div class="qpmi"><div class="qpmi-l">發票收件人</div><div class="qpmi-v">${invName||cust}</div></div>
+    <div class="qpmi"><div class="qpmi-l">收件電話</div><div class="qpmi-v">${invPhone||phone}</div></div>
+    <div class="qpmi full"><div class="qpmi-l">發票收件地址</div><div class="qpmi-v">${invAddr}</div></div>`;
+
+  document.getElementById('qpa').innerHTML=`
+  <div class="qph">
+    <div><div class="qph-co">雅浩國際股份有限公司</div>
+      <div class="qph-sub">台北市大安區仁愛路三段125號1樓<br>TEL: 02-2545-2382 ｜ www.yaho.com.tw</div></div>
+    <div class="qph-doc"><h2>訂 購 單</h2><div class="qph-date">Date: ${date}</div></div>
+  </div>
+  <div class="qptw"><table class="qpt">
+    <thead><tr>
+      <th style="width:26px">#</th><th style="width:175px">型號</th><th>敘述</th>
+      <th class="c" style="width:48px">數量</th>
+      <th class="r" style="width:108px">定價 (NT)</th>
+      <th class="r" style="width:118px">售價小計 (NT)</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table></div>
+  <div class="qptots">
+    <div class="qptr"><span>商品小計</span><span>${fmtNTD(subtotal)}</span></div>
+    ${discRow}
+    <div class="qptf"><span>總計（含稅）</span><span>${fmtNTD(fin)}</span></div>
+  </div>
+  <div class="qpm" style="border-top:1px solid #e0ddd8;">
+    <div class="qpmi"><div class="qpmi-l">訂購者</div><div class="qpmi-v">${cust}</div></div>
+    <div class="qpmi"><div class="qpmi-l">聯絡電話</div><div class="qpmi-v">${phone}</div></div>
+    <div class="qpmi"><div class="qpmi-l">Email</div><div class="qpmi-v">${email}</div></div>
+    <div class="qpmi"><div class="qpmi-l">發票類型</div><div class="qpmi-v">${invType}</div></div>
+    ${triRow}
+    <div class="qpmi full"><div class="qpmi-l">送貨地址</div><div class="qpmi-v">${addr}</div></div>
+    ${invRecRow}
+    ${noteRow}
+  </div>
+  <div class="qpdl">
+    <div class="qpdli"><div class="qpdll">貨物狀況</div><div>${stock}</div></div>
+    <div class="qpdli"><div class="qpdll">預估交貨期</div><div>${del}</div></div>
+    <div class="qpdli"><div class="qpdll">付款方式</div><div>${pay}</div></div>
+    <div class="qpdli"><div class="qpdll">承辦人</div><div>${handler}</div></div>
+  </div>
+  <div class="qpterms">
+    <div class="qpterms-t">注意事項</div>
+    <ol>
+      <li>客戶同意於簽署本訂單時，請先支付貨款，敝公司將立刻為您安排訂貨。</li>
+      <li>付款方式：(1) 電匯/ATM轉帳：第一銀行代號 007，帳戶：雅浩國際股份有限公司，帳號：145-10-074518（第一銀行民生分行）。(2) 信用卡付款。(3) 付現或即期支票（限門市部現場交易時）。</li>
+      <li>特價品及訂貨產品不可退貨、更換款式或更新顏色。</li>
+      <li>商品已出貨並超過7日猶豫期，客戶未提出商品異議，視同交貨完成。猶豫期間退換貨，客戶需負擔NT$2,500運費（以件計）。</li>
+      <li>原廠包裝與吊牌為商品一部分。退/換貨若無原廠外箱/腳套/防塵套，需負擔包材費NT$1,500；缺原廠吊牌則另收NT$2,000。</li>
+      <li>本款椅子配備BB輪適用一般地板；若需C7軟硬地板兩用輪，請加付NT$2,000（需自行安裝）。C7輪5顆單購NT$3,250；DC1靜音輪5顆單購NT$4,750（限New Aeron）。</li>
+      <li>凡購買HermanMiller椅款，收到貨品時請確認保固貼紙完整，切勿撕毀或遺失，否則原廠不提供保固服務。</li>
+      <li>現貨商品自下單超過三個月未出貨，或訂購商品自通知到貨三個月未出貨，貯存費用由客戶自行負擔。</li>
+    </ol>
+  </div>
+  <div class="qpsign">
+    <div class="qpsign-box"><div class="qpsign-label">訂購人簽名</div></div>
+    <div class="qpsign-box"><div class="qpsign-label">承辦人簽名</div></div>
+  </div>
+  <div class="qpfoot">雅浩國際股份有限公司｜台北市大安區仁愛路三段125號1樓｜TEL: 02-2545-2382｜www.yaho.com.tw</div>`;
+}
+
+// ══════════════════════════════════════════════
+// 重設
+// ══════════════════════════════════════════════
+function resetAll(){
+  if(!confirm('確定清空所有資料重新填寫？')) return;
+  document.getElementById('itemBody').innerHTML=''; rc=0;
+  ['fCust','fPhone','fEmail','fAddrStreet','fAddrBldg','fAddrZip',
+   'fDel','fHandler','fNote','fInvTitle','fInvTaxId',
+   'fInvName','fInvPhone','fInvStreet','fInvBldg','fInvZip'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.value='';
+  });
+  ['fAddrCity','fAddrDist','fInvCity','fInvDist'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.value='';
+  });
+  document.getElementById('fDate').value=todayStr();
+  document.getElementById('discInput').value=0;
+  document.getElementById('sameAsBuyer').checked=false;
+  document.getElementById('fHandlerSel').value='__custom__';
+  document.getElementById('fHandler').value='';
+  document.getElementById('fHandler').style.display='none';
+  setInvType(2);
+  ncSelectedProduct=null;
+  const ncBar=document.getElementById('ncAddBar');
+  if(ncBar) ncBar.className='nc-add-bar';
+  updateTotal(); goStep(1); switchBrand('HM');
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+// ══════════════════════════════════════════════
+// 承辦人下拉
+// ══════════════════════════════════════════════
+function onHandlerSelChange(){
+  const sel=document.getElementById('fHandlerSel');
+  const inp=document.getElementById('fHandler');
+  if(sel.value==='__custom__'){
+    inp.style.display='block'; inp.value=''; inp.focus();
+  } else {
+    inp.style.display='none'; inp.value=sel.value;
+  }
+}
+
+// ══════════════════════════════════════════════
+// 發票類型切換
+// ══════════════════════════════════════════════
+function setInvType(n){
+  document.getElementById('btnInv2').classList.toggle('sel',n===2);
+  document.getElementById('btnInv3').classList.toggle('sel',n===3);
+  document.getElementById('invTriSection').style.display=n===3?'block':'none';
+}
+
+// ══════════════════════════════════════════════
+// 同購買人綁定
+// ══════════════════════════════════════════════
+function toggleSameAsBuyer(){
+  const chk=document.getElementById('sameAsBuyer').checked;
+  const fields=document.getElementById('invRecipientFields');
+  if(chk){
+    syncInvFromBuyer();
+    // 鎖定欄位
+    ['fInvName','fInvPhone','fInvStreet','fInvBldg','fInvZip'].forEach(id=>{
+      const el=document.getElementById(id); if(el){el.readOnly=true;el.style.background='#f0efe9';el.style.color='var(--muted)';}
+    });
+    ['fInvCity','fInvDist'].forEach(id=>{
+      const el=document.getElementById(id); if(el){el.disabled=true;el.style.opacity='0.6';}
+    });
+  } else {
+    ['fInvName','fInvPhone','fInvStreet','fInvBldg'].forEach(id=>{
+      const el=document.getElementById(id); if(el){el.readOnly=false;el.style.background='';el.style.color='';}
+    });
+    document.getElementById('fInvZip').readOnly=true;
+    ['fInvCity','fInvDist'].forEach(id=>{
+      const el=document.getElementById(id); if(el){el.disabled=false;el.style.opacity='';}
+    });
+  }
+}
+
+function syncInvFromBuyer(){
+  const chk=document.getElementById('sameAsBuyer').checked;
+  if(!chk) return;
+  const copy=(src,dst)=>{const s=document.getElementById(src),d=document.getElementById(dst);if(s&&d)d.value=s.value;};
+  copy('fCust','fInvName'); copy('fPhone','fInvPhone');
+  copy('fAddrCity','fInvCity'); copy('fAddrDist','fInvDist');
+  copy('fAddrStreet','fInvStreet'); copy('fAddrBldg','fInvBldg'); copy('fAddrZip','fInvZip');
+  // 同步下拉選單選項
+  const cityEl=document.getElementById('fAddrCity');
+  const invCityEl=document.getElementById('fInvCity');
+  if(cityEl&&invCityEl){ invCityEl.innerHTML=cityEl.innerHTML; invCityEl.value=cityEl.value; }
+  const distEl=document.getElementById('fAddrDist');
+  const invDistEl=document.getElementById('fInvDist');
+  if(distEl&&invDistEl){ invDistEl.innerHTML=distEl.innerHTML; invDistEl.value=distEl.value; }
+}
+
+function onBuyerChange(){ syncInvFromBuyer(); }
+
+// ══════════════════════════════════════════════
+// 郵局地址 — 縣市 / 鄉鎮市區 / 郵遞區號
+// ══════════════════════════════════════════════
+const TW_ADDR = {
+  '臺北市':{'中正區':'100','大同區':'103','中山區':'104','松山區':'105','大安區':'106','萬華區':'108','信義區':'110','士林區':'111','北投區':'112','內湖區':'114','南港區':'115','文山區':'116'},
+  '新北市':{'板橋區':'220','汐止區':'221','深坑區':'222','石碇區':'223','瑞芳區':'224','平溪區':'226','雙溪區':'227','貢寮區':'228','新店區':'231','坪林區':'232','烏來區':'233','永和區':'234','中和區':'235','土城區':'236','三峽區':'237','樹林區':'238','鶯歌區':'239','三重區':'241','新莊區':'242','泰山區':'243','林口區':'244','蘆洲區':'247','五股區':'248','八里區':'249','淡水區':'251','三芝區':'252','石門區':'253'},
+  '桃園市':{'中壢區':'320','平鎮區':'324','龍潭區':'325','楊梅區':'326','新屋區':'327','觀音區':'328','桃園區':'330','龜山區':'333','八德區':'334','大溪區':'335','復興區':'336','大園區':'337','蘆竹區':'338'},
+  '臺中市':{'中區':'400','東區':'401','南區':'402','西區':'403','北區':'404','北屯區':'406','西屯區':'407','南屯區':'408','太平區':'411','大里區':'412','霧峰區':'413','烏日區':'414','豐原區':'420','后里區':'421','石岡區':'422','東勢區':'423','和平區':'424','新社區':'426','潭子區':'427','大雅區':'428','神岡區':'429','大肚區':'432','沙鹿區':'433','龍井區':'434','梧棲區':'435','清水區':'436','大甲區':'437','外埔區':'438','大安區':'439'},
+  '臺南市':{'中西區':'700','東區':'701','南區':'702','北區':'704','安平區':'708','安南區':'709','永康區':'710','歸仁區':'711','新化區':'712','左鎮區':'713','玉井區':'714','楠西區':'715','南化區':'716','仁德區':'717','關廟區':'718','龍崎區':'719','官田區':'720','麻豆區':'721','佳里區':'722','西港區':'723','七股區':'724','將軍區':'725','學甲區':'726','北門區':'727','新營區':'730','後壁區':'731','白河區':'732','東山區':'733','六甲區':'734','下營區':'735','柳營區':'736','鹽水區':'737','善化區':'741','大內區':'742','山上區':'743','新市區':'744','安定區':'745'},
+  '高雄市':{'新興區':'800','前金區':'801','苓雅區':'802','鹽埕區':'803','鼓山區':'804','旗津區':'805','前鎮區':'806','三民區':'807','楠梓區':'811','小港區':'812','左營區':'813','仁武區':'814','大社區':'815','岡山區':'820','路竹區':'821','阿蓮區':'822','田寮區':'823','燕巢區':'824','橋頭區':'825','梓官區':'826','彌陀區':'827','永安區':'828','湖內區':'829','鳳山區':'830','大寮區':'831','林園區':'832','鳥松區':'833','大樹區':'840','旗山區':'842','美濃區':'843','六龜區':'844','內門區':'845','杉林區':'846','甲仙區':'847','桃源區':'848','那瑪夏區':'849','茂林區':'851','茄萣區':'852'},
+  '基隆市':{'仁愛區':'200','信義區':'201','中正區':'202','中山區':'203','安樂區':'204','暖暖區':'205','七堵區':'206'},
+  '新竹市':{'東區':'300','北區':'302','香山區':'303'},
+  '嘉義市':{'東區':'600','西區':'600'},
+  '新竹縣':{'竹北市':'302','湖口鄉':'303','新豐鄉':'304','新埔鎮':'305','關西鎮':'306','芎林鄉':'307','寶山鄉':'308','竹東鎮':'310','五峰鄉':'311','橫山鄉':'312','尖石鄉':'313','北埔鄉':'314','峨眉鄉':'315'},
+  '苗栗縣':{'竹南鎮':'350','頭份市':'351','三灣鄉':'352','南庄鄉':'353','獅潭鄉':'354','後龍鎮':'356','通霄鎮':'357','苑裡鎮':'358','苗栗市':'360','造橋鄉':'361','頭屋鄉':'362','公館鄉':'363','大湖鄉':'364','泰安鄉':'365','銅鑼鄉':'366','三義鄉':'367','西湖鄉':'368','卓蘭鎮':'369'},
+  '彰化縣':{'彰化市':'500','芬園鄉':'502','花壇鄉':'503','秀水鄉':'504','鹿港鎮':'505','福興鄉':'506','線西鄉':'507','和美鎮':'508','伸港鄉':'509','員林市':'510','社頭鄉':'511','永靖鄉':'512','埔心鄉':'513','溪湖鎮':'514','大村鄉':'515','埔鹽鄉':'516','田中鎮':'520','北斗鎮':'521','田尾鄉':'522','埤頭鄉':'523','溪州鄉':'524','竹塘鄉':'525','二林鎮':'526','大城鄉':'527','芳苑鄉':'528','二水鄉':'530'},
+  '南投縣':{'南投市':'540','中寮鄉':'541','草屯鎮':'542','國姓鄉':'544','埔里鎮':'545','仁愛鄉':'546','名間鄉':'551','集集鎮':'552','水里鄉':'553','魚池鄉':'555','信義鄉':'556','竹山鎮':'557','鹿谷鄉':'558'},
+  '雲林縣':{'斗南鎮':'630','大埤鄉':'631','虎尾鎮':'632','土庫鎮':'633','褒忠鄉':'634','東勢鄉':'635','臺西鄉':'636','崙背鄉':'637','麥寮鄉':'638','斗六市':'640','林內鄉':'643','古坑鄉':'646','莿桐鄉':'647','西螺鎮':'648','二崙鄉':'649','北港鎮':'651','水林鄉':'652','口湖鄉':'653','四湖鄉':'654','元長鄉':'655'},
+  '嘉義縣':{'番路鄉':'602','梅山鄉':'603','竹崎鄉':'604','阿里山鄉':'605','中埔鄉':'606','大埔鄉':'607','水上鄉':'608','鹿草鄉':'611','太保市':'612','朴子市':'613','東石鄉':'614','六腳鄉':'615','新港鄉':'616','民雄鄉':'621','大林鎮':'622','溪口鄉':'623','義竹鄉':'624','布袋鎮':'625'},
+  '屏東縣':{'屏東市':'900','三地門鄉':'901','霧台鄉':'902','瑪家鄉':'903','九如鄉':'904','里港鄉':'905','高樹鄉':'906','鹽埔鄉':'907','長治鄉':'908','麟洛鄉':'909','竹田鄉':'911','內埔鄉':'912','萬丹鄉':'913','潮州鎮':'920','泰武鄉':'921','來義鄉':'922','萬巒鄉':'923','崁頂鄉':'924','新埤鄉':'925','南州鄉':'926','林邊鄉':'927','東港鎮':'928','琉球鄉':'929','佳冬鄉':'931','新園鄉':'932','枋寮鄉':'940','枋山鄉':'941','春日鄉':'942','獅子鄉':'943','車城鄉':'944','牡丹鄉':'945','恆春鎮':'946','滿州鄉':'947'},
+  '宜蘭縣':{'宜蘭市':'260','頭城鎮':'261','礁溪鄉':'262','壯圍鄉':'263','員山鄉':'264','羅東鎮':'265','三星鄉':'266','大同鄉':'267','五結鄉':'268','冬山鄉':'269','蘇澳鎮':'270','南澳鄉':'272'},
+  '花蓮縣':{'花蓮市':'970','新城鄉':'971','秀林鄉':'972','吉安鄉':'973','壽豐鄉':'974','鳳林鎮':'975','光復鄉':'976','豐濱鄉':'977','瑞穗鄉':'978','萬榮鄉':'979','玉里鎮':'981','卓溪鄉':'982','富里鄉':'983'},
+  '臺東縣':{'臺東市':'950','綠島鄉':'951','蘭嶼鄉':'952','延平鄉':'953','卑南鄉':'954','鹿野鄉':'955','關山鎮':'956','海端鄉':'957','池上鄉':'958','東河鄉':'959','成功鎮':'961','長濱鄉':'962','太麻里鄉':'963','金峰鄉':'964','大武鄉':'965','達仁鄉':'966'},
+  '澎湖縣':{'馬公市':'880','西嶼鄉':'881','望安鄉':'882','七美鄉':'883','白沙鄉':'884','湖西鄉':'885'},
+  '金門縣':{'金城鎮':'890','金湖鎮':'891','金沙鎮':'892','金寧鄉':'893','烈嶼鄉':'894','烏坵鄉':'896'},
+  '連江縣':{'南竿鄉':'209','北竿鄉':'210','莒光鄉':'211','東引鄉':'212'},
+};
+
+function initCitySelect(cityId){
+  const el=document.getElementById(cityId); if(!el) return;
+  el.innerHTML='<option value="">縣市</option>';
+  Object.keys(TW_ADDR).forEach(c=>{
+    const o=document.createElement('option'); o.value=c; o.textContent=c; el.appendChild(o);
+  });
+}
+
+function updateCityDist(cityId,distId){
+  const city=document.getElementById(cityId)?.value||'';
+  const distEl=document.getElementById(distId); if(!distEl) return;
+  distEl.innerHTML='<option value="">鄉鎮市區</option>';
+  if(!city||!TW_ADDR[city]) return;
+  Object.keys(TW_ADDR[city]).forEach(d=>{
+    const o=document.createElement('option'); o.value=d; o.textContent=d; distEl.appendChild(o);
+  });
+  // clear zip
+  const zipId=distId.replace('Dist','Zip');
+  const zipEl=document.getElementById(zipId); if(zipEl) zipEl.value='';
+}
+
+function syncZip(distId,zipId){
+  const cityId=distId.replace('Dist','City');
+  const city=document.getElementById(cityId)?.value||'';
+  const dist=document.getElementById(distId)?.value||'';
+  const zipEl=document.getElementById(zipId); if(!zipEl) return;
+  zipEl.value=(TW_ADDR[city]&&TW_ADDR[city][dist])||'';
+}
+
+initChips();
+initNCBrowser();
+initHAGChips();
+mdUpdateTop();
+initCitySelect('fAddrCity');
+onHandlerSelChange();
+initCitySelect('fInvCity');
+document.getElementById('fDate').value=todayStr();
+addRow();
+</script>
+</body>
+</html>
