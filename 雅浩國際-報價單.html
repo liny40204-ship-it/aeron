@@ -322,23 +322,22 @@ mark{background:#fff3cd;border-radius:2px;padding:0 1px;}
   .qph-doc h2{font-size:15px!important;}
   .qph-date{font-size:8.5px!important;}
 
-  /* ── 商品表格區：flex:1 吃滿剩餘空間 ── */
+  /* ── 商品表格區：自然高度，不撐滿 ── */
   .qptw{
     padding:0 14px!important;
-    flex:1!important;
-    display:flex!important;flex-direction:column!important;
-    overflow:hidden!important;
-    min-height:0!important;
+    flex:none!important;
+    display:block!important;
+    overflow:visible!important;
   }
   .qpt{
-    width:100%!important;flex:1!important;
+    width:100%!important;flex:none!important;
     font-size:10px!important;margin:4px 0!important;
     table-layout:fixed!important;border-collapse:collapse!important;
   }
   .qpt thead{display:table-header-group!important;}
   .qpt tbody{display:table-row-group!important;}
   .qpt th{padding:5px 6px!important;font-size:8.5px!important;font-weight:600!important;color:#444!important;text-transform:uppercase!important;letter-spacing:.05em!important;}
-  .qpt td{padding:0 6px!important;font-size:10px!important;line-height:1.35!important;vertical-align:middle!important;}
+  .qpt td{padding:6px 6px!important;font-size:10px!important;line-height:1.5!important;vertical-align:middle!important;}
   .qpt th:nth-child(1),.qpt td:nth-child(1){width:4%!important;text-align:center!important;}
   .qpt th:nth-child(2),.qpt td:nth-child(2){width:23%!important;}
   .qpt th:nth-child(3),.qpt td:nth-child(3){width:37%!important;}
@@ -356,13 +355,14 @@ mark{background:#fff3cd;border-radius:2px;padding:0 1px;}
   .qptf{font-size:14px!important;font-weight:700!important;gap:20px!important;padding-top:4px!important;display:flex!important;justify-content:space-between!important;border-top:1px solid #e0ddd8!important;margin-top:3px!important;}
   .qptf span:last-child{font-family:'Roboto Mono',monospace!important;min-width:90px!important;text-align:right!important;}
 
-  /* ── 客戶資料（兩欄 grid，自然高度）── */
+  /* ── 客戶資料：flex:1 自動填滿中間剩餘空間 ── */
   .qpm{
     display:grid!important;grid-template-columns:1fr 1fr!important;
     border-top:1px solid #e0ddd8!important;border-bottom:1px solid #e0ddd8!important;
-    flex-shrink:0!important;
+    flex:1!important;
+    align-content:start!important;
   }
-  .qpmi{padding:4px 14px!important;font-size:9.5px!important;border-right:1px solid #e0ddd8!important;border-bottom:1px solid #e0ddd8!important;}
+  .qpmi{padding:0!important;font-size:9.5px!important;border-right:1px solid #e0ddd8!important;border-bottom:1px solid #e0ddd8!important;display:flex!important;flex-direction:column!important;justify-content:center!important;min-height:22px!important;padding:3px 14px!important;}
   .qpmi:nth-child(even){border-right:none!important;}
   .qpmi.full{grid-column:1/-1!important;border-right:none!important;}
   .qpmi-l{font-size:7.5px!important;color:#888!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.05em!important;margin-bottom:1px!important;}
@@ -371,7 +371,7 @@ mark{background:#fff3cd;border-radius:2px;padding:0 1px;}
 
   /* ── 物流列 ── */
   .qpdl{display:flex!important;font-size:9.5px!important;flex-shrink:0!important;border-bottom:1px solid #e0ddd8!important;}
-  .qpdli{flex:1!important;padding:4px 14px!important;border-right:1px solid #e0ddd8!important;}
+  .qpdli{flex:1!important;padding:5px 14px!important;border-right:1px solid #e0ddd8!important;}
   .qpdli:last-child{border-right:none!important;}
   .qpdll{font-size:7.5px!important;color:#888!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.05em!important;margin-bottom:1px!important;}
 
@@ -439,13 +439,13 @@ mark{background:#fff3cd;border-radius:2px;padding:0 1px;}
 
   /* Chips — 放大方便點選 */
   .cat-tabs{grid-template-columns:repeat(auto-fit,minmax(72px,1fr));gap:4px;margin-bottom:10px;}
-  .cat-tab{padding:9px 6px;font-size:11px;border-radius:7px;}
+  .cat-tab{padding:8px 6px;font-size:11px;border-radius:7px;}
   .eames-subtabs{margin-bottom:10px;}
-  .eames-stab{padding:9px 8px;font-size:12px;}
-  .chip{padding:10px 16px;font-size:13px;border-radius:10px;}
-  .chiprow{gap:8px;}
-  .ctag{font-size:13px;}
-  .cprice{font-size:12px;}
+  .eames-stab{padding:8px 8px;font-size:12px;}
+  .chip{padding:8px 14px;font-size:12px;border-radius:10px;}
+  .chiprow{gap:6px;}
+  .ctag{font-size:12px;}
+  .cprice{font-size:11px;}
 
   /* 品項明細表 → 卡片式 */
   .itbl thead{display:none;}
@@ -506,7 +506,8 @@ mark{background:#fff3cd;border-radius:2px;padding:0 1px;}
   /* Step 2 表單 */
   .addr-row{grid-template-columns:1fr 1fr;gap:8px;}
   .addr-row input[id$="Street"]{grid-column:1/-1;}
-  .finput,.fsel,.finput-sm,.fsel-sm{font-size:15px;padding:11px 12px;}
+  .finput,.fsel{font-size:14px;padding:9px 11px;}
+  .finput-sm,.fsel-sm{font-size:14px;padding:9px 10px;}
 
   /* 發票區 */
   .inv-panel{padding:12px;}
