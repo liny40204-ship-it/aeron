@@ -60,6 +60,7 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);
 .hm-stab.active{background:#1a1917;}
 .hag-stab.active{background:#6b3a1f!important;}
 .emb-stab.active{background:#2d5a3d!important;}
+.m2-stab.active{background:#3a4a6b!important;}
 .aer-stab.active{background:#1a1917!important;}
 .hm-stab.active .hm-stab-name{color:#fff;}
 .hm-stab.active .hm-stab-sub{color:rgba(255,255,255,.55);}
@@ -322,22 +323,23 @@ mark{background:#fff3cd;border-radius:2px;padding:0 1px;}
   .qph-doc h2{font-size:15px!important;}
   .qph-date{font-size:8.5px!important;}
 
-  /* ── 商品表格區：自然高度，不撐滿 ── */
+  /* ── 商品表格區：flex:1 吃滿剩餘空間 ── */
   .qptw{
     padding:0 14px!important;
-    flex:none!important;
-    display:block!important;
-    overflow:visible!important;
+    flex:1!important;
+    display:flex!important;flex-direction:column!important;
+    overflow:hidden!important;
+    min-height:0!important;
   }
   .qpt{
-    width:100%!important;flex:none!important;
+    width:100%!important;flex:1!important;
     font-size:10px!important;margin:4px 0!important;
     table-layout:fixed!important;border-collapse:collapse!important;
   }
   .qpt thead{display:table-header-group!important;}
   .qpt tbody{display:table-row-group!important;}
   .qpt th{padding:5px 6px!important;font-size:8.5px!important;font-weight:600!important;color:#444!important;text-transform:uppercase!important;letter-spacing:.05em!important;}
-  .qpt td{padding:6px 6px!important;font-size:10px!important;line-height:1.5!important;vertical-align:middle!important;}
+  .qpt td{padding:0 6px!important;font-size:10px!important;line-height:1.35!important;vertical-align:middle!important;}
   .qpt th:nth-child(1),.qpt td:nth-child(1){width:4%!important;text-align:center!important;}
   .qpt th:nth-child(2),.qpt td:nth-child(2){width:23%!important;}
   .qpt th:nth-child(3),.qpt td:nth-child(3){width:37%!important;}
@@ -355,14 +357,13 @@ mark{background:#fff3cd;border-radius:2px;padding:0 1px;}
   .qptf{font-size:14px!important;font-weight:700!important;gap:20px!important;padding-top:4px!important;display:flex!important;justify-content:space-between!important;border-top:1px solid #e0ddd8!important;margin-top:3px!important;}
   .qptf span:last-child{font-family:'Roboto Mono',monospace!important;min-width:90px!important;text-align:right!important;}
 
-  /* ── 客戶資料：flex:1 自動填滿中間剩餘空間 ── */
+  /* ── 客戶資料（兩欄 grid，自然高度）── */
   .qpm{
     display:grid!important;grid-template-columns:1fr 1fr!important;
     border-top:1px solid #e0ddd8!important;border-bottom:1px solid #e0ddd8!important;
-    flex:1!important;
-    align-content:start!important;
+    flex-shrink:0!important;
   }
-  .qpmi{padding:0!important;font-size:9.5px!important;border-right:1px solid #e0ddd8!important;border-bottom:1px solid #e0ddd8!important;display:flex!important;flex-direction:column!important;justify-content:center!important;min-height:22px!important;padding:3px 14px!important;}
+  .qpmi{padding:4px 14px!important;font-size:9.5px!important;border-right:1px solid #e0ddd8!important;border-bottom:1px solid #e0ddd8!important;}
   .qpmi:nth-child(even){border-right:none!important;}
   .qpmi.full{grid-column:1/-1!important;border-right:none!important;}
   .qpmi-l{font-size:7.5px!important;color:#888!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.05em!important;margin-bottom:1px!important;}
@@ -371,7 +372,7 @@ mark{background:#fff3cd;border-radius:2px;padding:0 1px;}
 
   /* ── 物流列 ── */
   .qpdl{display:flex!important;font-size:9.5px!important;flex-shrink:0!important;border-bottom:1px solid #e0ddd8!important;}
-  .qpdli{flex:1!important;padding:5px 14px!important;border-right:1px solid #e0ddd8!important;}
+  .qpdli{flex:1!important;padding:4px 14px!important;border-right:1px solid #e0ddd8!important;}
   .qpdli:last-child{border-right:none!important;}
   .qpdll{font-size:7.5px!important;color:#888!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.05em!important;margin-bottom:1px!important;}
 
@@ -439,13 +440,13 @@ mark{background:#fff3cd;border-radius:2px;padding:0 1px;}
 
   /* Chips — 放大方便點選 */
   .cat-tabs{grid-template-columns:repeat(auto-fit,minmax(72px,1fr));gap:4px;margin-bottom:10px;}
-  .cat-tab{padding:8px 6px;font-size:11px;border-radius:7px;}
+  .cat-tab{padding:9px 6px;font-size:11px;border-radius:7px;}
   .eames-subtabs{margin-bottom:10px;}
-  .eames-stab{padding:8px 8px;font-size:12px;}
-  .chip{padding:8px 14px;font-size:12px;border-radius:10px;}
-  .chiprow{gap:6px;}
-  .ctag{font-size:12px;}
-  .cprice{font-size:11px;}
+  .eames-stab{padding:9px 8px;font-size:12px;}
+  .chip{padding:10px 16px;font-size:13px;border-radius:10px;}
+  .chiprow{gap:8px;}
+  .ctag{font-size:13px;}
+  .cprice{font-size:12px;}
 
   /* 品項明細表 → 卡片式 */
   .itbl thead{display:none;}
@@ -506,8 +507,7 @@ mark{background:#fff3cd;border-radius:2px;padding:0 1px;}
   /* Step 2 表單 */
   .addr-row{grid-template-columns:1fr 1fr;gap:8px;}
   .addr-row input[id$="Street"]{grid-column:1/-1;}
-  .finput,.fsel{font-size:14px;padding:9px 11px;}
-  .finput-sm,.fsel-sm{font-size:14px;padding:9px 10px;}
+  .finput,.fsel,.finput-sm,.fsel-sm{font-size:15px;padding:11px 12px;}
 
   /* 發票區 */
   .inv-panel{padding:12px;}
@@ -641,6 +641,7 @@ mark{background:#fff3cd;border-radius:2px;padding:0 1px;}
     <div class="cat-tabs">
       <div class="cat-tab active" onclick="switchCat('aeron')">Aeron®</div>
       <div class="cat-tab" onclick="switchCat('embody')">Embody®</div>
+      <div class="cat-tab" onclick="switchCat('mirra2')">Mirra 2®</div>
       <div class="cat-tab" onclick="switchCat('eames')">Eames® Lounge</div>
       <div class="cat-tab" onclick="switchCat('acc')">配件</div>
     </div>
@@ -653,7 +654,7 @@ mark{background:#fff3cd;border-radius:2px;padding:0 1px;}
         <div class="hm-series-label">EMBODY® 選擇框架系列</div>
         <div class="hm-series-tabs">
           <button class="hm-stab emb-stab active" data-emb="black" onclick="switchEmbodySeries('black')">
-            <span class="hm-stab-name">黑框黑腳</span><span class="hm-stab-sub">NT$88,000 起</span>
+            <span class="hm-stab-name">黑框黑腳</span><span class="hm-stab-sub">NT$90,000 起</span>
           </button>
           <button class="hm-stab emb-stab" data-emb="white" onclick="switchEmbodySeries('white')">
             <span class="hm-stab-name">白框系列</span><span class="hm-stab-sub">黑腳／灰腳</span>
@@ -670,6 +671,34 @@ mark{background:#fff3cd;border-radius:2px;padding:0 1px;}
         </div>
         <div class="hm-series-panel" id="embSeries-polish" style="display:none">
           <div class="chiprow" id="embChipPolish"></div>
+        </div>
+      </div>
+    </div>
+    <div class="cat-panel" id="cat-mirra2">
+      <div class="hm-series-wrap">
+        <div class="hm-series-label">MIRRA 2® 選擇框架系列</div>
+        <div class="hm-series-tabs">
+          <button class="hm-stab m2-stab active" data-m2="black" onclick="switchMirra2Series('black')">
+            <span class="hm-stab-name">黑框黑腳</span><span class="hm-stab-sub">待建檔</span>
+          </button>
+          <button class="hm-stab m2-stab" data-m2="white" onclick="switchMirra2Series('white')">
+            <span class="hm-stab-name">白框系列</span><span class="hm-stab-sub">待建檔</span>
+          </button>
+          <button class="hm-stab m2-stab" data-m2="polish" onclick="switchMirra2Series('polish')">
+            <span class="hm-stab-name">拋光鋁腳</span><span class="hm-stab-sub">待建檔</span>
+          </button>
+        </div>
+        <div class="hm-series-panel" id="m2Series-black">
+          <div class="chiprow" id="m2ChipBlack"></div>
+          <div style="font-size:11px;color:var(--muted);padding:8px 4px;">尚未建立 Mirra 2® 黑框黑腳品項，請提供型號後新增。</div>
+        </div>
+        <div class="hm-series-panel" id="m2Series-white" style="display:none">
+          <div class="chiprow" id="m2ChipWhite"></div>
+          <div style="font-size:11px;color:var(--muted);padding:8px 4px;">尚未建立 Mirra 2® 白框系列品項，請提供型號後新增。</div>
+        </div>
+        <div class="hm-series-panel" id="m2Series-polish" style="display:none">
+          <div class="chiprow" id="m2ChipPolish"></div>
+          <div style="font-size:11px;color:var(--muted);padding:8px 4px;">尚未建立 Mirra 2® 拋光鋁腳品項，請提供型號後新增。</div>
         </div>
       </div>
     </div>
@@ -994,6 +1023,7 @@ mark{background:#fff3cd;border-radius:2px;padding:0 1px;}
 // ══════════════════════════════════════════════
 const PRODUCTS = [
   // ── Aeron 常用椅款 ──
+  { code:'AER1A13DW ALP G1 G1 G1 BB BK 23103',    tag:'旗艦A',   desc:'Aeron® 旗艦款 A｜Graphite 石墨黑｜全功能把手＋PostureFit SL', ntd:85500, cat:'aeron' },
   { code:'AER1B23DW ALP G1 G1 G1 BB BK 23103',    tag:'旗艦B',   desc:'Aeron® 旗艦款 B｜Graphite 石墨黑｜全功能把手＋PostureFit SL', ntd:85500, cat:'aeron' },
   { code:'AER1C23DW ALP G1 G1 G1 BB BK 23103',    tag:'旗艦C',   desc:'Aeron® 旗艦款 C｜Graphite 石墨黑｜全功能把手＋PostureFit SL', ntd:85500, cat:'aeron' },
   { code:'AER1B23DW ALP BK BLX BLX BB BK 23105',  tag:'尊爵B',   desc:'Aeron® 尊爵款 B｜Onyx 極黑啞光｜全功能把手＋PostureFit SL',   ntd:97000, cat:'aeron' },
@@ -1095,11 +1125,11 @@ const EAMES_LEATHERS = [
 (function addHMProducts(){
   const extra = [
   // ── Embody ──
-  { code:'CN122AWAA G1 G1 BB 3SY08', tag:'夜幕藍', desc:'Embody® 人體工學椅｜黑框黑腳｜夜幕藍（3SY08）', ntd:88000, cat:'embody', embodyGroup:'black' },
-  { code:'CN122AWAA G1 G1 BB 3SY12', tag:'石頭黑', desc:'Embody® 人體工學椅｜黑框黑腳｜石頭黑（3SY12）', ntd:88000, cat:'embody', embodyGroup:'black' },
-  { code:'CN122AWAA G1 G1 BB 3SY03', tag:'峽谷紅', desc:'Embody® 人體工學椅｜黑框黑腳｜峽谷紅（3SY03）', ntd:88000, cat:'embody', embodyGroup:'black' },
-  { code:'CN122AWAA G1 G1 BB 3SY01', tag:'可可',   desc:'Embody® 人體工學椅｜黑框黑腳｜可可（3SY01）',   ntd:88000, cat:'embody', embodyGroup:'black' },
-  { code:'CN122AWAA G1 G1 BB 3SY06', tag:'森杉綠', desc:'Embody® 人體工學椅｜黑框黑腳｜森杉綠（3SY06）', ntd:88000, cat:'embody', embodyGroup:'black' },
+  { code:'CN122AWAA G1 G1 BB 3SY08', tag:'夜幕藍', desc:'Embody® 人體工學椅｜黑框黑腳｜夜幕藍（3SY08）', ntd:90000, cat:'embody', embodyGroup:'black' },
+  { code:'CN122AWAA G1 G1 BB 3SY12', tag:'石頭黑', desc:'Embody® 人體工學椅｜黑框黑腳｜石頭黑（3SY12）', ntd:90000, cat:'embody', embodyGroup:'black' },
+  { code:'CN122AWAA G1 G1 BB 3SY03', tag:'峽谷紅', desc:'Embody® 人體工學椅｜黑框黑腳｜峽谷紅（3SY03）', ntd:90000, cat:'embody', embodyGroup:'black' },
+  { code:'CN122AWAA G1 G1 BB 3SY01', tag:'可可',   desc:'Embody® 人體工學椅｜黑框黑腳｜可可（3SY01）',   ntd:90000, cat:'embody', embodyGroup:'black' },
+  { code:'CN122AWAA G1 G1 BB 3SY06', tag:'森杉綠', desc:'Embody® 人體工學椅｜黑框黑腳｜森杉綠（3SY06）', ntd:90000, cat:'embody', embodyGroup:'black' },
   { code:'CN122AWAA G1 91 BB 3SY12', tag:'白框黑腳・暮夜黑', desc:'Embody® 人體工學椅｜白框黑腳｜暮夜黑（3SY12）', ntd:89500, cat:'embody', embodyGroup:'white' },
   { code:'CN122AWAA XT 91 BB 3SY08', tag:'白框灰腳・夜幕藍', desc:'Embody® 人體工學椅｜白框灰腳｜夜幕藍（3SY08）', ntd:91000, cat:'embody', embodyGroup:'white' },
   { code:'CN122AWAA XT 91 BB 3SY10', tag:'白框灰腳・沉靜灰', desc:'Embody® 人體工學椅｜白框灰腳｜沉靜灰（3SY10）', ntd:91000, cat:'embody', embodyGroup:'white' },
@@ -1612,6 +1642,14 @@ function switchEmbodySeries(series){
   document.querySelectorAll('.emb-stab').forEach(b=>b.classList.toggle('active', b.dataset.emb===series));
   ['black','white','polish'].forEach(s=>{
     const p=document.getElementById('embSeries-'+s);
+    if(p) p.style.display=s===series?'block':'none';
+  });
+}
+
+function switchMirra2Series(series){
+  document.querySelectorAll('.m2-stab').forEach(b=>b.classList.toggle('active', b.dataset.m2===series));
+  ['black','white','polish'].forEach(s=>{
+    const p=document.getElementById('m2Series-'+s);
     if(p) p.style.display=s===series?'block':'none';
   });
 }
